@@ -51,8 +51,8 @@ importers:
         specifier: ^1.0.0
         version: 1.1.0
       hexo-theme-stellar:
-        specifier: ^1.34.0
-        version: 1.34.0
+        specifier: ^1.40.0
+        version: 1.40.0
 
 packages:
 
@@ -1590,8 +1590,8 @@ packages:
   hexo-theme-landscape@1.1.0:
     resolution: {integrity: sha512-nszjixBEiEDZjf7glAGbHg0nKGHZdUDwzFVVdRDeu4FeHfGcY5CZNl9sF4vSligjnD8IwFXpDfx5E+GRmNKvWg==}
 
-  hexo-theme-stellar@1.34.0:
-    resolution: {integrity: sha512-A7saCCRwTTb0pOR25OlKH7gqwdapU8aWDiznkvJ48sIuYBGabItaf1w0gmtMyspkHVFAwSVPwZMdyw4VodpnzA==}
+  hexo-theme-stellar@1.40.0:
+    resolution: {integrity: sha512-z5TF+9sPzEAdcF0mKK9gSrkqH8pZ/0WhPmncFYY6YveN1ObV5g7CekM9RFGrTsZOp4V/lwXkDafdLbXuiI1bjg==}
 
   hexo-util@2.7.0:
     resolution: {integrity: sha512-hQM3h34nhDg0bSe/Tg1lnpODvNkz7h2u0+lZGzlKL0Oufp+5KCAEUX9wal7/xC7ax3/cwEn8IuoU75kNpZLpJQ==}
@@ -4667,10 +4667,11 @@ snapshots:
 
   hexo-theme-landscape@1.1.0: {}
 
-  hexo-theme-stellar@1.34.0:
+  hexo-theme-stellar@1.40.0:
     dependencies:
       cheerio: 1.2.0
       glob: 10.5.0
+      hexo-pagination: 3.0.0
       hexo-renderer-ejs: 2.0.0
       hexo-renderer-stylus: 3.0.1
       probe-image-size: 7.3.0
