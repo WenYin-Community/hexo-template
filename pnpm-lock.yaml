@@ -51,8 +51,8 @@ importers:
         specifier: ^1.0.0
         version: 1.1.0
       hexo-theme-stellar:
-        specifier: ^1.34.0
-        version: 1.34.0
+        specifier: ^1.41.0
+        version: 1.41.0
 
 packages:
 
@@ -1590,8 +1590,8 @@ packages:
   hexo-theme-landscape@1.1.0:
     resolution: {integrity: sha512-nszjixBEiEDZjf7glAGbHg0nKGHZdUDwzFVVdRDeu4FeHfGcY5CZNl9sF4vSligjnD8IwFXpDfx5E+GRmNKvWg==}
 
-  hexo-theme-stellar@1.34.0:
-    resolution: {integrity: sha512-A7saCCRwTTb0pOR25OlKH7gqwdapU8aWDiznkvJ48sIuYBGabItaf1w0gmtMyspkHVFAwSVPwZMdyw4VodpnzA==}
+  hexo-theme-stellar@1.41.0:
+    resolution: {integrity: sha512-wrV3BAsKBpt+gNQYe2pcaz9gxeVCeJy4qgp4XxnY5b+Qb7M0Zu0+Xc75WvyxUipNX6aEYu5eCodLwJtDgFzkbA==}
 
   hexo-util@2.7.0:
     resolution: {integrity: sha512-hQM3h34nhDg0bSe/Tg1lnpODvNkz7h2u0+lZGzlKL0Oufp+5KCAEUX9wal7/xC7ax3/cwEn8IuoU75kNpZLpJQ==}
@@ -2289,8 +2289,8 @@ packages:
     resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
     engines: {node: '>=6'}
 
-  probe-image-size@7.3.0:
-    resolution: {integrity: sha512-7CaDeBwiAbh6ohXsvLbAZhO7wzsZAmaevfxe39qvCwRh8LyaZfDlBGGLU1CCTgrTLtCOdwBBhjOrIHaIIimHfQ==}
+  probe-image-size@7.4.0:
+    resolution: {integrity: sha512-cdEprVtZxV+awMde9X+4jILBFYh4CARxVrQaMl4wY4YcPWbul9jntXrIW95NInBDyJwcVUP3U0T6yukN8rMBaQ==}
 
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -4667,13 +4667,14 @@ snapshots:
 
   hexo-theme-landscape@1.1.0: {}
 
-  hexo-theme-stellar@1.34.0:
+  hexo-theme-stellar@1.41.0:
     dependencies:
       cheerio: 1.2.0
       glob: 10.5.0
+      hexo-pagination: 3.0.0
       hexo-renderer-ejs: 2.0.0
       hexo-renderer-stylus: 3.0.1
-      probe-image-size: 7.3.0
+      probe-image-size: 7.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -5432,7 +5433,7 @@ snapshots:
 
   prismjs@1.30.0: {}
 
-  probe-image-size@7.3.0:
+  probe-image-size@7.4.0:
     dependencies:
       lodash.merge: 4.6.2
       needle: 2.9.1
