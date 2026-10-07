@@ -50,6 +50,49 @@ body {
   white-space: nowrap;
 }
 
+// ---- 归档页：月份分组（年份下的二级分组）----
+.posts-collapse .post-content .collection-month {
+  font-size: $font-size-large;
+  font-weight: 600;
+  margin: 32px 0 8px;
+  position: relative;
+
+  &::before {
+    background: #6f42c1;
+    border-radius: 50%;
+    content: '';
+    height: 6px;
+    margin-left: -3px;
+    margin-top: -3px;
+    position: absolute;
+    top: 50%;
+    width: 6px;
+  }
+
+  .collection-month-count {
+    font-size: $font-size-smallest;
+    background: rgba(111, 66, 193, .12);
+    border-radius: 10px;
+    color: #6f42c1;
+    margin-left: 5px;
+    padding: 2px 8px;
+    vertical-align: 2px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .posts-collapse .post-content .collection-month {
+    &::before {
+      background: #a78bfa;
+    }
+
+    .collection-month-count {
+      background: rgba(167, 139, 250, .18);
+      color: #a78bfa;
+    }
+  }
+}
+
 .site-subtitle {
   color: rgba(255, 255, 255, .78);
 }
