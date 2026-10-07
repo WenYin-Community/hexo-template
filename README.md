@@ -1,6 +1,6 @@
 # Hexo Template
 
-基于 [Hexo](https://hexo.io/) 的静态博客模板，使用 [Stellar](https://github.com/xaoxuu/hexo-theme-stellar) 主题。
+基于 [Hexo](https://hexo.io/) 的静态博客模板，使用 [NexT](https://theme-next.js.org/) 主题（Pisces 布局），配色与 [wenyinos.com](https://wenyinos.com/) 主站视觉体系对齐。
 
 ## 快速开始
 
@@ -108,12 +108,11 @@ tags:
 ├── source/              # 文章和静态资源
 │   ├── _posts/          # Markdown 文章
 │   ├── _drafts/         # 草稿
-│   ├── _data/           # 主题数据配置
+│   ├── _data/           # NexT 自定义样式（styles.styl / variables.styl）
 │   └── images/          # 图片资源
-├── themes/              # 主题目录
 ├── scaffolds/           # 文章模板
 ├── _config.yml          # Hexo 主配置
-├── _config.stellar.yml  # Stellar 主题配置
+├── _config.next.yml     # NexT 主题配置
 └── package.json
 ```
 
@@ -137,5 +136,7 @@ hexo clean && hexo g -d
 ## 技术栈
 
 - Hexo 8.x
-- Stellar 1.33.1
+- NexT 8.29（Pisces 布局）
+- hexo-generator-searchdb（本地搜索）
+- hexo-excerpt（自动摘要）
 - hexo-deployer-git

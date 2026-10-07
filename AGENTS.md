@@ -3,10 +3,10 @@
 ## Project Structure & Module Organization
 This repository is a Hexo 8 static site for the WenYin Open Source Wiki.
 Primary content lives in `source/_posts/` as Markdown posts with YAML front
-matter. Shared data is in `source/_data/`, custom styles are in
-`source/css/custom.styl`, and images/icons are in `source/images/`.
-Site-wide settings are in `_config.yml`; theme-specific Stellar settings are in
-`_config.stellar.yml`. `public/` is generated output, so do not edit it
+matter. NexT custom styles live in `source/_data/` (`styles.styl` and
+`variables.styl`), and images/icons are in `source/images/`.
+Site-wide settings are in `_config.yml`; theme-specific NexT settings are in
+`_config.next.yml`. `public/` is generated output, so do not edit it
 directly. `scaffolds/` contains templates used when creating new Hexo content.
 
 ## Build, Test, and Development Commands
@@ -27,7 +27,8 @@ Markdown posts should use clear front matter with `title`, `date`,
 lowercase descriptive slugs such as `linux-power-management.md`; keep existing
 underscore patterns only when they are already part of a topic name. Keep
 Markdown headings hierarchical and examples fenced with language tags. Stylus
-customizations should stay small and focused in `source/css/custom.styl`.
+customizations should stay small and focused in `source/_data/styles.styl`
+(with theme palette overrides in `source/_data/variables.styl`).
 
 ## Testing Guidelines
 There is no dedicated automated test suite in this checkout. Treat
