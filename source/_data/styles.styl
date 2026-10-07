@@ -1,0 +1,82 @@
+// ==============================================================
+// WenYin 主站风组件定制
+// 原则：保留 NexT 博客布局，只做视觉呼应（配色 / 质感）
+// ==============================================================
+
+// ---- 本地字体声明（与主站自托管字体一致，见 wenyin-community.github.io）----
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('/fonts/noto-sans-sc-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('/fonts/noto-sans-sc-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Serif SC';
+  src: url('/fonts/noto-serif-sc-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+// ---- 页面背景：柔和紫色光晕（呼应主站 hero 渐变与圆形光斑装饰）----
+body {
+  background-image: linear-gradient(180deg, rgba(111, 66, 193, .085) 0, rgba(111, 66, 193, .025) 220px, transparent 420px),
+    radial-gradient(900px 480px at 88% -6%, rgba(111, 66, 193, .10), transparent 68%),
+    radial-gradient(720px 420px at -8% 12%, rgba(139, 95, 214, .085), transparent 66%),
+    radial-gradient(800px 600px at 108% 62%, rgba(74, 44, 130, .06), transparent 70%);
+  background-repeat: no-repeat;
+}
+
+// ---- 顶部品牌栏：深紫渐变（呼应主站紫色氛围）----
+.site-brand-container {
+  background: linear-gradient(135deg, #4a2c82 0%, #6f42c1 100%);
+}
+
+.site-meta {
+  padding: 28px 0;
+}
+
+.site-title {
+  white-space: nowrap;
+}
+
+.site-subtitle {
+  color: rgba(255, 255, 255, .78);
+}
+
+// ---- 页脚：浅紫底（对齐主站 footer 观感）----
+.footer {
+  background: #f5f2f8;
+  border-radius: 6px;
+}
+
+// ---- 深色模式适配 ----
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image: linear-gradient(180deg, rgba(139, 95, 214, .12) 0, rgba(139, 95, 214, .04) 220px, transparent 420px),
+      radial-gradient(900px 480px at 88% -6%, rgba(139, 95, 214, .16), transparent 68%),
+      radial-gradient(720px 420px at -8% 12%, rgba(111, 66, 193, .14), transparent 66%),
+      radial-gradient(800px 600px at 108% 62%, rgba(167, 139, 250, .09), transparent 70%);
+  }
+
+  .footer {
+    background: #2a1a45;
+    color: #b9a8d8;
+  }
+
+  .sidebar-toc-active .sidebar-nav-toc,
+  .sidebar-overview-active .sidebar-nav-overview {
+    border-bottom-color: #a78bfa;
+    color: #a78bfa;
+  }
+}
