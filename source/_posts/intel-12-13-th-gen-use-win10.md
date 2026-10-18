@@ -1,5 +1,6 @@
 ---
 title: "Intel 12、13代CPU在Win10、Win11系统大核调度方法"
+author: "学姐大人"
 date: 2023-05-06
 categories:
   - "Windows"

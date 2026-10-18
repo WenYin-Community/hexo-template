@@ -1,5 +1,6 @@
 ---
 title: "野兽先辈计算器.cpp"
+author: "学姐大人"
 date: 2022-02-26
 categories:
   - "文化杂谈"

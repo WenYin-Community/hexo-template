@@ -1,5 +1,6 @@
 ---
 title: "企业级后台开发踩坑实录：NestJS + Prisma + MySQL"
+author: "学姐大人"
 date: 2026-06-29
 categories:
   - "开发工具"

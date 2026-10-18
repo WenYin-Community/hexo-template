@@ -1,5 +1,6 @@
 ---
 title: "清理 VS Code"
+author: "学姐大人"
 date: 2026-04-17
 categories:
   - "开发工具"

@@ -1,5 +1,6 @@
 ---
 title: "在XWayland应用中调整缩放"
+author: "学姐大人"
 date: 2024-04-01
 categories:
   - "Linux"

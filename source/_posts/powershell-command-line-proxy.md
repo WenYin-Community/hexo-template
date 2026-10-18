@@ -1,5 +1,6 @@
 ---
 title: "PowerShell 配置命令行代理"
+author: "学姐大人"
 date: 2026-02-19
 categories:
   - "网络与代理"

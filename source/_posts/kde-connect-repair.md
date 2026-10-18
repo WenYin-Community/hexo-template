@@ -1,5 +1,6 @@
 ---
 title: "KDE Connect 故障修复"
+author: "学姐大人"
 date: 2023-06-25
 categories:
   - "Linux"

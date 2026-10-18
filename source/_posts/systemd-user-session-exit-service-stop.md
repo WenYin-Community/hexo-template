@@ -1,5 +1,6 @@
 ---
 title: "用户会话退出导致的级联服务停止"
+author: "学姐大人"
 date: 2026-03-27
 categories:
   - "Linux"

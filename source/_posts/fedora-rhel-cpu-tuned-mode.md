@@ -1,5 +1,6 @@
 ---
 title: "Fedora/RHEL动态调优CPU性能模式"
+author: "学姐大人"
 date: 2023-04-09
 categories:
   - "Linux"

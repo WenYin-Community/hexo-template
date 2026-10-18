@@ -1,5 +1,6 @@
 ---
 title: "Ubuntu 22.04在线升级注意事项"
+author: "学姐大人"
 date: 2023-04-25
 categories:
   - "Linux"

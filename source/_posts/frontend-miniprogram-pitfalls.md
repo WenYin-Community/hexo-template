@@ -1,5 +1,6 @@
 ---
 title: "前端工程踩坑笔记：Vue 3、小程序与 Canvas 小游戏"
+author: "学姐大人"
 date: 2026-07-31
 categories:
   - "开发工具"

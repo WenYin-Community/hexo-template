@@ -1,5 +1,6 @@
 ---
 title: "npm 和 pnpm 清理缓存"
+author: "学姐大人"
 date: 2026-02-06
 categories:
   - "开发工具"

@@ -1,5 +1,6 @@
 ---
 title: "QChatGPT"
+author: "学姐大人"
 date: 2023-02-18
 categories:
   - "AI"

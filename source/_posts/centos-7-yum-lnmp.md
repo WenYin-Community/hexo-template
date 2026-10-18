@@ -1,5 +1,6 @@
 ---
 title: "CentOS 7 YUM 10分钟快速安装 LNMP 环境"
+author: "学姐大人"
 date: 2018-02-28
 categories:
   - "Linux"

@@ -1,5 +1,6 @@
 ---
 title: "优化新型号英特尔显卡在Linux下的多媒体加速"
+author: "学姐大人"
 date: 2023-06-10
 categories:
   - "硬件设备"

@@ -1,5 +1,6 @@
 ---
 title: "在斐讯N1盒子上刷入armbian Linux系统"
+author: "学姐大人"
 date: 2018-06-24
 categories:
   - "硬件设备"

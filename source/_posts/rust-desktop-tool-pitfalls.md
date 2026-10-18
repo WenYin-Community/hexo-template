@@ -1,5 +1,6 @@
 ---
 title: "Rust 桌面工具开发踩坑：从 TLS 指纹到系统托盘"
+author: "学姐大人"
 date: 2026-08-10
 categories:
   - "开发工具"

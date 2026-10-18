@@ -1,5 +1,6 @@
 ---
 title: "/home 空间迁移与 fstab 调整记录"
+author: "学姐大人"
 date: 2026-05-08
 categories:
   - "Linux"

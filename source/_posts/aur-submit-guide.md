@@ -1,5 +1,6 @@
 ---
 title: "AUR 提交指南"
+author: "学姐大人"
 date: 2026-03-14
 categories:
   - "开发工具"

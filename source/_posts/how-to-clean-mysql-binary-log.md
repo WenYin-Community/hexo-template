@@ -1,5 +1,6 @@
 ---
 title: "mysql日志文件mysql-bin太大怎么办"
+author: "学姐大人"
 date: 2023-04-01
 categories:
   - "开发工具"

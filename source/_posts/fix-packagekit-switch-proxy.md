@@ -1,5 +1,6 @@
 ---
 title: "修复PackageKit无法正确切换代理"
+author: "学姐大人"
 date: 2023-04-26
 categories:
   - "网络与代理"

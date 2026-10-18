@@ -1,5 +1,6 @@
 ---
 title: "KDE Dolphin文件管理器以root访问"
+author: "学姐大人"
 date: 2023-06-27
 categories:
   - "Linux"

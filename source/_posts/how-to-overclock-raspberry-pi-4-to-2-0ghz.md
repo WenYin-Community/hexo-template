@@ -1,5 +1,6 @@
 ---
 title: "将您的树莓派4超频至2.0GHz"
+author: "学姐大人"
 date: 2019-08-02
 categories:
   - "硬件设备"

@@ -1,5 +1,6 @@
 ---
 title: "Linus Torvalds怒喷牙膏厂：漏洞门修复一团渣"
+author: "学姐大人"
 date: 2018-02-28
 categories:
   - "文化杂谈"

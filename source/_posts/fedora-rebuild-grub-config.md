@@ -1,5 +1,6 @@
 ---
 title: "在 Fedora 下重建 GRUB 配置文件"
+author: "学姐大人"
 date: 2026-04-04
 categories:
   - "Linux"

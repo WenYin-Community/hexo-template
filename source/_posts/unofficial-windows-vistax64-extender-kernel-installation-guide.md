@@ -1,5 +1,6 @@
 ---
 title: "非官方 Windows Vista x64 Extender Kernel 分步安装指南"
+author: "学姐大人"
 date: 2022-05-10
 categories:
   - "Windows"

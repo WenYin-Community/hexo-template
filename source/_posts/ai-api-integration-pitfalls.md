@@ -1,5 +1,6 @@
 ---
 title: "对接多家大模型 API 的踩坑与治理经验"
+author: "学姐大人"
 date: 2026-08-08
 categories:
   - "AI"

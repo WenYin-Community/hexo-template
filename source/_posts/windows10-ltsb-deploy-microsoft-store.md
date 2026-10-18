@@ -1,5 +1,6 @@
 ---
 title: "在Windows 10 企业版长期服务计划版本部署应用商店"
+author: "学姐大人"
 date: 2018-02-28
 categories:
   - "Windows"

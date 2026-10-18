@@ -1,5 +1,6 @@
 ---
 title: "使用zram-generator配置zram"
+author: "学姐大人"
 date: 2025-08-17
 categories:
   - "Linux"

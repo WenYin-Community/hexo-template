@@ -1,5 +1,6 @@
 ---
 title: "Win8/8.1安装和使用Virtual PC 2007虚拟机的方法以及注意事项（32位和64位）"
+author: "学姐大人"
 date: 2022-10-29
 categories:
   - "虚拟化"

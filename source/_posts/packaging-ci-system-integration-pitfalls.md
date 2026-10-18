@@ -1,5 +1,6 @@
 ---
 title: "跨平台打包与 CI 发布实践踩坑集"
+author: "学姐大人"
 date: 2026-09-17
 categories:
   - "开发工具"

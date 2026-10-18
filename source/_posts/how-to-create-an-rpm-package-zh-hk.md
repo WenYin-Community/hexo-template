@@ -1,5 +1,6 @@
 ---
 title: "How to create an RPM package/zh-hk（如何创建一个打包的RPM"
+author: "学姐大人"
 date: 2018-03-02
 categories:
   - "开发工具"

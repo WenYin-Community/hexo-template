@@ -1,5 +1,6 @@
 ---
 title: "在树莓派 3 上运行 openSUSE：简单几步搭建一个实用系统"
+author: "学姐大人"
 date: 2018-03-20
 categories:
   - "硬件设备"

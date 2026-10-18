@@ -1,5 +1,6 @@
 ---
 title: "让女孩子更快学会Linux的方法与建议"
+author: "学姐大人"
 date: 2017-03-04
 categories:
   - "Linux"

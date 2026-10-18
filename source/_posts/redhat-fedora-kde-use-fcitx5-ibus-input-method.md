@@ -1,5 +1,6 @@
 ---
 title: "在RedHat/Fedora KDE桌面使用fcitx5/ibus输入法"
+author: "学姐大人"
 date: 2023-04-11
 categories:
   - "Linux"

@@ -1,6 +1,7 @@
 ---
 title: "自建 MCP 服务端：认证、冒充与删除端点的坑"
-date: 2026-10-17
+author: "学姐大人"
+date: 2026-10-14
 categories:
   - "开发工具"
 tags:

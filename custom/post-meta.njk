@@ -1,0 +1,9 @@
+{%- if post.author %}
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ post.author }}</span></span>
+</span>
+{%- endif %}

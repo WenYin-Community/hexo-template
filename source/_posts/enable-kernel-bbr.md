@@ -1,5 +1,6 @@
 ---
 title: "内核开启BBR方法"
+author: "学姐大人"
 date: 2022-03-08
 categories:
   - "网络与代理"

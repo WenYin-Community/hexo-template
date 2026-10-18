@@ -1,5 +1,6 @@
 ---
 title: "Fedora/CentOS下命令行配置Shadowsocks全局代理"
+author: "学姐大人"
 date: 2017-03-17
 categories:
   - "网络与代理"

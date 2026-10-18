@@ -1,5 +1,6 @@
 ---
 title: "为腾讯云主机安装Windows Server 2012R2+Linux双系统"
+author: "学姐大人"
 date: 2018-02-28
 categories:
   - "云服务"

@@ -1,5 +1,6 @@
 ---
 title: "Unofficial Windows Vista x64 Extender Kernel step by step installation guide"
+author: "学姐大人"
 date: 2022-05-10
 categories:
   - "Windows"

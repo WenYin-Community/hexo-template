@@ -1,5 +1,6 @@
 ---
 title: "Linux install qemu-kvm and virt-manager"
+author: "学姐大人"
 date: 2022-12-03
 categories:
   - "虚拟化"

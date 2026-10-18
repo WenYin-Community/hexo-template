@@ -1,5 +1,6 @@
 ---
 title: "简易安装Arch Linux ARM for Raspberry Pi 3"
+author: "学姐大人"
 date: 2018-05-12
 categories:
   - "硬件设备"

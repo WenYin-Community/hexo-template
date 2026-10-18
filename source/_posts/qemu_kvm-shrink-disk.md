@@ -1,5 +1,6 @@
 ---
 title: "Qemu_kvm虚拟机缩小磁盘容量"
+author: "学姐大人"
 date: 2025-11-12
 categories:
   - "虚拟化"

@@ -1,5 +1,6 @@
 ---
 title: "Linux(CentOS 7)下使用mono+ArchiSteamFarm挂卡"
+author: "学姐大人"
 date: 2019-03-04
 categories:
   - "Linux"

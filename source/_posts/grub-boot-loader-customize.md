@@ -1,5 +1,6 @@
 ---
 title: "对 GRUB 引导装载程序进行永久性更改"
+author: "学姐大人"
 date: 2023-04-12
 categories:
   - "Linux"

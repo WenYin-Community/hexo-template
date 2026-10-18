@@ -1,5 +1,6 @@
 ---
 title: "在基于RHEL的系统上安装KDE Plasma桌面环境"
+author: "学姐大人"
 date: 2023-04-09
 categories:
   - "Linux"

@@ -1,5 +1,6 @@
 ---
 title: "斐讯K2t免拆机刷入LEDE/OpenWRT的步骤"
+author: "学姐大人"
 date: 2018-05-25
 categories:
   - "网络与代理"

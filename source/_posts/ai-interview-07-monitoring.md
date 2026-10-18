@@ -1,5 +1,6 @@
 ---
 title: "AI面试题 - 监控与可观测性"
+author: "学姐大人"
 date: 2026-01-01
 categories:
   - "AI工程师面试题"

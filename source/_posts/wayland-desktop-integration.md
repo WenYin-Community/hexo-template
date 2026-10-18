@@ -1,6 +1,7 @@
 ---
 title: "把桌面集成从 X11 搬到 Wayland：一次完整的补全实录"
-date: 2026-10-17
+author: "学姐大人"
+date: 2026-10-07
 categories:
   - "开发工具"
 tags:

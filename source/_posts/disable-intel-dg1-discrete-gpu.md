@@ -1,5 +1,6 @@
 ---
 title: "彻底禁用 DG1 独立显卡"
+author: "学姐大人"
 date: 2026-04-28
 categories:
   - "硬件设备"

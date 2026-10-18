@@ -1,5 +1,6 @@
 ---
 title: "如何在Google Colab上面简单创建NovelAI（白嫖）"
+author: "学姐大人"
 date: 2023-03-04
 categories:
   - "AI"

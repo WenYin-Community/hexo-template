@@ -1,5 +1,6 @@
 ---
 title: "系统｜ chroot | 修复Grub 引导 for Win10"
+author: "学姐大人"
 date: 2022-02-20
 categories:
   - "Windows"

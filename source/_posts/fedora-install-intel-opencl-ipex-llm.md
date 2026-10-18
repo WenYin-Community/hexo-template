@@ -1,5 +1,6 @@
 ---
 title: "在Fedora安装Intel OpenCL套件以运行ipex-llm"
+author: "学姐大人"
 date: 2025-03-12
 categories:
   - "AI"

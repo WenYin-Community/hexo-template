@@ -1,5 +1,6 @@
 ---
 title: "MediaTek Helio P60一些详细参数的分析"
+author: "学姐大人"
 date: 2018-03-30
 categories:
   - "硬件设备"

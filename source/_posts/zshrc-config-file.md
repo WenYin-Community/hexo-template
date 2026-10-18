@@ -1,5 +1,6 @@
 ---
 title: "自用的.zshrc配置文件"
+author: "学姐大人"
 date: 2017-06-05
 categories:
   - "开发工具"

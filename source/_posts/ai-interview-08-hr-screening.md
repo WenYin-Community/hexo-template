@@ -1,5 +1,6 @@
 ---
 title: "AI面试题 - HR 初筛面试指南"
+author: "学姐大人"
 date: 2026-01-01
 categories:
   - "AI工程师面试题"

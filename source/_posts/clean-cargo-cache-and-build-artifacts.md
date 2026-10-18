@@ -1,5 +1,6 @@
 ---
 title: "清理 Cargo 缓存和构建产物"
+author: "学姐大人"
 date: 2026-03-03
 categories:
   - "开发工具"

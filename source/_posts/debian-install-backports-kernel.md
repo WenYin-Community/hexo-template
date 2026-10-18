@@ -1,5 +1,6 @@
 ---
 title: "Debian安装新版本Linux内核（backports kernel）"
+author: "学姐大人"
 date: 2024-04-13
 categories:
   - "Linux"

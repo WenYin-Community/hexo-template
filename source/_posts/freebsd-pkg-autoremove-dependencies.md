@@ -1,5 +1,6 @@
 ---
 title: "FreeBSD pkg 自动卸载安装依赖"
+author: "学姐大人"
 date: 2026-01-29
 categories:
   - "Linux"

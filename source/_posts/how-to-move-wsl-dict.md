@@ -1,5 +1,6 @@
 ---
 title: "如何将win10/win11的wsl子系统移动到其他位置"
+author: "学姐大人"
 date: 2023-04-22
 categories:
   - "Windows"

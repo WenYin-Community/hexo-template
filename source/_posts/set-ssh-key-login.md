@@ -1,5 +1,6 @@
 ---
 title: "设置 SSH 通过密钥登录"
+author: "学姐大人"
 date: 2018-03-17
 categories:
   - "网络与代理"

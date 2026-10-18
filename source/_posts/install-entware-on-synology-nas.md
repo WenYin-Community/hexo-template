@@ -1,5 +1,6 @@
 ---
 title: "Install entware repository on Synology NAS"
+author: "学姐大人"
 date: 2019-05-20
 categories:
   - "云服务"

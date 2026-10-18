@@ -1,5 +1,6 @@
 ---
 title: "Linux 电源管理设置"
+author: "学姐大人"
 date: 2023-03-12
 categories:
   - "Linux"

@@ -1,5 +1,6 @@
 ---
 title: "免费申请120天的IBM PowerPC s390x大型机VPS试用"
+author: "学姐大人"
 date: 2018-03-02
 categories:
   - "云服务"

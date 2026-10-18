@@ -1,5 +1,6 @@
 ---
 title: "Firefox 打开视频硬解码功能"
+author: "学姐大人"
 date: 2023-07-09
 categories:
   - "硬件设备"

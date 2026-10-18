@@ -1,5 +1,6 @@
 ---
 title: "x86架构进入你的iPhone"
+author: "学姐大人"
 date: 2018-12-18
 categories:
   - "硬件设备"

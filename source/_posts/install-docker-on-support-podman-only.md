@@ -1,5 +1,6 @@
 ---
 title: "在仅支持Podman的系统（如RHEL/Rocky）中安装Docker"
+author: "学姐大人"
 date: 2023-05-17
 categories:
   - "Linux"

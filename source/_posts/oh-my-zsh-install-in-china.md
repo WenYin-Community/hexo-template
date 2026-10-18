@@ -1,5 +1,6 @@
 ---
 title: "在国内安装 oh-my-zsh"
+author: "学姐大人"
 date: 2023-06-29
 categories:
   - "开发工具"

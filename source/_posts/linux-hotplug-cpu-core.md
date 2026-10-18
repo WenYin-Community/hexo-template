@@ -1,5 +1,6 @@
 ---
 title: "Linux热插拔CPU核心"
+author: "学姐大人"
 date: 2022-10-30
 categories:
   - "Linux"

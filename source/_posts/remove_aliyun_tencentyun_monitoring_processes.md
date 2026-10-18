@@ -1,5 +1,6 @@
 ---
 title: "卸载阿里/腾讯云Linux主机监控进程，屏蔽云盾功能"
+author: "学姐大人"
 date: 2018-12-19
 categories:
   - "云服务"

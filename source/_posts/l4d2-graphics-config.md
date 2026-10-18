@@ -1,5 +1,6 @@
 ---
 title: "求生之路2图形设定"
+author: "学姐大人"
 date: 2023-06-20
 categories:
   - "硬件设备"

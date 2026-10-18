@@ -1,5 +1,6 @@
 ---
 title: "使用吃灰的Android手机代替第三方开发板等制作简易家庭服务器"
+author: "学姐大人"
 date: 2018-02-28
 categories:
   - "云服务"

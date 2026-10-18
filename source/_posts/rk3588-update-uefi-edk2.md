@@ -1,5 +1,6 @@
 ---
 title: "RK3588设备更新UEFI edk2固件"
+author: "学姐大人"
 date: 2025-11-18
 categories:
   - "硬件设备"

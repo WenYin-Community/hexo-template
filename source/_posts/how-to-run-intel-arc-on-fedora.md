@@ -1,5 +1,6 @@
 ---
 title: "如何让Intel Arc在Fedora上面运行"
+author: "学姐大人"
 date: 2023-11-28
 categories:
   - "硬件设备"

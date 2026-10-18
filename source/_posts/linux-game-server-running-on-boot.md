@@ -1,5 +1,6 @@
 ---
 title: "Linux Game Server Running on Boot"
+author: "学姐大人"
 date: 2020-03-06
 categories:
   - "Linux"

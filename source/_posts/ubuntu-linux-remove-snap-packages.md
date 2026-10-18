@@ -1,5 +1,6 @@
 ---
 title: "Ubuntu Linux 中移除 Snap 软件包"
+author: "学姐大人"
 date: 2023-02-27
 categories:
   - "Linux"

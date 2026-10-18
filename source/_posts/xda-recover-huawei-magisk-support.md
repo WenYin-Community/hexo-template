@@ -1,5 +1,6 @@
 ---
 title: "XDA开发者已修复华为设备的Magisk支持"
+author: "学姐大人"
 date: 2018-10-11
 categories:
   - "硬件设备"

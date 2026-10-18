@@ -1,6 +1,7 @@
 ---
 title: "PHP 8 下维护一套老系统：静默失效与致命错误实录"
-date: 2026-10-16
+author: "学姐大人"
+date: 2026-10-03
 categories:
   - "开发工具"
 tags:

@@ -1,6 +1,7 @@
 ---
 title: "不改上游源码做跨平台打包：overlay 隔离层与 FreeBSD 移植"
-date: 2026-10-15
+author: "学姐大人"
+date: 2026-10-11
 categories:
   - "开发工具"
 tags:

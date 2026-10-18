@@ -1,5 +1,6 @@
 ---
 title: "升级gcc 14.2.0"
+author: "学姐大人"
 date: 2024-10-15
 categories:
   - "开发工具"

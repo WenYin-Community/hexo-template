@@ -1,5 +1,6 @@
 ---
 title: "（转）Fushsia编译指南"
+author: "学姐大人"
 date: 2018-12-18
 categories:
   - "开发工具"

@@ -1,5 +1,6 @@
 ---
 title: "使用Raspberry Pi等ARM迷你开发板运行ArchiSteamFarm挂卡程序"
+author: "学姐大人"
 date: 2018-05-05
 categories:
   - "硬件设备"

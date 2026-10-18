@@ -1,5 +1,6 @@
 ---
 title: "Fedora 更新到最新版"
+author: "学姐大人"
 date: 2025-05-10
 categories:
   - "Linux"

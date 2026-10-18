@@ -1,5 +1,6 @@
 ---
 title: "简要测试一下Intel处理器在安装漏洞补丁前后的性能差异"
+author: "学姐大人"
 date: 2018-02-28
 categories:
   - "硬件设备"

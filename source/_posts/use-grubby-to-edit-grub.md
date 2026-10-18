@@ -1,5 +1,6 @@
 ---
 title: "使用 grubby 工具在 GRUB 中进行永久更改"
+author: "学姐大人"
 date: 2023-11-28
 categories:
   - "Linux"

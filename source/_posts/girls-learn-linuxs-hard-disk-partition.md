@@ -1,5 +1,6 @@
 ---
 title: "女孩子学Linux之硬盘分区篇"
+author: "学姐大人"
 date: 2017-03-04
 categories:
   - "Linux"
