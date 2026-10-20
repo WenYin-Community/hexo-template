@@ -95,21 +95,9 @@ fil[x*3] = thefilterb[fil[x*3]][fil[(x-1)*3]];
 
 ## 四、只有"装完能跑"才算验证：FreeBSD 二进制包
 
-给一本 FreeBSD 开源书写"如何制作 pkg 包"这一节时，我把每条命令都在真机上跑了一遍。收获是四个纯靠实测才能发现的事实。
+给一本 FreeBSD 开源书写"如何制作 pkg 包"这一节时，我把每条命令都在真机上跑了一遍。pkg 的本地数据库已经是 SQLite（读元数据要用 `pkg query`）这点在《不改上游源码做跨平台打包》里写过，这里只记"制作"这一侧新踩到的三个事实。
 
-**1. pkg 的本地数据库是 SQLite，不是目录。**
-
-```
-/var/db/pkg/local.sqlite
-```
-
-没有 `/var/db/pkg/<包名>-<版本>/+MANIFEST` 这种逐包目录。读元数据要用 `pkg query`：
-
-```sh
-pkg query -e '%n = curl' '%dn %do %dv'
-```
-
-**2. `find -type f` 会漏掉符号链接。**
+**1. `find -type f` 会漏掉符号链接。**
 
 打包时 plist 靠 `find stage` 生成，而 `-type f` 只匹配普通文件。含符号链接的目录会少列一条，链接就不会进包：
 
@@ -119,29 +107,21 @@ find stage \( -type f -o -type l \) | sed 's|^stage||' > meta/files.plist
 
 实测：改前少一条，改后链接被正常打包、安装后仍是符号链接、卸载无残留。
 
-**3. `pkg install` 接受本地归档路径。**
+**2. `pkg install` 接受本地归档路径。**
 
 不需要改用 `pkg add`。`pkg install ./hello-1.0.pkg` 实测装成功、程序能跑、`pkg delete` 之后无残留。
 
-**4. BSD tar 不剥前导 `/`。**
+**3. BSD tar 不剥前导 `/`。**
 
 pkg 归档成员路径本身就是绝对路径，FreeBSD 上 `tar --zstd -tf` 显示的是 `/usr/local/bin/hello`。GNU tar 才会剥掉开头的 `/`——写文档或工具时别弄混。
 
 另外几个参数级的坑：安装/卸载脚本有四个固定文件名（`+PRE_INSTALL`、`+POST_INSTALL`、`+PRE_DEINSTALL`、`+POST_DEINSTALL`，都需要可执行权限），桌面条目要装到 `/usr/local/share/applications/`、图标要按标准尺寸装到 `hicolor/<尺寸>x<尺寸>/apps/`，否则桌面环境不认。
 
-## 五、overlay 上的三方合并
+## 五、overlay 合并：只补一条 CI 才能暴露的回归
 
-另一个项目用 overlay 的方式维护平台补丁（上游源码一字节不改，构建时叠加）。上游发 rc.2 时，27 个被覆盖的文件全部需要重建，合并后 19 处冲突。
+overlay 三方合并的语义（`merge: true` 只增不恢复、未被覆盖的文件会 import 被覆盖文件的新增导出、`git merge-file -p` 不写文件）已经在《不改上游源码做跨平台打包》里写过，这里不重复。补一条只有 CI 才能暴露的：
 
-三个反复出现的坑：
-
-**`merge: true` 的文件不能整文件三方合并。** 上游已经删除的键会被 fork 副本原样带回来。后果不是报错，而是 lockfile 对不上（`ERR_PNPM_OUTDATED_LOCKFILE`）。正确语义是"以上游新版为基底、只叠加自己的键"——**只增，不恢复**。
-
-**未被覆盖的文件会 import 被覆盖文件的新增导出。** 上游在 `prepare-runtime.ts` 里加了三个导出，而另外两个我没覆盖的脚本直接 import 它们。所以"只修当前报错那一处"必然还会失败——必须让整层 overlay 与上游新版对齐。
-
-**`git merge-file -p` 不写文件。** `-p` 是"把结果写到标准输出"，不加重定向的话目标文件纹丝不动。一度以为 12 个文件"干净合并"了，抽查才发现全是原样——冲突判定有效，但内容根本没落盘。
-
-还有一处只有 CI 才能暴露：合并时重建根 `package.json`，脚本值漏了 `package:` 前缀（写成 `run linux:x64`，正确是 `run package:linux:x64`）。本地 `typecheck` 不会有意见，打包 job 直接失败。
+合并时重建根 `package.json`，脚本值漏了 `package:` 前缀——写成 `run linux:x64`，正确是 `run package:linux:x64`。本地 `typecheck` 不会有任何意见，**打包 job 直接失败**。这类"少一个前缀"的错误没有静态检查兜得住，只能靠"合并后必须完整跑一次打包链路"。
 
 ## 六、空库起不来：迁移脚本不是建库脚本
 

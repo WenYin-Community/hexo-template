@@ -91,7 +91,7 @@ tags:
 **其他系统级任务**：
 
 - **指纹驱动**：设备在 libfprint 无驱动时，"No devices available"是驱动缺失而非配置问题；滑动式小传感器（出图仅 103×52）即使 enroll 成功，verify 也频繁失败——匹配算法处理不了小图（上游 MR 悬置多年）。KDE 锁屏原生支持指纹，但 SDDM 登录不支持（加了 PAM 模块会无提示失败+易误锁）；
-- **PHP 老应用迁移 PHP 8**：`@` 只能抑制 warning/notice，**不能抑制 `extract()` 的 TypeError**——`@extract(null)` 直接 Fatal error 截断了原有"缓存缺失→重建"的自愈路径。修法：数组兜底 + 强制触发缓存重建；
+- **PHP 老应用迁移 PHP 8**：内容较多，已单独成篇，见《PHP 8 下维护老系统：静默失效、致命错误与编码约束》；
 - **Android 固件解包**：tgz 是流式压缩，tar 必须读完整个数据流才结束（12GB 包不要用短超时命令）；动态分区（vendor_dlkm/odm）不在包内，需从 `super.img` 用 `lpunpack -p` 提取；
 - **AAPT2 会自动 gunzip 以 `.gz` 结尾的 assets**：APK 内变纯文本，运行时 `GZIPInputStream` 读取直接崩溃——内置数据改纯文本 JSONL 存放。
 
