@@ -133,6 +133,8 @@ deploy:
 hexo clean && hexo g -d
 ```
 
+> 注意：`wenyinos/wenyinos.github.io` 仓库现在包含 `.github/workflows/deploy-cloudbase.yml`，用于把 Pages 产物同步到 CloudBase。`hexo deploy` 会清空 `.deploy_git` 并强制推送，可能删除该工作流；如果仍使用 `hexo deploy` 发布，请在推送后检查并恢复该工作流。日常发布建议以 Pages 仓库为同步源。
+
 ## 技术栈
 
 - Hexo 8.x
