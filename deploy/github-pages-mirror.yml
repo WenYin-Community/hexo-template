@@ -1,0 +1,75 @@
+# 可选方案：直接镜像 GitHub Pages 产物仓库到 CloudBase。
+#
+# 使用方式：
+# 1. 把本文件复制到 wenyinos/wenyinos.github.io 仓库的 .github/workflows/ 下；
+# 2. 在该仓库添加与源码仓库相同的 Actions secrets；
+# 3. 不要同时启用源码仓库的 deploy-cloudbase.yml，避免两个工作流互相覆盖。
+#
+# 这个工作流不构建 Hexo，只把 Pages 仓库当前内容原样同步到 CloudBase 的
+# wenyinos-wiki 应用，适合“以 GitHub Pages 产物为准”的场景。
+
+name: Mirror GitHub Pages to CloudBase
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudbase-wenyinos-wiki
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout GitHub Pages content
+        uses: actions/checkout@v4
+
+      - name: Prepare deploy directory
+        run: |
+          mkdir -p dist
+          rsync -a --exclude='.git' --exclude='.github' ./ dist/
+
+      - name: Install CloudBase CLI
+        run: npm install --global @cloudbase/cli@3.8.7
+
+      - name: Login to CloudBase
+        env:
+          TCB_ENV_ID: ${{ secrets.TCB_ENV_ID }}
+          TCB_API_KEY: ${{ secrets.TCB_API_KEY }}
+          TCB_SECRET_ID: ${{ secrets.TCB_SECRET_ID }}
+          TCB_SECRET_KEY: ${{ secrets.TCB_SECRET_KEY }}
+        run: |
+          set -euo pipefail
+          : "${TCB_ENV_ID:?Missing TCB_ENV_ID repository secret}"
+
+          if [ -n "${TCB_API_KEY:-}" ]; then
+            tcb login --cloudbase-api-key "$TCB_API_KEY" -e "$TCB_ENV_ID"
+          elif [ -n "${TCB_SECRET_ID:-}" ] && [ -n "${TCB_SECRET_KEY:-}" ]; then
+            tcb login --apiKeyId "$TCB_SECRET_ID" --apiKey "$TCB_SECRET_KEY"
+          else
+            echo "Missing CloudBase credentials: set TCB_API_KEY, or TCB_SECRET_ID + TCB_SECRET_KEY." >&2
+            exit 1
+          fi
+
+      - name: Deploy static site
+        env:
+          TCB_ENV_ID: ${{ secrets.TCB_ENV_ID }}
+        run: |
+          set -euo pipefail
+          tcb app deploy wenyinos-wiki \
+            -e "$TCB_ENV_ID" \
+            --cwd dist \
+            --framework static \
+            --install-command "" \
+            --build-command "" \
+            --output-dir ./ \
+            --deploy-path / \
+            --force \
+            --json
