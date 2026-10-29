@@ -2,6 +2,7 @@
 title: "给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite"
 author: "学姐大人"
 date: 2026-10-25
+updated: 2026-10-29
 categories:
   - "开发工具"
 tags:
@@ -11,6 +12,8 @@ tags:
   - "llm"
   - "streaming"
   - "architecture"
+  - "memory-search"
+  - "database-repair"
 ---
 
 给 AI agent 加"长期记忆"，第一版几乎都会这么做：在系统提示里约定一个 `MEMORY.md`，让模型"觉得重要就自己写进去"，下一轮再把它读回来。
@@ -90,7 +93,42 @@ tags:
 
 还有一处收尾：0.4.2 把 `MEMORY.md` **彻底下线**——删掉运行时回退，系统提示里那些"有事就更新 MEMORY.md"的规则一并删掉。否则会出现"SQLite 已经启用，但提示词还在让模型写一个没人读的文件"的鬼状态。
 
-## 六、流式管道的两个卡点
+## 六、检索：非空不等于健康
+
+0.4.5 之前，`memory` 工具的 search 走的是提示词检索的 `Search`，而不是管理搜索：
+
+- 只查 `active + episodic/procedural`；
+- 默认只查 `real/work`；
+- `private` 记忆需要传入私有渠道；
+- 工具层根本没有把 `realm/layer` 参数传下去。
+
+当时库里有 306 条、296 active，但符合这套条件的只有 **3 条 `work/procedural`**。所以不管搜乱码、生日还是角色设定，都返回同 3 条。不是缓存，也不是 fallback，而是**搜索范围本身只有这 3 条**。
+
+修复拆成两条路径：
+
+- **管理搜索 `SearchEntries`**：默认查全部 layer，支持 realm/layer/status 过滤，不自动过滤 private，新写入立即可见。
+- **提示词检索 `Search`**：仍只取 active episodic/procedural，但相似度为 0 的候选不再注入；去掉 SQL 预 `LIMIT`，避免较早的相关记忆被截断；继续保留 audience、私有渠道和 fictional 隔离。
+- 单字中文查询增加归一化后的子串匹配，例如“海”可以命中“一起看了海”。
+
+回归测试覆盖：乱码查询返回空、生日命中 `real/profile`、`realm=fictional` 生效、private 记忆在工具搜索可见但只在私有渠道注入、新写入立即可见。
+
+另一个容易误判的点：`use_count/last_used_at` 为 0 不是故障证据，旧 `Search` 本来就不更新它们；库里没有 FTS 表也不是原因，检索走的是 SQL + Jaccard，不是 FTS5。
+
+## 七、数据库修复与迁移
+
+这次没有 schema 迁移，`memory.db` 的表结构不变。需要迁移的是**数据分类**：如果生产库仍把角色设定放在 `work/procedural`，提示词就会把它当成工作流程。
+
+0.4.5 在 Launcher `/memory` 增加了“数据库修复”：
+
+1. 选 source：realm / layer / status / audience / 关键词；
+2. 预览匹配数量和前 20 条样本；
+3. 设置 target：realm / layer / audience；
+4. 执行：先用 SQLite `VACUUM INTO` 备份，再在事务里批量更新；
+5. 验证：搜索原句、realm/layer 过滤、private 渠道隔离。
+
+它只改分类，不删除记录；自动备份文件是 `memory.db.backup-时间戳`。语义分层（profile / relationship / episodic / boundary）仍建议分批、按关键词迁移，不要指望工具替你猜。
+
+## 八、流式管道的两个卡点
 
 记忆之外，这块运行时里最影响体感的是流式。
 
@@ -112,7 +150,7 @@ tags:
 
 一个实测数据值得记：长回复 **2751 字符 / 235 帧 / 383KB**，而每帧都是**全量快照**——累计传输放大约 **140 倍**。这就是下一步要做增量帧的动机。
 
-## 七、定时任务的四个「看起来正常」
+## 九、定时任务的四个「看起来正常」
 
 定时任务这一块，四个 bug 的共同点是**界面显示一切正常**：
 
@@ -128,7 +166,7 @@ tags:
 
 **已知限制**：CLI 与 gateway 同时写 `jobs.json` 仍是"最后写入者获胜"，彻底解决需要跨进程文件锁或由 gateway 提供控制 API。
 
-## 八、客户端的出口边界
+## 十、客户端的出口边界
 
 最后记一件和"记忆"看似无关、但同属 agent 工程边界的事。
 
