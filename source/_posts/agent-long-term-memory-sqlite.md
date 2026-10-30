@@ -2,7 +2,7 @@
 title: "给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite"
 author: "学姐大人"
 date: 2026-10-25
-updated: 2026-10-29
+updated: 2026-10-30
 categories:
   - "开发工具"
 tags:
@@ -14,6 +14,7 @@ tags:
   - "architecture"
   - "memory-search"
   - "database-repair"
+  - "schema-v2"
   - "boundary"
 ---
 
@@ -131,6 +132,17 @@ tags:
 5. 验证：搜索原句、realm/layer 过滤、private 渠道隔离。
 
 它只改分类，不删除记录；自动备份文件是 `memory.db.backup-时间戳`。语义分层（profile / relationship / episodic / boundary）仍建议分批、按关键词迁移，不要指望工具替你猜。
+
+### 0.5.0：把 schema v2 迁移做进 Launcher
+
+0.4.x 的数据库修复只改分类，不改表结构。0.5.0 把长期记忆升级到 schema v2，并把迁移入口放进 Launcher 的 `/memory`：
+
+- `entries` 增加 `facet`：同一个 `subject+predicate` 下的不同侧面可以共存，不再互相 supersede；
+- `personas` 改成 `(id, version)`，并增加 `realm / audience / scope`：伴侣人设可以只进入私有渠道；
+- `relationship_state` 增加 `expires_at`，旧值写入 `relationship_state_history`；
+- 空 `predicate` 统一为“待分类”，参考库 v13–v21 的 9 条 relationship 会写入 predicate/facet 并保持 active。
+
+迁移仍然先 `VACUUM INTO` 备份，只改分类，不删除条目。页面会显示 schema 版本、空 predicate、空 relationship facet 和已映射数量；命令行对应 `picoclaw memory migrate`。这解决了一个很实际的问题：**用户不该为了升级记忆库去手写 SQL。**
 
 ## 八、流式管道的两个卡点
 
