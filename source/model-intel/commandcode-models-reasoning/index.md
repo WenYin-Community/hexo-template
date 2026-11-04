@@ -1,13 +1,12 @@
 ---
-title: "CommandCode 全模型推理档位速查"
-author: "学姐大人"
+title: CommandCode 全模型推理档位速查
 date: 2026-11-04
-categories:
-  - "ai-model-intel"
-tags:
-  - "commandcode"
-  - "推理档位"
-  - "cli"
+---
+
+> 94 款模型的推理档位、上下文与网关价。数据抓取日 **2026-11-04**。
+
+[← 返回「模型情报」合集](/model-intel/)
+
 ---
 
 > 覆盖 **command-code 网关 Provider API 96 个端点** 与 **CLI 1.88.2 官方目录 94 款**（抓取日 **2026-11-04**）。
@@ -38,8 +37,6 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 > ⚠️ **沙箱注意**：包体约 4.2 MB（1.88.2 实测 4,185,427 字节）且解压后远超 /tmp 配额，**禁止 `tar xzf` 全量解压**（会报「设备上没有空间」）；必须用 `tar xzOf <tgz> <包内路径>` 直接流式取单个文件。先 `tar tzf | grep models.md` 确认路径。
 
 **新模型核实要求**：先 diff Provider API 全名单与本文表内条目，新增端点**直接读 CLI 包内 `models.md` 取档位与价格**；**禁止按同族模型外推**。注意：**未列入下表档位列的模型，不代表不推理**——见第二节「自动档」。
-
-<!-- more -->
 
 ---
 
@@ -204,7 +201,7 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 
 > **收录版本口径**：表内版本号为 CHANGELOG 中**最早出现该模型的条目**。⚠️ CHANGELOG 只记 feature 行，**未单列的模型不得倒推版本**（如 `deepseek-v4-flash-fast`）。**当前 CLI 1.88.2，官方目录共 94 款**；Provider API 在线 96 端点，差集 2 款为网关独有的 `inclusionai/ling-3.1-flash-1019`、`stealth/crouton-alpha`（CLI 目录未收录）。1.85.0 **新增 Beam 1.0 free 与 MiniMax M3.1 Flash（含限时免费档），同版移除 `stealth/cat-jam:free`**；1.86.0 **新增 Ornith 1.5 122B（含限时免费档）**；1.87.x 为功能与修复版（`/btw` 侧问指令、permission mode aliases、BYOK 包更新）；**1.88.0 起新增 Kimi K3.1 Pro 与 GPT-6.1 Terra，同版移除 MiniMax M3.1 Flash 与 Ornith 1.5 122B 两个限时免费档及 `xiaomi/mimo-v2.5` 系（目录 96 → 94 款）**；1.88.0–1.88.2 另有后台任务改用免费模型、更新器改进与安装目录替换不中断会话等修复。
 
-> **档位口径补充**：① `Min plan = Go and above` 指 **Command Code 自家 Go 档（$1/月）**即可用（GOAT/Pro/Max 同样可用）——与本报告另一处「GOAT 独占」（指 OpenCode Go 未上架）口径不同，勿混用；② CLI 目录同时给出全部 94 款的网关价与套餐下限，**可作 [OpenCode Go vs CommandCode GOAT 对比](/2026/11/04/opencode-go-vs-commandcode-goat/) 与价格对比文档的价格交叉校验源**；③ **未公布档位 ≠ 不推理**，只是不让调用方指定 `reasoning_effort`；④ CLI 目录末注原文：「Rates are the advertised price list resolved from the billing source of truth (**promos are already baked in**)」——**表内价格已含 Deals 折后价**。
+> **档位口径补充**：① `Min plan = Go and above` 指 **Command Code 自家 Go 档（$1/月）**即可用（GOAT/Pro/Max 同样可用）——与本报告另一处「GOAT 独占」（指 OpenCode Go 未上架）口径不同，勿混用；② CLI 目录同时给出全部 94 款的网关价与套餐下限，**可作 [OpenCode Go vs CommandCode GOAT](/model-intel/opencode-go-vs-commandcode-goat/) 与价格对比文档的价格交叉校验源**；③ **未公布档位 ≠ 不推理**，只是不让调用方指定 `reasoning_effort`；④ CLI 目录末注原文：「Rates are the advertised price list resolved from the billing source of truth (**promos are already baked in**)」——**表内价格已含 Deals 折后价**。
 
 ## 五、CommandCode 套餐矩阵与 API（11-04 复核）
 

@@ -1,14 +1,12 @@
 ---
-title: "OpenCode Go vs CommandCode GOAT：两个 $10 套餐逐模型额度对比"
-author: "学姐大人"
+title: OpenCode Go vs CommandCode GOAT
 date: 2026-11-04
-categories:
-  - "ai-model-intel"
-tags:
-  - "opencode"
-  - "commandcode"
-  - "对比"
-  - "额度"
+---
+
+> 两个 $10 套餐的逐模型额度与 API 能力对比。数据抓取日 **2026-11-04**。
+
+[← 返回「模型情报」合集](/model-intel/)
+
 ---
 
 > 数据来源（**抓取日期 2026-11-04**）：
@@ -20,8 +18,6 @@ tags:
 > - 月费：**Go $10 / GOAT $10**（本文对比对象）；其余档位：Go Teams $20·成员 / Go Plus $40 / CommandCode Go $1 / Pro $20 / Provider $15 / Max 10× $100 / Max 20× $200 / Team Pro $40；折算汇率：1 美元 ≈ 6.7180 元人民币（中国外汇交易中心 2026-11-04 中间价，每轮重取）
 > - **Go Teams / Go Plus 简介**（详表见第四节）：三档 **Token 单价完全相同**，只差月度额度与成员数——**Teams = Go + $5/模型、每成员独立额度**；**Plus = Go × 2/3/4/8 倍、仅限单成员**。
 > - ⚠️ **退役现状**：`stealth/pixel-canary`、`stealth/space-bunny-alpha`、**`stealth/cat-jam:free`（GOAT 侧同步下架）**、**`space-bunny` / `space-bunny-free`（Go/Zen 全线退出）**——均已从网关 API 与 CLI 目录同步移除。
-
-<!-- more -->
 
 ---
 
@@ -68,7 +64,7 @@ tags:
 - **⚠️ 额度是"共享单池"**：低额度模型按比例消耗更多 credits，**不可把各模型额度简单相加**；滚动窗口按月度额度比例自动生成（GOAT $70 → 5h $14 / 周 $35）。
 - **开源仍未兑现**（页面口径 delay "later this month"）。
 
-> **🔄 新模型查询要求（每次核对必做）**：全目录以 `curl -s https://api.commandcode.ai/provider/v1/models`、CLI 包内目录（1.88.2 = 94 款）与 GOAT 页头计数（**72 / 98 / 5 / 4**）、Pricing & Limits 页 Deals 小节（**当前 Deals 5 条 = 免费 4 + 付费 1**）**四源交叉 diff**（⚠️ **网关 96 与 CLI 目录 94 存在 2 款差集，须同时记录**）。Go 侧用 `curl -sL https://opencode.ai/inference/go/v1/models`（**28 ID**）对 docs/go 正文（**30 款**）。**档位与价格以 CLI 包内官方目录为准**：`npm pack command-code@latest` → `tar xzOf command-code-*.tgz package/dist/bundled/command-code-knowledge/reference/models.md`（当前 = CLI **1.88.2**，含 Context/Efforts/$每1M/Min plan；CHANGELOG 同步取以捕捉退役公告）。⚠️ **包体约 4.2 MB，禁止全量 `tar xzf`（沙箱 /tmp 配额不足），必须 `tar xzOf` 流式取单文件**。**GOAT 页 10-18 起为 SSR**：请求数表、额度三表、模型表均可直接 `curl -sL` + HTML 解析，无需浏览器；Caps 列的 "+1" 展开值仍为客户端渲染。完整规则见 [OpenCode Go 模型配置指南](/2026/11/04/opencode-go-model-guide/) 同名节。
+> **🔄 新模型查询要求（每次核对必做）**：全目录以 `curl -s https://api.commandcode.ai/provider/v1/models`、CLI 包内目录（1.88.2 = 94 款）与 GOAT 页头计数（**72 / 98 / 5 / 4**）、Pricing & Limits 页 Deals 小节（**当前 Deals 5 条 = 免费 4 + 付费 1**）**四源交叉 diff**（⚠️ **网关 96 与 CLI 目录 94 存在 2 款差集，须同时记录**）。Go 侧用 `curl -sL https://opencode.ai/inference/go/v1/models`（**28 ID**）对 docs/go 正文（**30 款**）。**档位与价格以 CLI 包内官方目录为准**：`npm pack command-code@latest` → `tar xzOf command-code-*.tgz package/dist/bundled/command-code-knowledge/reference/models.md`（当前 = CLI **1.88.2**，含 Context/Efforts/$每1M/Min plan；CHANGELOG 同步取以捕捉退役公告）。⚠️ **包体约 4.2 MB，禁止全量 `tar xzf`（沙箱 /tmp 配额不足），必须 `tar xzOf` 流式取单文件**。**GOAT 页 10-18 起为 SSR**：请求数表、额度三表、模型表均可直接 `curl -sL` + HTML 解析，无需浏览器；Caps 列的 "+1" 展开值仍为客户端渲染。完整规则见 [OpenCode Go 模型配置指南](/model-intel/opencode-go-model-guide/) 同名节。
 
 **关键差异**：GOAT 套餐级参考限额 **$70** vs Go 参考值 **$60**，5 小时 $14 vs $12、每周 $35 vs $30。**但两平台额度都按模型分档**（Go：$15 / $20 / $30 / $60 / $100 五档；GOAT：$10~$100 十档），**套餐级数字只是默认参考值，比较必须落到逐模型，见第二节。**
 
@@ -304,4 +300,4 @@ tags:
 - **P1 单人、主力是 3x 档（GLM-5.3-Flash / GLM-5.2 / Kimi K2.7 Code）** → **留 Go 或换 GOAT**（GOAT 的 GLM-5.3-Flash 给 $100），**不要升 Plus**（-25%）。
 - **P2 需要 Teams 又要高额度** → **Teams + 按需 credits**（Teams 成员同样受 5h=20% / 周=50% / 月=100% 比例窗口约束，超限可走 Zen 余额按量付费，不自动回落）。
 
-> ⚠️ **两档都不能解决"额度效率"问题**：三档 Token 单价完全相同，**加额度只能靠加钱**。若目标是"同样的钱跑更多 token"，正解是换更便宜的模型（见 [国产大模型官方 API vs OpenRouter 价格对比](/2026/11/04/china-llm-api-vs-openrouter-pricing/)）或走 GOAT（见第一至三节）。
+> ⚠️ **两档都不能解决"额度效率"问题**：三档 Token 单价完全相同，**加额度只能靠加钱**。若目标是"同样的钱跑更多 token"，正解是换更便宜的模型（见 [国产大模型官方 API vs OpenRouter 价格对比](/model-intel/china-llm-api-vs-openrouter-pricing/)）或走 GOAT（见第一至三节）。

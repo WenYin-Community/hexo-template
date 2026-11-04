@@ -1,22 +1,18 @@
 ---
-title: "OpenCode Go 定价、请求数与性价比测算"
-author: "学姐大人"
+title: OpenCode Go 定价与性价比测算
 date: 2026-11-04
-categories:
-  - "ai-model-intel"
-tags:
-  - "opencode"
-  - "定价"
-  - "性价比"
-  - "额度"
+---
+
+> 内部价、请求数上限、峰谷时段与月等效价值测算。数据抓取日 **2026-11-04**。
+
+[← 返回「模型情报」合集](/model-intel/)
+
 ---
 
 > 数据来源：OpenCode Go 官方文档 [opencode.ai/docs/go](https://opencode.ai/docs/go/)（**2026-11-04 抓取，11 张表全量解析**）、官方营销页 opencode.ai/zh/go、**OpenCode Data（opencode.ai/data，页面顶部"已更新 11月4日, GMT+8 14:32"）**、**OpenCode Zen / Go 清单 API（Zen 80 款、Go 28 ID）**、**CommandCode Provider API（96 端点）/ CLI 1.88.2 目录（94 款，差集 2 款）**、**OpenRouter 模型与 endpoints API（11-04 抓取，目录 455 款）**、各厂商官方 API 定价页（OpenAI / x.ai / 阿里云百炼 / 月之暗面 / MiniMax / 小米 / 智谱 / DeepSeek / 腾讯）。
 > **折算汇率：1 美元 ≈ 6.7180 元人民币**（中国外汇交易中心 2026-11-04 中间价，每轮按实时中间价重取）。所有"性价比"均为月等效价值 ÷ 月订阅费（$10）。
 > **现行口径**：**三档订阅**——**Go $10/月**、**Go Plus $40/月**（Higher usage limits）、**Go Teams $20/成员/月**（每成员独立额度，逐模型比 Go 高 $5/月）；**三档 Token 单价完全相同**，仅月度额度上限不同（Plus = Go 的 2x / 3x / 4x / 8x）。正文清单 **30 款**（套餐 API **28 个 ID**；`mimo-v2.5`、`mimo-v2.5-pro` 两款**仅正文列出、API 已不返**；**正文新增 `kimi-k3.1-pro`、`iceman-contributor-free`，`gemini-4-argon-contributor` 更名为 `gemini-4-argon`**）；**Go / Go Plus 仅限单成员 workspace**（带 Go 订阅的 workspace 无法邀请成员）；达额**不自动回落**，但可手动切用免费模型；**Iceman Contributor Free** 与 **Beam Free** 为套餐内不限量限时免费（docs 正文标 "Unlimited limited time"，**官方未公布截止日，不可假定已到期**；Beam Free 另有地区限制与 30 天留存）；**DeepSeek ZDR 有效期至 2026-10-31**（月度续签）。
 > ⚠️ **DeepSeek V4.1 Flash 月额度实测为 $80**（Off-Peak / Peak 两档同额度），**为 Go 侧现行最高档**；5h / 周窗口按 20% / 50% 比例 = $16 / $40。
-
-<!-- more -->
 
 ---
 
@@ -194,7 +190,7 @@ tags:
 > **定价要点**：
 > 1. **DeepSeek 官方端点已在 OpenRouter 列售**（endpoint `tag=deepseek`），价格随官方峰谷实时浮动：10-21 抓取时刻（北京 12:40 前后，工作日午间非高峰）落在**空闲窗口**，`deepseek-v4.1-flash-1017` 线抓到 **$0.15/$0.60 · 缓存 $0.003**。**但该端点并非每条 DeepSeek 线都有**——`deepseek/deepseek-v4-pro` 的 16 渠道中**无 `tag=deepseek`**，官方直供在 Pro 线上缺席。
 > 2. **🔑 V4 Pro 缓存：第三方一律高于官方，缓存密集场景必须走官方直连**：OpenRouter 的 `pricing.discount` 字段表示**已折后实付价**（`0.895` = −89.5%），原价 = 折后价 ÷ (1 − discount)；**负值 = 溢价**。11-04 实测 **V4 Pro 缓存读最低为 StreamLake $0.07961（disc 0.451）/ GMICloud $0.07975（disc 0.45）**，折人民币约 **¥0.537**，仍是官方空闲 ¥0.15 的 **3.6 倍**；输入最低 **Relace $0.90（¥6.07，反比官方 ¥4.50 贵 35%）**、输出最低 **Relace $1.50（¥10.11，便宜 25%）**。⚠️ **百度千帆的 −89.5% 深度折扣未复现**（现行 -47.1%，$0.894/$1.788/$0.07406）。**结论：V4 Pro 一律走官方直连（空闲 ¥4.50 / ¥13.50 / ¥0.15）**。**V4.1 Flash 侧仍是例外**：最低三项 **Morph / Relace $0.0350 / Sail Research $0.2500 / CoreWeave $0.0020**，缓存 $0.002 低于官方空闲 $0.003 约 33%。
-> 3. **最低位分布（11-04）**：V4.1 Flash 40 渠道——输入 **Morph / Relace $0.0350**、输出 **Sail Research $0.2500**、缓存 **CoreWeave $0.0020**；**V4.1 Flash-1017 为 46 渠道**，输入 + 缓存最低 **Particle AI $0.0250 / $0.0015（flex）**、输出最低 **Sail Research $0.1500**；GLM-5.3-Flash 41 渠道——**Relace $0.0269 / Relace $0.0996 / Darkbloom $0.0120**；GLM-5.3 48 渠道——输入 **Wafer $0.0699（us）**、输出 + 缓存 **Baidu $0.8800 / $0.0520（disc 0.8）**；GLM-5.2 33 渠道——输入 + 缓存 **Wafer $0.0060 / $0.0050（us）**、输出 **Morph $1.4000**；Kimi K3 30 渠道——输入 + 输出 **Relace $0.1900 / $8.9400**、缓存 **Wafer $0.1300（us）**；MiniMax M3.1 Flash 13 渠道——**Tenstorrent $0.0500 / $0.2000 / $0.0050**。明细见 [国产大模型官方 API vs OpenRouter 价格对比](/2026/11/04/china-llm-api-vs-openrouter-pricing/) 第二节。⚠️ **最低位多为第三方量化通道（fp4/fp8）或限时折扣，采购前须自备质量评测并核对折扣有效期**。
+> 3. **最低位分布（11-04）**：V4.1 Flash 40 渠道——输入 **Morph / Relace $0.0350**、输出 **Sail Research $0.2500**、缓存 **CoreWeave $0.0020**；**V4.1 Flash-1017 为 46 渠道**，输入 + 缓存最低 **Particle AI $0.0250 / $0.0015（flex）**、输出最低 **Sail Research $0.1500**；GLM-5.3-Flash 41 渠道——**Relace $0.0269 / Relace $0.0996 / Darkbloom $0.0120**；GLM-5.3 48 渠道——输入 **Wafer $0.0699（us）**、输出 + 缓存 **Baidu $0.8800 / $0.0520（disc 0.8）**；GLM-5.2 33 渠道——输入 + 缓存 **Wafer $0.0060 / $0.0050（us）**、输出 **Morph $1.4000**；Kimi K3 30 渠道——输入 + 输出 **Relace $0.1900 / $8.9400**、缓存 **Wafer $0.1300（us）**；MiniMax M3.1 Flash 13 渠道——**Tenstorrent $0.0500 / $0.2000 / $0.0050**。明细见 [国产大模型官方 API vs OpenRouter 价格对比](/model-intel/china-llm-api-vs-openrouter-pricing/) 第二节。⚠️ **最低位多为第三方量化通道（fp4/fp8）或限时折扣，采购前须自备质量评测并核对折扣有效期**。
 > 4. **Go/GOAT 内部价与渠道波动解耦**：OpenRouter 渠道价高频波动期间，Go 侧 DeepSeek 峰谷内部价、GLM $1.40/$4.40 等透传口径全部未动。
 
 ---

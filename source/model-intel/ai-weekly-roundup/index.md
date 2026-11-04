@@ -1,21 +1,18 @@
 ---
-title: "AI 大模型一周汇总：10-16 → 11-04"
-author: "学姐大人"
+title: AI 大模型一周汇总
 date: 2026-11-04
-categories:
-  - "ai-model-intel"
-tags:
-  - "周报"
-  - "行业动态"
-  - "开源模型"
+---
+
+> 开源模型、融资、算力与政策的滚动窗口综述。数据抓取日 **2026-11-04**。
+
+[← 返回「模型情报」合集](/model-intel/)
+
 ---
 
 > 数据窗口：**2026-10-16 → 2026-11-04**（距上期 10-16 间隔 19 天，本期合并收录）。抓取时间：**2026-11-04**。
 > 数据来源：科技日报、北京市科委 / 中关村管委会、北京市科委、财联社、证券时报、界面新闻、解放日报、IT之家、量子位、钛媒体、Reuters、Financial Times（经 CNA / 腾讯新闻 / 新浪财经转载）、the-decoder、aibriefs.news、newmarketpitch.com、Gitee 官方博客、hashnode、腾讯新闻、Supwil News Digest、Kimi 官方发布页与文档、DeepSeek 官方定价页、OpenCode 官方页与清单 API、CommandCode 官方页与 CLI、OpenRouter 模型与 endpoints API、各厂商官方定价页。
 > 口径：模型价格均为**每百万 token 美元价**（除注明人民币者）；**折算汇率 1 USD = 6.7180 CNY**（中国外汇交易中心 2026-11-04 中间价，每轮重取）；涨跌配色**涨 = 红、跌 = 绿**（中国惯例）。
 > ⚠️ 平台侧数字为本工作区 **2026-11-04 实测**，不沿用上期；OpenRouter 渠道价为抓取时刻快照，**不可跨日沿用**。
-
-<!-- more -->
 
 ---
 

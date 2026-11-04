@@ -1,16 +1,12 @@
 ---
-title: "国产大模型官方 API vs OpenRouter 各渠道价格对比"
-author: "学姐大人"
+title: 国产大模型官方 API vs OpenRouter 价格对比
 date: 2026-11-04
-categories:
-  - "ai-model-intel"
-tags:
-  - "价格"
-  - "openrouter"
-  - "deepseek"
-  - "glm"
-  - "kimi"
-  - "minimax"
+---
+
+> 六家厂商官方价与 OpenRouter 全渠道最低价对照。数据抓取日 **2026-11-04**。
+
+[← 返回「模型情报」合集](/model-intel/)
+
 ---
 
 > 数据抓取时间：**2026-11-04**（OpenRouter endpoints 实测于 **11-04 15:20 CST**；六家厂商官方定价页于 **11-04 15:10 CST** 逐家复核）| **折算汇率：1 USD = 6.7180 CNY**（中国外汇交易中心 2026-11-04 中间价，每轮按实时中间价重取）
@@ -21,8 +17,6 @@ tags:
 > 🔑 **OpenRouter `pricing` 新增 `discount` 字段**（0.895 = 打 1.05 折，即 -89.5%）：`prompt` / `completion` / `input_cache_read` **已是折后实付价**，原价需按 `折后价 ÷ (1 - discount)` 还原。**负值表示加价**，**`discount = 0` 表示无折扣、按原价挂牌**。本文所有渠道价均记**折后实付价**，并在折扣列标注原价，**不再把原价误记为"官方原价档"**。
 > ⚠️ **抓取时点 15:20 CST = 07:20 UTC，已出 DeepSeek 高峰窗口（01:00–04:00 与 06:00–10:00 UTC 工作日）**；OpenRouter 的 DeepSeek 直供端点仍报空闲档 $0.15 / $0.60 · 缓存 $0.003 → **OpenRouter 端点标价不随峰谷切换，实际计费以 platform.deepseek.com 为准**。
 > 🔑 **2026-11-04 渠道侧要点**：① **百度千帆折扣重新在架**——`deepseek-v4.1-flash` 的 Baidu 折扣已退出最低位，但 `deepseek-v4-pro` 与 `glm-5.3` 的 Baidu 折扣分别为 -45.1% 与 **-80%**（后者重夺 GLM-5.3 输出 + 缓存最低位）；② **`deepseek-v4.1-flash` 缓存最低位易主**：Baidu（-82.1%，10-23 口径）→ **CoreWeave $0.002（无折扣）**；③ **Kimi K3 输入最低降至 Relace $0.19**（10-23 口径为 Wafer $0.238），**输出最低亦为 Relace $8.94**（10-23 口径 Sail Research $5.50）；④ **新模型 Kimi K3.1 Pro 上线**（10-23 created，OpenRouter 仅 Moonshot 官方 2 渠道）；⑤ **MiniMax M3.1 Flash 出现 Tenstorrent 新低价 $0.05/$0.2/$0.005**。
-
-<!-- more -->
 
 ---
 
@@ -329,7 +323,7 @@ tags:
 | **Step 3.7 Flash** | 2 | Novita / StepFun（同价） | $0.20（¥1.34） | $1.15（¥7.73） | $0.04（¥0.269） | 256K |
 | **Step 3.5 Flash** | 1 | SiliconFlow（`siliconflow/fp8`） | $0.09（¥0.605） | $0.30（¥2.02） | $0.02（¥0.134） | 262K |
 
-> **Ling 系列**：`ling-3.1-flash` 已由 $0 免费转为付费（Novita $0.075/$0.225）；Command Code 侧 `ling-3.1-flash` 的月度额度促销仍在（GOAT $100 / Pro $110），见 [OpenCode Go vs CommandCode GOAT 对比](/2026/11/04/opencode-go-vs-commandcode-goat/)。
+> **Ling 系列**：`ling-3.1-flash` 已由 $0 免费转为付费（Novita $0.075/$0.225）；Command Code 侧 `ling-3.1-flash` 的月度额度促销仍在（GOAT $100 / Pro $110），见 [OpenCode Go vs CommandCode GOAT](/model-intel/opencode-go-vs-commandcode-goat/)。
 
 ### 新增模型渠道（2026-10-15 ~ 10-19 上架）
 
@@ -564,7 +558,7 @@ tags:
 6. **腾讯云 TokenHub 已上架 DeepSeek 原厂直供**：`DeepSeek-V4.1-Flash-1017 原厂直供` 空闲 ¥1/¥4/¥0.02、高峰 ¥2/¥8/¥0.04；`DeepSeek-V4-Pro 0813 正式版 原厂直供` 空闲 ¥4.5/¥13.5/¥0.15、高峰 ¥9/¥27/¥0.3 —— **与 DeepSeek 官方直连完全同价**。**10-21 00:32 页内更新新增 MiniMax-M3.1-Flash ¥1/¥4/¥0.1 与 Kimi K2.8 Preview ¥6.5/¥27/¥1.7**——TokenHub 已成为国产新模型首发上架最快的转售入口之一（P1）。
 7. **OpenRouter 目录 455 款（`:free` 14 个、`:batch` 73 个、`~` 别名 19 个）**。最新上架（按 `created`）：`tencent/hy4`（**11-04**）、`stealth/crouton-alpha`（**11-03**）、`z-ai/glm-5.3-flashx-legal`（11-02）、`particle-ai/particle-1`（10-28）、`openai/gpt-6.1-terra` 与 `gpt-6.1-terra-pro`（10-26）、**`moonshotai/kimi-k3.1-pro`（10-23）**、`recursive/flint-v1.0:free`（10-21）、`minimax/minimax-m3.1-flash`（10-19，**付费档 13 渠道，Tenstorrent 三项最低 $0.05/$0.2/$0.005**）、`deepseek/deepseek-v4.1-flash-1017`（10-17，**46 渠道**）。⚠️ **`minimax/minimax-m3.1-flash:free` 限时免费端点已下架（0 渠道）**，CommandCode / Go / Zen 三侧同步移除；**`xai/grok-4.6` 已自 OpenRouter 下架**。
 8. **智谱"开源倒挂"继续加深**：GLM-5.3（48 渠道）三项最低 **$0.0699 / $0.88 / $0.052**（Wafer 输入、Baidu 输出+缓存 -80%）；GLM-5.2（33 渠道）三项最低 **$0.006 / $1.40 / $0.005**（Wafer 输入+缓存、Morph 输出）——**输入与缓存已是白菜价通道（较官方低 98~99.6%）**；GLM-5.3-Flash（41 渠道）三项最低 **$0.0269 / $0.0996 / $0.012**（Relace 输入+输出、Darkbloom 缓存），较 Z.AI 官方目录价便宜 **60~82%**。**GLM-5.3-FlashX 仍是唯一渠道 = Z.AI 官方，国内直购比 OpenRouter 便宜 7~25%**。GLM-5.3-Prime 仍仅 Alibaba 单渠道。
-9. **Kimi K3 第三方套利空间仍在，输出端进一步扩大**：输入最低 **¥1.60（官方 ¥20 的 8%，Wafer）**、输出最低 **¥36.95（Sail Research，官方的 37%）**、缓存最低 **¥1.11（Decart，-45% 折后）**。⚠️ **Wafer 输入最低但输出 $16 高于官方 $15**——须整行核算。官方价目另有**缓存写入 ¥20（TTL 5min）/ ¥40（TTL 1h）**，OpenRouter 各渠道均未列该项。**K3 在订阅侧的额度促销已结束**（Command Code GOAT 现回落至 $70 池内 $20 档），见 [OpenCode Go vs CommandCode GOAT 对比](/2026/11/04/opencode-go-vs-commandcode-goat/)。
+9. **Kimi K3 第三方套利空间仍在，输出端进一步扩大**：输入最低 **¥1.60（官方 ¥20 的 8%，Wafer）**、输出最低 **¥36.95（Sail Research，官方的 37%）**、缓存最低 **¥1.11（Decart，-45% 折后）**。⚠️ **Wafer 输入最低但输出 $16 高于官方 $15**——须整行核算。官方价目另有**缓存写入 ¥20（TTL 5min）/ ¥40（TTL 1h）**，OpenRouter 各渠道均未列该项。**K3 在订阅侧的额度促销已结束**（Command Code GOAT 现回落至 $70 池内 $20 档），见 [OpenCode Go vs CommandCode GOAT](/model-intel/opencode-go-vs-commandcode-goat/)。
 10. **阿里出现"国内更便宜"的反向差价（官方价 10-21 复核无变动）**：Qwen3.8-Flash 国内百炼 ¥0.8/¥2.7，OpenRouter 的 Alibaba 渠道走国际站口径，**贵 17~35%**；Qwen3.8-Omni-Flash 官方国内 ¥0.8 / ¥2.7 · **固定**缓存命中 ¥0.1，OpenRouter 唯一 Alibaba 渠道贵 **8~26%**；**阿里文本模型的缓存为比例口径（显式≈输入 10%、隐式≈20%），不是固定数值**。**Qwen3.7-Flash 以 $0.03/$0.13/$0.006 成为全场最低单价段**；**Qwen3.8-27B 20 渠道价差极大**（输入 $0.020~$0.99）。
 11. **海外旗舰没有低价第三方，但有"服务档"这条降本线**：GPT-6 Luna / Sol / Astra、GPT-6.1 Sol、Claude Opus 5.5 / Sonnet 5.5 / Haiku 5.5、Grok 4.7 在 OpenRouter 的端点全部来自一线云厂商官方，**区域档仅 ±10%，无跨商套利**；真正的杠杆是服务档——**`flex` 约半价（缓存同比例减半）、`fast` 约双倍、`ultrafast`（Astra / GPT-6.1 Sol）六倍、xAI `priority` 双倍**。
 12. **选型建议（P0→P3）**：

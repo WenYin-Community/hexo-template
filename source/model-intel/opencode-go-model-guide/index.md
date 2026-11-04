@@ -1,21 +1,17 @@
 ---
-title: "OpenCode Go 模型配置指南（2026-11-04 实测）"
-author: "学姐大人"
+title: OpenCode Go 模型配置指南
 date: 2026-11-04
-categories:
-  - "ai-model-intel"
-tags:
-  - "opencode"
-  - "opencode-go"
-  - "配置"
-  - "模型清单"
+---
+
+> Go 套餐 30 款模型的清单口径、端点归属、倍率与配置推荐。数据抓取日 **2026-11-04**。
+
+[← 返回「模型情报」合集](/model-intel/)
+
 ---
 
 > 版本：**2026-10-21**（数据抓取日 2026-10-21）
 > 适用：Claude Code · OpenCode Go · oh-my-opencode-slim · Linux · FreeBSD · Docker · Kubernetes · Rust · Go · Python · 网络设备运维
 > ⚠️ 本版**只保留现行有效口径**。模型清单、额度与价格每次以官方清单 API diff 复核。
-
-<!-- more -->
 
 ## OpenCode Go 模型列表
 
@@ -186,7 +182,7 @@ tags:
 
 ## 模型调用量排名（2026-11-04 快照）
 
-> 数据来源：**OpenCode Data（[opencode.ai/data](https://opencode.ai/data)）**，页面顶部更新 **11月4日, GMT+8 14:32**，OpenCode 全量用户。**本节只保留摘要；完整周榜 / 日榜 / 前 5 国家每日份额 / 作者份额统计见 [OpenCode 模型调用量排名](/2026/11/04/opencode-model-usage-ranking/)。**
+> 数据来源：**OpenCode Data（[opencode.ai/data](https://opencode.ai/data)）**，页面顶部更新 **11月4日, GMT+8 14:32**，OpenCode 全量用户。**本节只保留摘要；完整周榜 / 日榜 / 前 5 国家每日份额 / 作者份额统计见 [OpenCode 模型调用量排名](/model-intel/opencode-model-usage-ranking/)。**
 
 **周榜 Top 5（滚动 7 日，截至 2026-11-04）**
 
@@ -198,7 +194,7 @@ tags:
 | 4 | **beam-1.0-501b-a23b** | Reflection | 5.5T | -6% |
 | 5 | mimo-v2.6-flash | Xiaomi | 3.2T | -34% |
 
-> 完整周榜 / 日榜、地理分布与作者份额见 [OpenCode 模型调用量排名](/2026/11/04/opencode-model-usage-ranking/)（页面顶部"已更新 11月4日, GMT+8 14:32"）。
+> 完整周榜 / 日榜、地理分布与作者份额见 [OpenCode 模型调用量排名](/model-intel/opencode-model-usage-ranking/)（页面顶部"已更新 11月4日, GMT+8 14:32"）。
 
 **要点**：
 - **`deepseek-v4.1-flash` 以 133T 居首、周环比 +4%**；作者份额当日 **76.3% → 85.1%**。
@@ -276,7 +272,7 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md ; npm view command-code 
 1. **created 时间戳仅 OpenRouter 可信**——Go/Zen/CommandCode 三家的 API 每日整表重打时间戳，不能用于判断上架时间；新品发布日期以厂商官网/官方博客/OpenRouter created 交叉确认。
 2. **API 清单与文档正文会分叉**（Go API 返回 **28 ID** vs docs 正文 **30 款**，差集为 `mimo-v2.5` / `mimo-v2.5-pro` 只存在于正文、API 已不返；docs/zen 端点表只列部分 free 但 API 实测返回 **9 款 `-free` + big-pickle**）——文档必须同时记录两个口径并注明"以 API 清单为准、docs 表格为其子集"。
 3. **请求数/额度**：Go 侧读 docs/go（SSR 可 `curl -sL`，9 张表完整可解析）；**GOAT 页 Caps 列（"+1" 展开器）是客户端渲染，curl 拿不到**，但**页面下方的「请求数」「月额度」两张表已渲染进 DOM**，可用 `agent-browser open https://commandcode.ai/docs/plans/goat` 后 `agent-browser eval "document.body.innerText"` 直接提取。全量单价与套餐可用性另见 `commandcode.ai/docs/resources/pricing-limits`（SSR 可 curl）。**推理档位以 CLI 包内 `models.md` 的 Efforts 列为准（T+0）**，未列档位即自动档；**禁止按同族模型外推档位**。
-4. 新模型确认后需**同步更新五处**：本指南模型列表表、[OpenCode Go 定价与性价比测算](/2026/11/04/opencode-go-pricing-comparison/)（请求数+内部价+性价比三表）、GOAT 对比文档（逐模型两表+独占清单+胜负统计）、价格对比文档（OpenRouter/GOAT/Zen 节）、调用量排名（若已登榜）。
+4. 新模型确认后需**同步更新五处**：本指南模型列表表、[OpenCode Go 定价与性价比测算](/model-intel/opencode-go-pricing-comparison/)（请求数+内部价+性价比三表）、GOAT 对比文档（逐模型两表+独占清单+胜负统计）、价格对比文档（OpenRouter/GOAT/Zen 节）、调用量排名（若已登榜）。
 5. 厂商匿名模型（stealth/Unknown）以 OpenRouter slug 前缀为归属证据（如 inclusionai/ling→蚂蚁、poolside/laguna→Poolside、meituan/LongCat→美团）。
 6. **额度口径每次必查"表述方式"本身是否变了**——官方现以"**月度美元上限 + 比例窗口**（5h=20%、周=50%、月=100%）"定义 Go 额度，**新档位窗口自动按比例生成**（如 $15 档 = $3/$7.5/$15）。GOAT 页同样按月度额度比例生成滚动窗口（GOAT $70 → $14/$35）。
 7. **官方"下线/路由"计划会被撤销**——凡涉及"即将下线/即将迁移"的公告，下一次必须回查官方文档确认是否已反转（DeepSeek V4 Pro 的"9/14 下线路由"即被官方撤销，Go 侧额度行因此保持不变）。
@@ -303,7 +299,7 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md ; npm view command-code 
 | 长程推理 | 1M | GLM-5.2, Kimi K3, DS V4 Pro |
 | 截图/图像理解 | 1M | GLM-5.3-Flash（多模态，$60 档）或 MiniMax M3.1 Flash Free（限时） |
 
-> **上下文口径**（已用 OpenRouter 厂商自营端点 `context_length` 与 Command Code CLI 官方目录裁定）：**GPT-6/5.6 Luna 1.05M**、**Qwen3.7 Plus 1M**、Muse Spark 1.2 Contributor 1M、Hy3 262K、**Claude Haiku 5.5 200K（Go 内部按 100K 分档计价）**。完整逐模型对比见 [OpenCode Go vs CommandCode GOAT 对比](/2026/11/04/opencode-go-vs-commandcode-goat/)。
+> **上下文口径**（已用 OpenRouter 厂商自营端点 `context_length` 与 Command Code CLI 官方目录裁定）：**GPT-6/5.6 Luna 1.05M**、**Qwen3.7 Plus 1M**、Muse Spark 1.2 Contributor 1M、Hy3 262K、**Claude Haiku 5.5 200K（Go 内部按 100K 分档计价）**。完整逐模型对比见 [OpenCode Go vs CommandCode GOAT](/model-intel/opencode-go-vs-commandcode-goat/)。
 
 ## Claude Code 模式映射
 
@@ -422,7 +418,7 @@ Claude Code 采用四层工作流：**Fable → Opus → Sonnet → Haiku**
 
 ## Command Code GOAT 套餐（竞品参考）
 
-> 竞品逐模型对比详见 [OpenCode Go vs CommandCode GOAT 对比](/2026/11/04/opencode-go-vs-commandcode-goat/)。以下为用 GOAT 跑 Claude Code / oh-my-opencode-slim 的速查。
+> 竞品逐模型对比详见 [OpenCode Go vs CommandCode GOAT](/model-intel/opencode-go-vs-commandcode-goat/)。以下为用 GOAT 跑 Claude Code / oh-my-opencode-slim 的速查。
 
 ### 套餐与额度
 
@@ -434,7 +430,7 @@ Claude Code 采用四层工作流：**Fable → Opus → Sonnet → Haiku**
 | 每月限额 | **按模型分档 $15 / $20 / $30 / $60 / $100**（+ 2 款限时免费不限量） | **按模型分档 $10 ~ $100**（套餐级参考 $70） |
 | 模型数 | **30 款正文**（套餐 API 实测 **28 个 ID**） | **GOAT 72 款**（All plans 98；**网关 API 96 端点**，CLI 1.88.2 目录 94 款，差集 2 款为网关独有的 `ling-3.1-flash-1019` / `crouton-alpha`；limits 页 All 102） |
 | 免费模型 | 无内置（达限额后**不自动回落**，需手动切换 Zen `-free` 独立端点：**9 款 + Big Pickle**） | **在线 4 款**：`poolside/laguna-s-2.1-free`（while capacity lasts）、`stealth/glyph-cluster:free`（每日 100 请求上限）、**`stealth/crouton-alpha`**（while the stealth preview lasts）、**`reflection/beam:free`**（无每日上限，while capacity lasts） |
-| 套餐档位 | **Go $10**（Go 生态内的 Teams $20·成员 / Plus $40 属升档选项，见 [OpenCode Go vs CommandCode GOAT 对比](/2026/11/04/opencode-go-vs-commandcode-goat/) 第四节） | **Go $1（credits $10；5h $2 / 周 $5）/ GOAT $10（$70）/ Pro $20（$80）/ Provider $15 PAYG / Max 10× $100（$150）/ Max 20× $200（$300）/ Team Pro $40 / Enterprise $5,000+（无滚动窗口上限）** |
+| 套餐档位 | **Go $10**（Go 生态内的 Teams $20·成员 / Plus $40 属升档选项，见 [OpenCode Go vs CommandCode GOAT](/model-intel/opencode-go-vs-commandcode-goat/) 第四节） | **Go $1（credits $10；5h $2 / 周 $5）/ GOAT $10（$70）/ Pro $20（$80）/ Provider $15 PAYG / Max 10× $100（$150）/ Max 20× $200（$300）/ Team Pro $40 / Enterprise $5,000+（无滚动窗口上限）** |
 | 独占模型 | **无**（8 款仅套餐 API 返回但无 docs 行） | **GLM-5.3 FlashX**、**Qwen 3.8 Omni Flash**、GPT-5.6 Sol / Terra、Gemini 3.6/3.7/3.8 Flash、DS V4 Flash Fast / V4.1 Flash Fast、**Step 3.5 Flash / Step 3.7 Flash**、**GLM-5.2 Fast**、**Claude Haiku 4.5**、Inkling / Inkling Small、Fugu Ultra、Muse Wonder 1.0、**MiniMax M3.1 Flash**、**Ornith 1.5 122B**、**Jev**（TypeSafe 决策模型，32K、$0.042/$0.00、**仅 headless `cmd -p` 与 Provider API，不在 `/model`**）等（Go 未上架） |
 
 ### 两平台额度取向（谁更慷慨）
@@ -477,4 +473,4 @@ Claude Code 采用四层工作流：**Fable → Opus → Sonnet → Haiku**
 
 ---
 
-> **附注**：Go 使用限制为 **月度美元上限 + 比例窗口**（5h = 20%、周 = 50%、月 = 100%），按模型分档 $15 / $30 / $60 / $80，Plus 档放大 2x / 3x / 4x / 8x。调用量排名数据更新至 **2026-11-04**（完整榜见 [OpenCode 模型调用量排名](/2026/11/04/opencode-model-usage-ranking/)）；详细价格数据见 [OpenCode Go 定价与性价比测算](/2026/11/04/opencode-go-pricing-comparison/) 与 [国产大模型官方 API vs OpenRouter 价格对比](/2026/11/04/china-llm-api-vs-openrouter-pricing/)；行业动态见 [AI 大模型一周汇总](/2026/11/04/ai-weekly-roundup/)；竞品逐模型额度对比见 [OpenCode Go vs CommandCode GOAT 对比](/2026/11/04/opencode-go-vs-commandcode-goat/)。
+> **附注**：Go 使用限制为 **月度美元上限 + 比例窗口**（5h = 20%、周 = 50%、月 = 100%），按模型分档 $15 / $30 / $60 / $80，Plus 档放大 2x / 3x / 4x / 8x。调用量排名数据更新至 **2026-11-04**（完整榜见 [OpenCode 模型调用量排名](/model-intel/opencode-model-usage-ranking/)）；详细价格数据见 [OpenCode Go 定价与性价比测算](/model-intel/opencode-go-pricing-comparison/) 与 [国产大模型官方 API vs OpenRouter 价格对比](/model-intel/china-llm-api-vs-openrouter-pricing/)；行业动态见 [AI 大模型一周汇总](/model-intel/ai-weekly-roundup/)；竞品逐模型额度对比见 [OpenCode Go vs CommandCode GOAT](/model-intel/opencode-go-vs-commandcode-goat/)。

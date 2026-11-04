@@ -105,7 +105,7 @@ menu:
   #about: /about/ || fa fa-user
   tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th
-  模型情报: /categories/ai-model-intel/ || fa fa-flask
+  模型情报: /model-intel/ || fa fa-flask
   archives: /archives/ || fa fa-archive
   投稿: /submission/ || fa fa-paper-plane
   #schedule: /schedule/ || fa fa-calendar
