@@ -1,9 +1,9 @@
 ---
-title: $10 / $20 档订阅横向对比：OpenCode Go · CommandCode GOAT · OpenDesign Go · Ollama Pro
+title: AI 订阅档位横向对比：$10 档三家 · $20 档四家
 date: 2026-11-04
 ---
 
-> 同价位订阅横向对比：$10 档三家与 $20 档四家的额度、窗口、逐模型价格与模型面。数据抓取日 **2026-11-04**。
+> 同价位订阅横向对比：$10 档（OpenCode Go / CommandCode GOAT / OpenDesign Go）与 $20 档（Ollama Pro / CommandCode Pro / OpenDesign Plus / Go Teams）。数据抓取日 **2026-11-04**。
 
 [← 返回「模型情报」合集](/model-intel/)
 
