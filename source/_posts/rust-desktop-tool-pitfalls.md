@@ -85,6 +85,19 @@ pgrep -f '/usr/local/bin/dsmon' | xargs kill
 - **双架构产物同名**：x64/x86 产物同名会在 Release 上互相覆盖，构建后先重命名；
 - **本地能过、CI 失败的常见原因**：陈旧 `*.tsbuildinfo`（大量 TS6305 报错，清理即过）、本地残留的构建产物造成假象。
 
+## 九、GUI 重写的可行性评估：egui 不是 GTK 的替代品
+
+评估一个 Python + GTK3 的托盘工具（NetworkMgr）能否用 Rust 重写时，最容易犯的错是把「换 UI 框架」当成「换渲染库」。
+
+- **egui/eframe 是即时模式窗口框架，不提供系统托盘**：而这类工具的核心形态就是常驻托盘。架构必须拆成两件——托盘用 `tray-icon` + `muda` 原生菜单，配置窗口/对话框用 eframe；
+- **双二进制反而更贴合原契约**：原项目本来就有 `networkmgr` 与 `networkmgr_configuration` 两个入口，拆成「托盘进程 + 配置进程」后，desktop 文件与 sudoers 一行都不用改；
+- **`Exec=sudo networkmgr` 是硬约束**：sudo 环境下拿不到 session D-Bus，`ksni`（KSNI 托盘）后端直接失效，只能退回 `libappindicator`，代价是 GTK3 依赖去不掉。想「零 GTK」就必须改提权模型，那是范围扩张而不是重写；
+- **分阶段迁移，每阶段留回退**：契约冻结与样本采集 → 纯逻辑层 Rust 化（在 Linux 上跑契约测试）→ 配置窗口换 eframe → 托盘换 Rust → devd 与 port 打包。不要一次性全量重写；
+- **验收环境要先做 spike**：虚拟机没有 3D 加速（GLX 可能起不来）、没有真实无线网卡、guest 无 sudo——先验证 eframe 能起窗、tray-icon 能显示，再写业务代码，否则会把环境问题误判成业务 bug；
+- **依赖的 BSD 支持要查源码而不是印象**：`tray-icon` 官方支持 FreeBSD（AppIndicator / KSNI 两种后端），`winit` 的 Unix X11 cfg 含 freebsd/dragonfly；`eframe/egui` 默认 features 带 `wayland` + `wgpu`，BSD 上必须 `default-features=false`、只开 `glow,x11,default_fonts,clipboard`；egui 默认字体不含 CJK。
+
+**结论**：重写可行性取决于「原程序的形态约束」（托盘、提权、D-Bus）而不是「新框架好不好用」。先把这些约束列成 P0，再决定架构。
+
 ## 总结
 
 Rust 桌面工具开发的坑集中在"**边界条件**"：老旧系统、企业网络环境、高 DPI、跨平台窗口系统、多线程数据库访问——每一项都有隐藏的窄路径。策略是：把兼容性约束写进 CI 门禁、把平台差异封装成显式的探测与降级，而不是"出问题再补"。

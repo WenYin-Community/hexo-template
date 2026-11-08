@@ -272,3 +272,17 @@ adb logcat --pid=$(adb shell pidof -s org.kde.kdeconnect_tp)
 ### GSConnect
 
 **GSConnect** 是一个独立的项目，它将 **KDE Connect** 协议引入 GNOME 实现，并使用相同的 Android 应用。如果你正在运行 **GSConnect**，请先访问该项目 [GitHub 页面](https://github.com/andyholmes/gnome-shell-extension-gsconnect/wiki) 以获得支持。如果你和 **GSConnect** 团队确定问题出在安卓应用或协议上，请随时在 **KDE Connect** 错误跟踪器中报告这些问题。
+
+## KDE 默认应用的 MIME 优先级：按文件名类别排序
+
+`.md` 双击打开方式在 mdoxide / zedg / kwrite 之间反复横跳，最后挖出 KDE/KIO 的真实查找规则——它**不是** XDG 规范的「目录优先级交错」。
+
+- **现象**：系统设置里把 `.md` 默认程序改成 zedg，改完立刻变回 mdoxide；删掉 `~/.config/kde-mimeapps.list` 后又变成 kwrite；
+- **真实规则**：所有 `<desktop>-mimeapps.list`（无论在 `~/.config` 还是 `/usr/share`）**整体排在**所有 `mimeapps.list` 之前。系统级 `/usr/share/applications/kde-mimeapps.list`（`plasma-workspace` 自带）写着 `text/markdown=org.kde.kate.desktop;org.kde.kwrite.desktop`，kate 未安装 → kwrite 接手；用户 `mimeapps.list` 优先级更低，怎么写都赢不过；
+- **决定性实验**：把 `~/.config/kde-mimeapps.list` 写成空的 `[Default Applications]` 段，此时 `mimeapps.list` 里明明有 `text/markdown=dev.mdoxide.app.desktop`，`kde-open` 实测仍起 kwrite——证明不是「同名 key 谁优先」的合并关系，而是文件名类别决定整条查找路径；
+- **修法**：删除 `~/.config/kde-mimeapps.list`，在 `~/.config/mimeapps.list` 末尾追加 `[Removed Associations]` 段与 `text/markdown=org.kde.kate.desktop;org.kde.kwrite.desktop;`，再 `kbuildsycoca6` 重建缓存；
+- **顺序不能反**：先删补丁文件会立刻回退到系统默认的 kwrite，必须先加 `[Removed Associations]` 再删；
+- **软链合并不成立**：`kde-mimeapps.list -> mimeapps.list` 写入正常、内容同步，但 KDE 按规范化路径去重、软链被视为同一文件，打开仍走 kwrite；
+- **`text/x-markdown` 只是别名**：`.md` 的真实类型是 `text/markdown`，两套 key 各写各的默认值，两条都要处理；
+- **别信 `xdg-mime query default`**：它只读配置字面值，不校验应用是否声明支持该 MIME，也不反映 KIO 的真实优先级。判断实际行为要用 `kde-open <file>` + `ps -eo comm`；
+- **`kreadconfig6` 只读 `mimeapps.list`**：显示 zedg 已生效，与真实行为不符；`strings` 读 ksycoca 索引要用 `strings -el`（内部是 UTF-16）。

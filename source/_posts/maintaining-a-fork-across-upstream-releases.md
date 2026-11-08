@@ -95,6 +95,18 @@ tags:
 4. **元数据别写错**——同步记录的日期、版本号这种小地方，写错了会让下一个人误判范围（这次就把日期写成了一个月前）；
 5. **产物清单要和发布说明对得上**——少一个架构的包，说明里就不能说「双架构可用」。
 
+## 六、仓库搬家：组织迁移后的权限与徽章
+
+把主仓和两个发布源仓（Scoop manifest、Homebrew cask）一起迁到组织名下，踩到的都不是代码问题。
+
+- **`gh` 没有 `transfer` 子命令**：仓库转移只能走 GitHub API；
+- **迁移后跨仓推送立刻 403**：`Permission to <org>/scoop-zedg.git denied to <user>`——fine-grained PAT 的授权绑定在旧仓库上，无法跨组织。解法不是重新签发 PAT，而是把更新逻辑搬进发布源仓库自身（`update-manifest.yml` / `update-cask.yml`，各用自身 `GITHUB_TOKEN`），主仓只负责触发；
+- **组织 Verified 徽章要求 Website 与已验证域名一致**：只验证了根域 `example.com`，组织 Website 却填 `https://www.example.com/`，徽章不出现；改成根域后 `is_verified:true`；
+- **迁移后要全仓搜旧路径**：README、docs、workflow 里的仓库地址、`rebrand.py` 的常量、release notes 生成器、rpm spec 的 URL——漏一处就会在下次发布时 404；
+- **Secrets 不会跟着仓库转移**：迁移后要逐项确认 workflow 引用的 secret 仍存在；残留的旧 secret 条目可以留，但没人读，容易误判。
+
+**做法**：发布链路的跨仓写入尽量改成「目标仓库自更新」，比维护一个跨组织的 PAT 更稳。
+
 ## 总结
 
 跟着上游走的分支，维护成本不在「解冲突」，在这三件事：
