@@ -98,6 +98,28 @@ pgrep -f '/usr/local/bin/dsmon' | xargs kill
 
 **结论**：重写可行性取决于「原程序的形态约束」（托盘、提权、D-Bus）而不是「新框架好不好用」。先把这些约束列成 P0，再决定架构。
 
+## 十、从评估到实现：托盘、pkg 与 CI 的落地坑
+
+方案落地成 104 个 core 测试、12 个 GUI 用例、7 个二进制之后，真正耗时间的都是「框架不会告诉你」的那类问题。
+
+**托盘事件轮询不能写在 `gtk::main()` 之后。** 托盘菜单点了没反应、日志里连事件都没有——`gtk::main()` 阻塞主线程，写在它后面的 `thread::spawn` 永远不会执行。正确做法是把 `MenuEvent`/`TrayIconEvent` 的轮询塞进 GTK 主循环已有的 100 ms 定时器。
+
+**菜单每次重建都会分配新的全局 id。** 面板日志报 `ID does not refer to a menu item`，事件里的 id 是 84、当前布局只有 72–80。原因是 libdbusmenu 每次重建都重排 id，而 systray 插件缓存了旧 id。解法是给菜单快照派生 `PartialEq`，内容没变就不重建。
+
+**SNI 的左键 `Activate` 不会自动回退成弹菜单。** libayatana 没有 `Activate` handler 时直接返回错误、面板不补动作。要从 `app_indicator()` 拿到 GObject、连 `activate` 信号置标志，主循环里再 `popup_at_pointer` 弹出当前菜单。
+
+**`pkg` 的自动依赖扫描看不到 `dlopen` 加载的库。** 干净系统装完就 panic（退出码 101），因为 `libayatana-appindicator` 是 `tray-icon` 运行时 `dlopen` 的，不在 ELF `NEEDED` 里。`+MANIFEST` 要手写 `deps`，并在建托盘前做一次运行库自检——缺库时给可操作提示，而不是 backtrace。
+
+**CI 的 504 可能只是探测方法错了。** 三次 CI 都卡在下载脚本返回 504，本机复测也 504，看起来像网络故障。实际上 GitHub Releases 对 `HEAD` 请求返回 504、`GET` 正常——`curl -I` 探测错了，改 `GET` 后一次通过。
+
+**FreeBSD 进程名会被截断到 15 字符。** `pgrep -x networkmgr_configuration-rust` 永远匹配不到，误判「窗口没起来」；实际进程名是 `networkmgr_conf`，要用 `pgrep -f /usr/local/bin/...`。同环境下 `xwd` 只截出 585 字节纯色图，改用窗口树、键盘导航与 `xfce4-screenshooter`。
+
+**i18n 要做基语言回退。** `LANG=de_DE` 仍显示英文，因为只做了精确 locale 匹配，缺 `de_DE → de`。这是 gettext 的标准行为，自己实现时容易漏。
+
+**本地 fmt 干净、CI 报格式，可能是 rustfmt 版本差异。** 两版对长行的换行策略不同，写成两版都接受的多行格式即可。
+
+**验收前先核对产物。** 连续三次误判都是因为测的不是最新产物：只跑了 `cargo test` 没 rebuild、用了改造前的旧 pkg、`.mo` 没重新 `msgfmt`。每次验收先看版本号与时间戳。
+
 ## 总结
 
 Rust 桌面工具开发的坑集中在"**边界条件**"：老旧系统、企业网络环境、高 DPI、跨平台窗口系统、多线程数据库访问——每一项都有隐藏的窄路径。策略是：把兼容性约束写进 CI 门禁、把平台差异封装成显式的探测与降级，而不是"出问题再补"。

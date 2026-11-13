@@ -107,6 +107,31 @@ tags:
 
 **做法**：发布链路的跨仓写入尽量改成「目标仓库自更新」，比维护一个跨组织的 PAT 更稳。
 
+## 七、上游把测试目录整个删掉之后
+
+上一个上游版本（5099 文件、+42.9 万/−4.5 万）合并时，22 个冲突一下午解完，真正的工作量在测试：**上游删掉了整个 `packages/services/test/`**，本分支 11 个文件、164 个用例全红。
+
+这不是「改 import」能解决的。同一批改动里，契约也换了：
+
+- 凭据接口从 `key` 变成 `keys[]`；
+- 加密版本从 v1 升到 v2；
+- 新增批量 `loadMany/updateMany/deleteUnreadable`；
+- token 交换强制要求 `data.user.user_id`；
+- 会话键新增 `zai_cn`/`session_revision`/`linked_bigmodel`；
+- codingPlan 必须提供 `loadOAuthAccountMaterial`。
+
+测试只能按新契约逐类重写。最后 204 个文件 / 1524 个用例全绿，但这一步没有任何捷径——**上游删测试 ≠ 你的测试可以删**，凡是被删掉的目录里测过、而你分支还依赖的行为，都得在新框架下重新表达。
+
+几个具体坑：
+
+- **匿名工单用例拿不到 token、列表为空**：上游把匿名身份迁到凭据键 `zcodefeedbackaccesstoken`，`list()` 无 token 直接返回空且不发请求；mock 只认旧键 `zcodefeedbackclientid`，`saveIfAbsent` 也不落盘。另外 `list()` 不显式设 method，mock 里 `init?.method === "GET"` 永远不成立，要改成 `!init?.method || init?.method === "GET"`；
+- **合并后 lint 告警从 84 跳到 539**：不是代码回归，而是上游新增了 `.oxlintrc.json` 的 React Hooks override，首次全仓扫描集中暴露。对照基线树确认 0 error 即可；
+- **品牌文案 43 处遗留**：上游新文案写的是原品牌名，跑一遍 `apply-brand-naming.py --write`，复检干净即可；
+- **批量改写测试的脚本自身会出错**：`engineering-test-files.json` 合并后括号与排序被破坏，JSON 解析失败。批量改文件后先校验结构；
+- **缺 macOS 产物时，补发不如全量重发**：上一个版本 release 只出 10 个资产（macOS job 被取消），补发工作流也未必一次成功；最终放弃补发、全量重发下一个版本，12 个资产齐全，旧版转 draft；
+- **pre-push 钩子找不到 pnpm**：`git push` 报 exit 127，因为 pnpm 在 `~/.local/share/pnpm`、不在 hook 的 PATH。`PATH="$HOME/.local/share/pnpm:$PATH" git push` 即可，不必改钩子；
+- **两个 workflow 并发推 main 必然非快进**：定时统计 workflow 在另一个 workflow 运行期间推了 README，后者 push 报 `! [rejected] HEAD -> main (fetch first)`。checkout 要 `fetch-depth: 0`，push 前 `git fetch` + `git rebase`；而每次全量重写的清单文件必然冲突，rebase 时采用本次生成版本继续。
+
 ## 总结
 
 跟着上游走的分支，维护成本不在「解冲突」，在这三件事：

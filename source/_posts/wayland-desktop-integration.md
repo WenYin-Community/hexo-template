@@ -132,6 +132,16 @@ portal 的 RemoteDesktop 每次授权都要用户点确认，对无人值守场�
 - 平铺式合成器需要手动把工具窗口设为浮动；
 - 某些桌面环境的拖放时序问题，根治需要合成器实现对应协议，应用侧只能缓解。
 
+## 九、透明与自启动：两个容易误判的点
+
+**透明在 Wayland 上本身是通的。** eframe 0.36 的 glow 后端通过 glutin `with_transparency(true)` 选择带 alpha 通道的 GL config，winit 0.30 的 Wayland 后端对透明窗口调用 `set_opaque_region(None)`，合成器按 alpha 混合。窗口创建时 `.with_transparent(true)` + 全透明 `clear_color` 即可，不需要额外协议。
+
+真正做不到的是**窗口管理**：`set_visible` 在 winit 的 Wayland 后端里明确写成 "Not possible on Wayland."，`set_outer_position`、`set_window_level` 是空实现，最小化后也无法取消。所以「隐藏到托盘、固定位置、置顶」三件事在原生 Wayland 下都缺；要完整实现只能自己做 layer-shell 后端（sctk + 渲染 + 指针/拖动，约 800–1500 行，且 GNOME 不实现该协议）。实际选择是继续走 XWayland，原生 Wayland 只保留「关闭即退出 + 托盘重新拉起」。
+
+**自启动的坑不在「有没有加」，而在「什么时候写」。** 日志显示每次登录主程序和小工具都有启动记录，机制本身没坏；问题是小工具在**单实例声明之前**就重写了 `.desktop` 的 `Exec=`，第二次启动把临时路径写进去，随后作为 Latecomer 退出。之后 `cargo clean` 或重新构建让该路径失效，下次登录就静默不启动。修法是把自启动项对账移到单实例声明成功之后，并加日志打印「申请的值 / 系统持有的值」。
+
+**验证时还要确认跑的是新二进制。** 任务栏图标没消失、修复看起来不生效，最后发现 `/usr/bin/<app>` 还是上个月的安装版，新构建只在 `target/release`。替换安装包后行为才对——「改完没效果」先核对产物时间戳与版本号。
+
 ## 总结
 
 把桌面集成搬到 Wayland，难点不在"写多少行"，而在**先分清上游是没实现、半实现、还是刻意禁用**：

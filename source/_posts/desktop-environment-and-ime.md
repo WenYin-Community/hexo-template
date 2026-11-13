@@ -286,3 +286,26 @@ adb logcat --pid=$(adb shell pidof -s org.kde.kdeconnect_tp)
 - **`text/x-markdown` 只是别名**：`.md` 的真实类型是 `text/markdown`，两套 key 各写各的默认值，两条都要处理；
 - **别信 `xdg-mime query default`**：它只读配置字面值，不校验应用是否声明支持该 MIME，也不反映 KIO 的真实优先级。判断实际行为要用 `kde-open <file>` + `ps -eo comm`；
 - **`kreadconfig6` 只读 `mimeapps.list`**：显示 zedg 已生效，与真实行为不符；`strings` 读 ksycoca 索引要用 `strings -el`（内部是 UTF-16）。
+
+## KDE 主题的窗口圆角：`mask-*` 不是外形
+
+改 Aurorae 窗口装饰时常会误以为 `mask-*` 是「窗口外形遮罩」，其实在 Plasma 6.8 / KDecoration3 里：
+
+- `mask-*` 经 `KSvg::FrameSvg::mask()` 调用 `setBlurRegion()`，**只定义模糊区域的形状**；
+- 窗口外形和圆角由 `decoration-*` 角部元素决定（`decoration-topright` / `right` / `bottomright` 等）；缺的角靠 FrameSvg 镜像回退，实测正常；
+- **最大化窗口本来就不绘制圆角**，截最大化窗口无法验证圆角，必须用非最大化窗口实测；
+- 底部 4px 圆角肉眼看起来像直角，要用 XML 精确解析 + 高分辨率像素验证，不能靠截图目测。
+
+还有一个几何约束：**圆角半径不能超过边框厚度**。想把底角从 4px 加到 12px，必须同步把 `BorderBottom` 从 4 加到 12、`PaddingBottom` 相应减小、底边条加厚——否则窗口底部会多出一条深色边。改之前先想清楚视觉代价。
+
+另外，4 个 `look-and-feel/*/contents/defaults` 里的 `library=org.kde.kwin.aurorae` 在 Plasma 6.8 已过时，实际插件是 `org.kde.kwin.aurorae.v2`。因为本机 `kwinrc` 早已是 v2 值，所以**不报错、静默失效**，只有重装主题才会把旧值写回。
+
+## GTK 主题在 FreeBSD 上的安装脚本
+
+把 Linux 上的 `install.sh` 直接搬到 FreeBSD 会立刻失败：bash 数组、`[[ ]]`、`sed -i` 需要扩展名、`&>` 重定向，FreeBSD 的 sh 和 BSD sed 都不认。做法是另写一个 POSIX `sh` 脚本，自包含编译与安装：
+
+- `sassc` 只检测并提示 `pkg install sassc`，不代装依赖；
+- 默认用户级安装，`-s` 走系统级；
+- 没有 GNOME Shell 时跳过 Shell 主题，其余 GTK / Metacity / XFWM4 / Plank / Cinnamon 照常安装；
+- GNOME 检测要放在参数解析之后，否则 `-h` / `-u` 也会打印「未找到 gnome-shell」；
+- 卸载测试有破坏性（`-u` 会把已有的同名主题一起删掉），做之前先确认能重装恢复。

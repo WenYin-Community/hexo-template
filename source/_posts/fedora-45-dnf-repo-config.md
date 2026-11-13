@@ -191,7 +191,20 @@ sudo rm -rf /var/cache/PackageKit/*
 sudo rm -rf /var/lib/dnf/system-upgrade/*
 ```
 
-## 七、小结
+## 七、两个容易漏掉的清理与代理细节
+
+**`dnf clean all` 清不掉 dnf5 的用户缓存。** 元数据缓存在 `~/.cache/libdnf5`，老命令只清系统路径。这次 `dnf5 clean all` 清掉 721 MiB，而 `dnf clean all` 之后缓存还在。
+
+**全局代理会把国内镜像也套进去。** `/etc/dnf/dnf.conf` 里的 `proxy=socks5://127.0.0.1:7890` 对所有仓库生效，阿里云源也会绕一圈代理，表现为偶发 403 或超时。国内源要单独设空 `proxy=`：
+
+```ini
+[aliyun-fedora]
+name=...
+baseurl=...
+proxy=
+```
+
+## 八、小结
 
 Fedora 45 这次改动可以总结成一句话：
 

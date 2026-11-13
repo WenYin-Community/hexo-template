@@ -249,6 +249,22 @@ overlay 方案的最后一步是"每次上游发 rc 就自动打包"。这里有
 - **从 release 下载源码时不要用 `git clone`**：目标就是"不碰上游仓库历史"，用官方源码压缩包更干净；
 - **发布前必须做产物自检**：解包、检查可执行文件、跑一次 `--version`。只验证"CI 绿了"不够——文件少一个、权限不对、启动器路径写错，CI 都不会红。
 
+## 八、这一轮新增的六个打包坑
+
+**asar 下 `lstatSync(..., {throwIfNoEntry:false})` 返回 `null`，到 Node 侧变成 `undefined`。** 打包后的冒烟报「LibreOfficeKit 已安装但损坏」，而打包前 staging 冒烟正常。代码用 `!== undefined` 判断路径是否存在，把「不存在」误判成「存在但损坏」。更麻烦的是同类修复函数只修了一个包、漏了另一个——两个都要改。
+
+**runner 的 DNS 故障不是打包根因。** apt 装工具链报 `Temporary failure resolving ...`、重试 5 次仍失败，看起来像网络；但 DNS 只影响工具链，真正的失败在后面的 smoke 阶段。解法是恢复官方源、只覆盖 DNS（1.1.1.1/8.8.8.8）+ `Acquire::ForceIPv4=true`，不要用镜像替换硬解 runner 的 DNS。
+
+**先建 release 会让另一个平台被误判「已发布」。** Linux 重跑直接 `skipped`，因为发布判定只看 release 是否存在，而 FreeBSD 先建了 release。重跑要带 `force=true`。
+
+**RPM 的 `brp-compress` 会压缩 man page。** 构建最后一步失败，因为 `%files` 还写着 `wayfire.1`、实际已被压成 `.gz`。打包前统一压缩 man page，再生成文件清单。
+
+**`gh release upload dist/*` 会把目录当文件上传。** DEB 上传成功、RPM 缺失，因为 RPM 在 `x86_64/` 子目录、被当成文件。要只匹配 `.deb`/`.rpm`，缺失的手动补传。
+
+**目标发行版的库版本可能根本满足不了最低要求。** Debian trixie 的 wayland 1.23.1 / libdrm 2.4.124 / xkbcommon 1.7.0 都低于 wlroots 0.20.2 的要求，backports 也补不齐——只能改用 `debian:testing` 构建。顺带：运行时包名要按仓库元数据核对（`libdisplay-info` 实际叫 `libdisplay-info3`），不能凭印象写。
+
+另外两条和「版本」有关：带 `+git` 的 tag 容易被 workflow 自动标成 Pre-release（新建用 `--latest`、已存在的用 `--prerelease=false` 修正）；上游没发布的开发周期版本不能当发布版本（meson 里的 `0.12.0` 只是开发号，最新 release 是 `0.11.0`，包版本应该用 `0.11.0+git<日期>.<hash>-1`）。
+
 ## 总结
 
 用 overlay 做跨平台支持，本质是**用"每次构建时校验"换"每次发版时合并"**：

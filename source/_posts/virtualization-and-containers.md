@@ -208,3 +208,28 @@ Windows 8.1 以新的方式使用鼠标指针。尽管大多数程序都可以�
 在安装过程中，应用汇总更新虚拟网卡驱动程序的配置，这是正常现象，因为此更新可以提高 NAT 共享网络的性能。但奇怪的是，这会在 Windows 8.1 上卸载虚拟网卡驱动（这在以前的操作系统不会出现）。结果是：应用汇总后，虚拟机无法连接到网络。更糟糕的是，在 Windows 8.1 64 位系统中，安装更新后，你将无法从"控制面板"中卸载 VPC2007。Windows 8.1 32 位不受此影响。
 
 所以我的建议是 **不要安装汇总更新**，虽然添加了许多有用的功能，但这不是必须的。如果这些功能的改进对你很重要，请手动将下面的更新文件覆盖掉之前的文件。这样，无需安装汇总更新即可享受最新功能！
+
+## KVM 主机与 Windows 11 客户机之间的 virtiofs 共享
+
+libvirt 的 virtiofs 共享有两个硬性前提，缺一个就直接报错或服务起不来。
+
+**第一条：必须开共享内存。** 直接给 `<filesystem type='mount'>` 会被 libvirt 拒绝，报「virtiofs 需要共享内存」。要在 `<domain>` 里加：
+
+```xml
+<memoryBacking>
+  <source type='memfd'/>
+  <access mode='shared'/>
+</memoryBacking>
+```
+
+**第二条：设备只在虚拟机启动时创建。** 改完 XML 必须重启 VM（不是 reboot guest），设备才会出现。主机侧可以用 `virsh domfsinfo <domain>` 确认挂载点已经注册。
+
+guest 侧如果是 Linux，挂载 `mount -t virtiofs <tag> /mnt/share` 即可。Windows 侧要装 WinFsp + virtiofs 驱动，然后在「服务」里看 `VirtioFsSvc`：如果它启动 30 秒后报 **1053（服务未及时响应）**，多半是缺 WinFsp 或驱动没绑上。排查顺序：
+
+```cmd
+sc qc VirtioFsSvc
+where /r C:\ winfsp-x64.dll
+```
+
+再以前台方式带日志启动，看它卡在哪一步。主机侧的 QEMU 参数里有 `vhost-user-fs-pci tag=...` 只能证明共享设备已经建好，不能证明 guest 里的服务正常。
+
