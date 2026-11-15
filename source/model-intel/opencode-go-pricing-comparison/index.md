@@ -1,17 +1,17 @@
 ---
-title: OpenCode Go 定价与性价比测算
-date: 2026-11-04
+title: OpenCode Go 定价、请求数与性价比测算
+date: 2026-11-15
 ---
 
-> 内部价、请求数上限、峰谷时段与月等效价值测算。数据抓取日 **2026-11-04**。
+> 内部价、请求数上限、峰谷时段与月等效价值测算。数据抓取日 **2026-11-15**。
 
 [← 返回「模型情报」合集](/model-intel/)
 
 ---
 
-> 数据来源：OpenCode Go 官方文档 [opencode.ai/docs/go](https://opencode.ai/docs/go/)（**2026-11-04 抓取，11 张表全量解析**）、官方营销页 opencode.ai/zh/go、**OpenCode Data（opencode.ai/data，页面顶部"已更新 11月4日, GMT+8 14:32"）**、**OpenCode Zen / Go 清单 API（Zen 80 款、Go 28 ID）**、**CommandCode Provider API（96 端点）/ CLI 1.88.2 目录（94 款，差集 2 款）**、**OpenRouter 模型与 endpoints API（11-04 抓取，目录 455 款）**、各厂商官方 API 定价页（OpenAI / x.ai / 阿里云百炼 / 月之暗面 / MiniMax / 小米 / 智谱 / DeepSeek / 腾讯）。
-> **折算汇率：1 美元 ≈ 6.7180 元人民币**（中国外汇交易中心 2026-11-04 中间价，每轮按实时中间价重取）。所有"性价比"均为月等效价值 ÷ 月订阅费（$10）。
-> **现行口径**：**三档订阅**——**Go $10/月**、**Go Plus $40/月**（Higher usage limits）、**Go Teams $20/成员/月**（每成员独立额度，逐模型比 Go 高 $5/月）；**三档 Token 单价完全相同**，仅月度额度上限不同（Plus = Go 的 2x / 3x / 4x / 8x）。正文清单 **30 款**（套餐 API **28 个 ID**；`mimo-v2.5`、`mimo-v2.5-pro` 两款**仅正文列出、API 已不返**；**正文新增 `kimi-k3.1-pro`、`iceman-contributor-free`，`gemini-4-argon-contributor` 更名为 `gemini-4-argon`**）；**Go / Go Plus 仅限单成员 workspace**（带 Go 订阅的 workspace 无法邀请成员）；达额**不自动回落**，但可手动切用免费模型；**Iceman Contributor Free** 与 **Beam Free** 为套餐内不限量限时免费（docs 正文标 "Unlimited limited time"，**官方未公布截止日，不可假定已到期**；Beam Free 另有地区限制与 30 天留存）；**DeepSeek ZDR 有效期至 2026-10-31**（月度续签）。
+> 数据来源：OpenCode Go 官方文档 [opencode.ai/docs/go](https://opencode.ai/docs/go/)（**2026-11-15 抓取，11 张表全量解析**）、官方营销页 opencode.ai/zh/go、**OpenCode Data（opencode.ai/data，页面顶部"已更新 11月4日, GMT+8 14:32"）**、**OpenCode Zen / Go 清单 API（Zen 86 款、Go 30 ID）**、**CommandCode Provider API（98 端点）/ CLI 1.89.1 目录（98 款，差集 0）**、**OpenRouter 模型与 endpoints API（11-15 抓取，目录 470 款）**、各厂商官方 API 定价页（OpenAI / x.ai / 阿里云百炼 / 月之暗面 / MiniMax / 小米 / 智谱 / DeepSeek / 腾讯）。
+> **折算汇率：1 美元 ≈ 6.7152 元人民币**（中国外汇交易中心 2026-11-13 中间价，每轮按实时中间价重取）。所有"性价比"均为月等效价值 ÷ 月订阅费（$10）。
+> **现行口径**：**三档订阅**——**Go $10/月**、**Go Plus $40/月**（Higher usage limits）、**Go Teams $20/成员/月**（每成员独立额度，逐模型比 Go 高 $5/月）；**三档 Token 单价完全相同**，仅月度额度上限不同（Plus = Go 的 2x / 3x / 4x / 8x）。正文清单 **32 款**（套餐 API **30 个 ID**；`mimo-v2.5`、`mimo-v2.5-pro` 两款**仅正文列出、API 已不返**；**正文新增 `hy4`（正式版）与 `longcat-2.5-free`（免费档回归）**）；**Go / Go Plus 仅限单成员 workspace**（带 Go 订阅的 workspace 无法邀请成员）；达额**不自动回落**，但可手动切用免费模型；**Iceman Contributor Free** 与 **Beam Free** 为套餐内不限量限时免费（docs 正文标 "Unlimited limited time"，**官方未公布截止日，不可假定已到期**；Beam Free 另有地区限制与 30 天留存）；**DeepSeek ZDR 有效期至 2026-10-31**（月度续签）。
 > ⚠️ **DeepSeek V4.1 Flash 月额度实测为 $80**（Off-Peak / Peak 两档同额度），**为 Go 侧现行最高档**；5h / 周窗口按 20% / 50% 比例 = $16 / $40。
 
 ---
@@ -37,7 +37,7 @@ date: 2026-11-04
   - **已验证客户端**：OpenCode、Hermes（含 PR #101864 的构建）、Claude Code、Codex、ZCode、Pi、jcode（v0.81.6+）、Kilo Code CLI（含 PR #13752，**不覆盖 VS Code 扩展**）。
   - **已知有问题**：DeepSeek Harness、GitHub Copilot Chat、Kimi Code、MiMo Code。
 - **超限兜底**：达额度后**不会自动切换模型**；官方提示"You can continue using the free models"（**需手动换模型 ID**）。**唯一自动回落机制**：控制台开启 **Use balance** 后，Go 额度用尽会回退到 Zen 按量余额继续请求（付费）。订阅管理已并入 Zen 控制台。
-- **Zen 免费层**：**Zen 共 80 款 = 9 款 `-free` + Big Pickle + 70 付费**。`-free` 清单（API 实测）：`beam-free`、**`crouton-alpha-free`（新收录）**、`deepseek-v4.1-flash-free`、`flint-40b-free`、`glm-5.3-flash-free`、`mimo-v2.6-flash-free`、`nemotron-3.5-lightning-free`、`nemotron-3.5-super-vl-free`、**`pulse-alpha-free`（新收录）**（`deepseek-v4.1-flash-free`、`glm-5.3-flash-free`、`flint-40b-free` 等未列进 docs/zen 免费表，**以 API 清单为准**）。**已下架**：`minimax-m3.1-flash-free`（限时免费结束）、`longcat-2.5-preview-free`、`jev-1.13-free`。Zen 的 `-free` 与 Go 的付费 ID 是两套模型名（`opencode/mimo-v2.6-flash-free` vs `opencode-go/mimo-v2.6-flash`）。
+- **Zen 免费层**：**Zen 共 86 款 = 11 款 `-free` + Big Pickle + 74 付费**。`-free` 清单（API 实测）：`beam-free`、**`crouton-alpha-free`（新收录）**、`deepseek-v4.1-flash-free`、`flint-40b-free`、`glm-5.3-flash-free`、`mimo-v2.6-flash-free`、`nemotron-3.5-lightning-free`、`nemotron-3.5-super-vl-free`、**`pulse-alpha-free`（新收录）**（`deepseek-v4.1-flash-free`、`glm-5.3-flash-free`、`flint-40b-free` 等未列进 docs/zen 免费表，**以 API 清单为准**）。**已下架**：`minimax-m3.1-flash-free`（限时免费结束）、`longcat-2.5-preview-free`、`jev-1.13-free`。Zen 的 `-free` 与 Go 的付费 ID 是两套模型名（`opencode/mimo-v2.6-flash-free` vs `opencode-go/mimo-v2.6-flash`）。
 - **API 端点**：全部为 **`https://opencode.ai/inference/go/{openai,anthropic,google}/v1*`**，以 Go 订阅的同一 API key 认证（登录 Zen 控制台复制），按协议分流（端点表 **29 行 = 5 + 5 + 1 + 18**）：
 
 | 协议 | 端点 | 模型（29 款） | SDK |
@@ -47,7 +47,7 @@ date: 2026-11-04
 | **Anthropic Messages** | `/inference/go/anthropic/v1/messages` | Claude Haiku 5.5、MiniMax M3、Qwen3.8 Max、Qwen3.8 Flash、Qwen3.7 Plus（**5 款**） | `@ai-sdk/anthropic` |
 | **Google** | `/inference/go/google/v1beta/models/gemini-4-argon` | Gemini 4 Argon（**1 款**；原 `gemini-4-argon-contributor` 已更名） | `@ai-sdk/google` |
 
-  - 模型 ID 为短格式（如 `kimi-k3`），OpenCode 配置中写 `opencode-go/kimi-k3`；完整清单 `GET https://opencode.ai/inference/go/v1/models`（**返回 28 个 ID**，与 docs 表格互有出入）。**旧路径 `https://opencode.ai/zen/go/v1/*` 仍返回 200（10-23 实测），属于兼容别名，但文档与配置口径已统一到 `/inference/go/*`**。
+  - 模型 ID 为短格式（如 `kimi-k3`），OpenCode 配置中写 `opencode-go/kimi-k3`；完整清单 `GET https://opencode.ai/inference/go/v1/models`（**返回 30 个 ID**，与 docs 表格互有出入）。**旧路径 `https://opencode.ai/zen/go/v1/*` 仍返回 200（10-23 实测），属于兼容别名，但文档与配置口径已统一到 `/inference/go/*`**。
   - **✅ 两平台 API 能力已对齐**：Command Code Provider 自 CLI v1.55.0 起同样支持 Responses。
   - ⚠️ **Kimi K3 与 MiniMax M3 走不同协议**：Kimi K3 = Chat Completions，MiniMax M3 = Anthropic Messages；调用 Anthropic 兼容层时注意 `max_tokens` 必填。
 - **隐私表（29 款全覆盖）**：
