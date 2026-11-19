@@ -138,6 +138,27 @@ CLI 工具的两条基本纪律，这个项目原先都没完全做到：
 
 这里有个小判断值得记：本机 `dnf5 --refresh repoquery` 访问 `packages.redhat.com` 会超时，但那是本机网络环境的问题——**不能据此判断构建失败**，要以 Copr API 的结果为准。区分"我的网络"和"构建产物"是发布验收的基本功。
 
+## 八、给官方 CLI 补一个平台支持：先核对，再动最少的路径
+
+另一个任务是给一个只发 macOS/Windows 的官方 CLI 补 Linux 支持：用官方 Linux Command Line Tools（CLT）+ 源码构建，跑通 `create → check → build → device list`。
+
+**第一步是做可行性核对，而不是直接改代码。** 原方案列的一堆待办里，大部分其实已经就绪：插件系统在非 macOS 已设计为「探测失败即降级」；公共包已声明 `os=[darwin,linux,win32]`；发布打包已对 Linux 走 tar.gz；postinstall 已有 musl/baseline/avx2 分支。真正的红色阻断只有一个——ripgrep 缺 Linux 映射，缓存缺失时构建脚本直接 `process.exit(1)`，postinstall 的白名单里也没有 `linux`。
+
+**第二步是找「改动面最小的接缝」。** 不要新增抽象层，而是在解析安装根目录的四个函数内部做**双布局探测**：CLT 用 `tool/node`、IDE 用 `tools/node`，hvigor/ohpm 同理。这样 `hdc`、`homegraph`、`router`、`registry`、onboarding 等 8 处调用点一行都不用改。CLT 没有 `product-info.json`，版本门禁改读 `version.txt`；Linux 默认候选加 `/opt/harmony-clt` 与 `~/command-line-tools`。
+
+**第三步是环境注入只留一个出口。** 工具调用与插件路径原本是两套环境构造，只改其中一处时 `device list` 能过（它不依赖那个变量），但 `build` 仍找不到 CLT。统一到 `applyCltEnv()` 之后才真正闭环。
+
+落地验证：产物 208 MB ELF，`create`、`check arkts`、`check lint`、`build`（产出 22K HAP）、`device list`、`emulator image list` 全部通过，60 个单测与类型检查通过。
+
+几个坑：
+
+- **bun 的版本门禁没有绕过开关**：`package.json` 要求 `^1.4.2`，本机是 1.3.14；重装时 npm 12 默认拦截 postinstall，还要 `--allow-scripts=bun`。
+- **上游 patch 在新 bun 上会失败**：`bun install --os="*"` 对某个包的 patch hunk 不匹配，用构建脚本自带的 `--skip-install`（依赖已按平台装好）。
+- **Fedora 上模拟器缺 `libbz2.so.1.0`**：在 CLT 模式自动建符号链接并只追加 `LD_LIBRARY_PATH`，不改系统。
+- **登录入口不在 CLI**：设置 `DEVECO_CLI_AUTH_SOURCE=deveco-code` 后 CLI 拒绝自行登录，实际入口是 TUI 的账号界面；未登录时签名命令要能正确提示且无副作用。
+- **push 失败未必是权限**：remote 写 `gitcode.com`、凭据存 `atomgit.com`，且无交互终端时 askpass 读不到响应；切 remote 到凭据实际域名即可。
+- **新增默认路径会让既有测试前提失效**：`~/command-line-tools` 进入候选后，相关测试要在隔离 HOME 下跑。
+
 ## 总结
 
 这次审计最大的收获不是修了 18 个问题，而是重新理解了「测试全绿」的含义：

@@ -126,3 +126,5 @@ FreeBSD 上跑 mihomo 的核心结论只有一句：**不要假设 Linux 的 TUN
 - 移植脚本时，rc.d 的 `onestart`、PATH、pidfile 检测、回环路由这些都是 FreeBSD 特有的窄路径，要逐项过一遍。
 
 最后一条经验：**测试环境的网络要先打通再谈功能**。这次如果没先把 SSH 反向隧道和端口冲突理清楚，后面所有"TUN 不通"的现象都会指向错误的方向。
+
+补一句版本管理：FreeBSD 的 pkg 默认走 `quarterly` 分支，它可能比上游 `latest` 滞后几个小版本（这次 `quarterly` 是 1.19.31_3、`latest` 是 1.19.34）。文档里不要写「pkg 装的就是最新」——想固定某个版本，要么显式切 `latest`，要么在安装脚本里检查 `pkg query` 的实际版本。

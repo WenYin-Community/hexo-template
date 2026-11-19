@@ -309,3 +309,15 @@ adb logcat --pid=$(adb shell pidof -s org.kde.kdeconnect_tp)
 - 没有 GNOME Shell 时跳过 Shell 主题，其余 GTK / Metacity / XFWM4 / Plank / Cinnamon 照常安装；
 - GNOME 检测要放在参数解析之后，否则 `-h` / `-u` 也会打印「未找到 gnome-shell」；
 - 卸载测试有破坏性（`-u` 会把已有的同名主题一起删掉），做之前先确认能重装恢复。
+
+## Winamp 皮肤格式：能塞什么、不能塞什么
+
+把千千静听（TTPlayer）的 `.skn` 转成 Audacious 能用的 `.wsz`，先要接受一个事实：**这个格式对矢量图一无所知**。
+
+- 插件只识别 `.bmp` / `.png` / `.xpm`（`skins_util.cc`），不支持 SVG，也没有 `@2x` 之类的倍率加载机制；
+- `double_size` 只是把整窗按整数倍放大，不是高清资源；
+- 主窗口固定按 275×116 绘制，`skin.hints` 里的多数位置项只解析、不生效。
+
+所以「BMP 转 SVG 以获得高分辨率」这条路在运行时收益为零。可行的做法是：**生成 SVG 母版用做源资产，离线渲染 1x/2x PNG 装进 `.wsz`**，布局保留原皮肤的绘制风格、控件位置重排到 Winamp 标准坐标。
+
+另一个容易误判的地方是「旧皮肤过时了」。Audacious 对缺失的位图有不少兜底：`balance` 可以由 `volume` 代替、`nums_ex` 由 `numbers` 代替、`eq_ex` 可选。先读加载器规则再决定清理，否则会把 95 个还能用的皮肤全删掉。转换完的验收也很直接：所有 PNG 能被 GdkPixbuf 解码、尺寸符合 Winamp 2.x 规范、日志里没有 `Skin does not contain` / `Unable to load skin`。

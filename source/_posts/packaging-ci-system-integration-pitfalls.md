@@ -255,7 +255,7 @@ overlay 方案的最后一步是"每次上游发 rc 就自动打包"。这里有
 
 **runner 的 DNS 故障不是打包根因。** apt 装工具链报 `Temporary failure resolving ...`、重试 5 次仍失败，看起来像网络；但 DNS 只影响工具链，真正的失败在后面的 smoke 阶段。解法是恢复官方源、只覆盖 DNS（1.1.1.1/8.8.8.8）+ `Acquire::ForceIPv4=true`，不要用镜像替换硬解 runner 的 DNS。
 
-**先建 release 会让另一个平台被误判「已发布」。** Linux 重跑直接 `skipped`，因为发布判定只看 release 是否存在，而 FreeBSD 先建了 release。重跑要带 `force=true`。
+**先建 release 会让另一个平台被误判「已发布」。** Linux 重跑直接 `skipped`，因为发布判定只看 release 是否存在，而 FreeBSD 先建了 release。当时的处理是重跑带 `force=true`，但那只是绕过；根本修法是**把判定改成「本平台产物是否存在」**——改成只检查自己的资产后，重跑不带 `force` 也能正确判定需要构建，这才算修完。
 
 **RPM 的 `brp-compress` 会压缩 man page。** 构建最后一步失败，因为 `%files` 还写着 `wayfire.1`、实际已被压成 `.gz`。打包前统一压缩 man page，再生成文件清单。
 

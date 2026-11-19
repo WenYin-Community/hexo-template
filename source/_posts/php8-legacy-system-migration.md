@@ -262,6 +262,23 @@ mysqli_report(MYSQLI_REPORT_OFF);
 
 **一个环境前提**：本机没有 `php` 命令，所有 `php -l` / `check.php` / `xrcli` 的验证都得在 podman 容器里跑——所以第一阶段的文档只能靠读脚本内部的依赖逻辑来确认用法，不能凭"文档这么写"。
 
+## 附四：SourceBans++ 的两个空值与 ID 语义坑
+
+线上一个 SourceBans++ 后台页面报 `Warning: Undefined array key 0`，用 Podman 在本地复现：MySQL 5.7 + PHP 8.5-fpm + nginx 三个容器（host 网络），数据库直接导入生产快照，rootless podman 绑不了 80 就用 8082。
+
+**第一处：查询无结果时直接下标取值。** `GetRow` 没有匹配行返回 `null`，代码却直接 `$web_group[0]`；编辑「服务器管理组」时 `sb_groups` 里没有同 id 记录，于是触发告警。改成 `isset($web_group[0]) ? intval($web_group[0]) : 0`。
+
+**第二处：同一个 `id` 被当成三套组表的键。** 页面用 `type` 区分「网页管理组 / 服务器管理组 / 服务器组」，但代码仍拿 `$_GET['id']` 去查用户表：`type=srv&id=1` 命中了用户 `ruojiner`，标题显示错人；`type=web&id=2` 查无用户返回 `null`，`str_replace` 收到 `null` 又产生 3 条 Deprecated。修法是按 `type` 从 `sb_srvgroups` / `sb_groups` 取 `name`，并用 `?? ''` 兜底。
+
+**本地复现的两个前提**，缺一个就会误判：
+
+- `display_errors=Off` 时 HTTP 200 不代表没有诊断——`E_ALL` 告警只进容器 stderr，必须查 `podman logs`；
+- 容器用 UTC、宿主是 GMT+8 时，`podman logs --since` 的时间边界不可靠。定位到最后一条诊断的行号后 `tail -n +N` 更稳。
+
+**还要先做基线对照。** `type=web&id=2` 的 3 条 Deprecated 在第一次修复前后都存在，如果不先复测隔离，很容易算到本次改动头上。
+
+顺带补了一份权限模型文档：网页管理组是整数位掩码、服务器管理组是 SourceMod 字母串 + immunity、服务器组只用于打包服务器（`flags` 恒 0）；`srv_flags` 是 `admins.srv_flags . sb_srvgroups.flags` 拼接，不是覆盖。**老系统的「同名不同表」比函数 bug 更常见，先把 ID 属于哪张表写清楚，再改代码。**
+
 ## 总结
 
 四次移植加起来，最难的不是"改多少行"，而是三类问题：

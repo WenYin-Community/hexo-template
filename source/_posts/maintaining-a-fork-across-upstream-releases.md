@@ -132,6 +132,24 @@ tags:
 - **pre-push 钩子找不到 pnpm**：`git push` 报 exit 127，因为 pnpm 在 `~/.local/share/pnpm`、不在 hook 的 PATH。`PATH="$HOME/.local/share/pnpm:$PATH" git push` 即可，不必改钩子；
 - **两个 workflow 并发推 main 必然非快进**：定时统计 workflow 在另一个 workflow 运行期间推了 README，后者 push 报 `! [rejected] HEAD -> main (fetch first)`。checkout 要 `fetch-depth: 0`，push 前 `git fetch` + `git rebase`；而每次全量重写的清单文件必然冲突，rebase 时采用本次生成版本继续。
 
+## 八、跨大版本迁移 fork：不要合并已分叉的主分支
+
+另一个 fork 停在 1.4.7，定制只有 6 个提交，而上游主分支比它多 180 个提交——两条历史早就分叉了。这种情况下「把定制分支合并回上游主干」是个伪需求：
+
+- 合并会把 180 个上游提交与 6 个定制提交揉成一个巨大的 merge commit，以后再跟上游就永远要解这一坨；
+- 正确做法是**基于上游目标 tag 新建分支，再把定制提交 cherry-pick 过来**。6 个提交里 1 个因为上游已包含同一修复、应用后无改动，确认后跳过。
+
+迁移过程里几个具体问题：
+
+- **配置键会跨 crate 搬家**：1.5.0 把 `hbb_common::config::keys::OPTION_*` 移到了 `base` crate，cherry-pick 后代码编译失败。改用文件已导入的 `keys::...`，行为不变，单独补一个适配提交。
+- **Release 全平台失败但没有任何编译错误**：唯一非成功作业是 iOS `cancelled`（iOS 需要额外签名，发布步骤本来就被注释掉）。把 iOS job 设为 `if: False` 直接跳过，重推 tag 后全作业成功。
+- **删主分支不会减小仓库体积**：本地对象从 90M 压到 33M，GitHub 仍显示 76MB——被删分支的提交仍是当前分支的祖先，对象仍被引用；只有重写历史才能回收，而重写会丢掉上游完整历史，不值得。
+- **`gh` 会默认解析到 upstream**：本地同时配了 fork 与 upstream 时，所有查询要显式 `-R <your-fork>`，否则看到的是上游的 CI 状态。
+- **rebase 不会改发布参数**：上游新版本把发布步骤写成 `prerelease: true`，rebase 后依然如此。每次同步后都要逐项核对 `draft`/`prerelease`。
+- **定时 workflow 会自动建分支**：推送后 origin 多出一个 `auto-update-*` 分支，是依赖更新任务创建的，不属于定制分支，删掉即可。
+
+**本机验证不了就写清楚**：RustDesk 需要 `vcpkg` 与 `libyuv`，本机没有，只能核对符号、导入路径与 diff，把编译验证交给 Release CI——这条限制要写进记录，避免下一个人误以为本地能跑。
+
 ## 总结
 
 跟着上游走的分支，维护成本不在「解冲突」，在这三件事：
