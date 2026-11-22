@@ -321,3 +321,20 @@ adb logcat --pid=$(adb shell pidof -s org.kde.kdeconnect_tp)
 所以「BMP 转 SVG 以获得高分辨率」这条路在运行时收益为零。可行的做法是：**生成 SVG 母版用做源资产，离线渲染 1x/2x PNG 装进 `.wsz`**，布局保留原皮肤的绘制风格、控件位置重排到 Winamp 标准坐标。
 
 另一个容易误判的地方是「旧皮肤过时了」。Audacious 对缺失的位图有不少兜底：`balance` 可以由 `volume` 代替、`nums_ex` 由 `numbers` 代替、`eq_ex` 可选。先读加载器规则再决定清理，否则会把 95 个还能用的皮肤全删掉。转换完的验收也很直接：所有 PNG 能被 GdkPixbuf 解码、尺寸符合 Winamp 2.x 规范、日志里没有 `Skin does not contain` / `Unable to load skin`。
+
+## Plasma 壁纸组件：开机后当日壁纸不切换
+
+一个 Bing 壁纸 plasmoid 的怪现象：开机后当日壁纸**能自动下载**，但桌面不切换，必须右键「刷新今日壁纸」；跨午夜/开机时序下更明显。
+
+**根因有两层，第一层很隐蔽。** `Plasma5Support.DataSource` 的 `executable` 引擎对**相同命令的 source 去重**：开机时第一次 `find` 还没返回，下载回调又去连 `listArchiveFiles()`，第二次连接被引擎静默吞掉——第二个 `find` 从未执行，文件列表永远缺今日文件。日志时序可以实锤：下载回调 12:04:28.059，首次 find 返回 12:04:28.076，第二次 find 从未出现。同一调用里的 `disconnect + connect` 也会被合并，别指望「断开再连」能绕过去。
+
+第二层是重试语义：开机瞬间网络未就绪导致下载失败后，`lastDownloadDate` 已经被置位，当天不再尝试——一次失败锁死一整天。
+
+**修复思路**：
+
+- 发起下载时记录 `pendingDownloadFile`，回调不再用「回调时刻」重新拼日期（跨午夜安全）；
+- 下载成功**立即把文件并入列表并选最新文件**，不等可能被去重的第二次查询；
+- 下载失败清空当日标记，Timer 每分钟重试；
+- 不拿「系统日期 == 文件名」当选择依据——文件名是保存时刻的日期，00:00 后 Bing 可能还没发布当日图，会出现「日期是今天、内容还是昨天」；改为选最新文件，并用 Bing API 的 `fullstartdate` 校验，未切到当天就限次重试。
+
+**验证时记住 QML 不会热更新**：改完 `main.qml` 不重启 plasmashell 等于没改，运行中的进程加载的还是启动时的旧代码。验证前必须重启，并以进程启动时间确认加载的是新版本。诊断手段推荐两个：备份 `main.qml` 注入 `console.warn` 时序日志（仓库源码不动），以及用 plasmashell 的 D-Bus `evaluateScript` 做无副作用探测。
