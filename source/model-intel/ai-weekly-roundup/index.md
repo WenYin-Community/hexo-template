@@ -3,7 +3,7 @@ title: AI 大模型一周汇总：11-15 → 11-22
 date: 2026-11-22
 ---
 
-> 开源模型、旗舰降价、算力与平台清单变化的滚动窗口综述。数据抓取日 **2026-11-22**。
+> 开源模型、旗舰降价、算力与平台清单变化的滚动窗口综述。数据窗口 **11-15 → 11-22**。
 
 [← 返回「模型情报」合集](/model-intel/)
 
@@ -23,7 +23,7 @@ date: 2026-11-22
 
 **2. 🔑 Google Gemini 4 Neon（11-18）——$3 / $15，取代 Argon 与 3.1 Pro**
 面向复杂软件工程、知识工作与科研，**百万级上下文、四档思考级别**，官方称 AA 智能指数 **61（总榜第三）**、默认思考档**单任务成本比 Carbon 低 32%**；可指挥 Hydrogen 子代理，但不生成图像/音频。在 Gemini App 中**取代 Argon 和 3.1 Pro**。OpenRouter 上 flex 档实测 **$1.50 / $7.50 / $0.075（-50%）**。
-> ⚠️ **Gemini 4 Carbon 将于 12-01 从 $2/$10 翻倍至 $4/$20**——涨价后比 Neon 更贵，低价窗口仅剩月末。
+> ⚠️ **Gemini 4 Argon 将于 12-01 从 $2/$10 翻倍至 $4/$20**——**Go 清单 API 的 `cost.multipliers` 已实测带 `when.date.gte = 2026-12-01`、factor 2**（作用于 `gemini-4-argon`），是价格变动的机器可读证据。**Gemini 4 Carbon 在 OpenRouter 同为 $2/$10/缓存 $0.10**，涨价后两者都会比 Neon（$3/$15）更贵，低价窗口仅剩月末。
 
 **3. 🔑 阿里 Qwen4-Max（11-16）——2.4 万亿参数 MoE**
 1M 上下文、文本+图像+视频输入，**$1.50 / $4.50 / 缓存 $0.075**，官方称单任务平均费用较上代降约 58%；无公开权重，小尺寸开源版承诺后续放出。已同步进入 OpenCode Go 与 CommandCode。
@@ -55,7 +55,8 @@ date: 2026-11-22
 - **GOAT 页头**：GOAT plan **75** / All plans **106** / Deals **3** / Free **2**（免费档现为 Flint + Glyph Cluster）。**GLM-5.3 额度仍为 $70**。
 
 **2. 🔑 docs/go 结构性改版**
-官方页从 **11 张表缩为 5 张**——逐模型价目表、请求数表、端点表**不再公开**，改为指向需登录的 **Console Go 页**。正文明确：三档 Token 单价相同、5h = 月额度 20%、**周窗口 = 50% 且每周一 00:00 UTC 重置**、达限额可开 **Extra Usage**、响应头 `opencode.allowance` 回报计入额度。
+官方页从 **11 张表缩为 5 张**——逐模型价目表、请求数表、端点表**不再放在文档页**，改为指向 **Console Go 页 `opencode.ai/console/go`（公开页，无需登录，`curl -sL` 即 200，四 Tab = Limits / Pricing / Privacy / API）**。正文明确：三档 Token 单价相同、5h = 月额度 20%、**周窗口 = 50% 且每周一 00:00 UTC 重置**、达限额可开 **Extra Usage**、响应头 `opencode.allowance` 回报计入额度。
+> 🔑 **数据已全额补齐**：清单 API `GET https://opencode.ai/inference/go/v1/models` 单次返回 **31 个 ID 的单价（含分档 cache write）、`go.monthly_usage.{go,go-plus,go-teams}` 三档月额度、`go.zdr` / `go.training` / `go.limited_regions`、`limit.context` / `limit.output`**——此前记为"不可获取"的逐模型价目与请求数**全部可得**。实测口径：**付费模型共用一个额度池**（逐模型月额度是"独用到 100%"的分母，不可相加）；**Teams 恒为 Go + $5，Plus 为 2 / 3 / 4 倍（上限 4x）**。
 > ⚠️ **Go Teams 细则更新**：**$20/成员/月、2 成员起（最低 $40/月）**，第二席位覆盖下一个加入者免费，期中加入收 $20 获全额，服务账号不覆盖；**可用 workspace credit 支付订阅/续费/升级**。
 > ⚠️ **时效项**：`GLM-5.3` 更高额度窗口 **11-22 到期**；`Gemini 4 Argon` 50% 折扣 **11-30 到期**；`Beam Free` 限时且**中国含港澳不可用**。
 

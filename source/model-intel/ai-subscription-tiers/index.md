@@ -3,24 +3,25 @@ title: AI 订阅档位横向对比：$10 档三家 · $20 档四家
 date: 2026-11-22
 ---
 
-> 同价位订阅横向对比：$10 档三家与 $20 档四家，含倍率口径对照。数据抓取日 **2026-11-22**。
+> OpenCode Go、CommandCode GOAT、OpenDesign 与国产订阅的档位、额度语义与单位价值对照。数据抓取日 **2026-11-22**。
 
 [← 返回「模型情报」合集](/model-intel/)
 
 ---
 
 > 数据来源（**抓取日期 2026-11-22**）：
-> - **覆盖范围**：**$10 档**（OpenCode Go / CommandCode GOAT / **OpenDesign Go**）+ **$20 档**（**Ollama Pro** / CommandCode Pro / OpenCode Go Teams / OpenDesign Plus）。$10 档主对比见第一至三节，$20 档见第五节。
-> - **OpenDesign**（open-design.ai/pricing，**页内标注 2026-10-19**）：Go $10/月（首月 $8；年付 $84/年 = $7/月），**月额度上限 $120（仅 Design Plan 模型）**、7 天窗口 $30、5 小时窗口 $10、**Plan-model credits $0**、并发 10。⚠️ **第三方网关实测（OctaFuse，非官方）**：Go 宣传的 $120/月约合 **$80 官方 API 等值用量（≈66.5%）**，7 天 $30 约合 $20——因 Design Plan credits 与模型实际 token 消耗存在换算差。
-> - **Ollama**（ollama.com/blog/transparent-pricing）：Pro **$20/月含 $60/月用量**（年付 $200/年 = $16.67/月），Max $100 含 $300，Team $500 含 $1,000 共享；**改为按 token 计费后取消 5 小时 / 每周限制**，超出后按同价 PAYG 继续；零数据留存，托管美国 / 欧洲（+ 新加坡部分 Qwen 模型）。
-> - **OpenCode Go（$10）**：官方文档 opencode.ai/docs/go（**11-22 改版为 5 张表**；逐模型价目/请求数/端点表已移至需登录的 Console Go 页）、官方营销页、官方营销页 opencode.ai/zh/go、docs/zen、清单 API `/inference/go/v1/models`（**31 个 ID / 正文 31 款，差集 0**）
-> - **CommandCode**：commandcode.ai/docs/plans/goat（**SSR 可 curl**：5 张表 = 模型 76 行 + 请求数 66 行 + 额度 22/3/43 行）、docs/resources/pricing-limits（套餐矩阵、滚动窗口、Deals 明细）。**GOAT 页头：GOAT plan 75 / All plans 106 / Deals 3 / Free 2；Pricing & Limits 页头：All 102 / Free 6**
-> - **档位权威源**：CLI 包内官方目录 `command-code@1.88.2` → `package/dist/bundled/command-code-knowledge/reference/models.md`（含 Context / Efforts / $每 1M / Min plan，**94 款**）；**Provider API 在线 96 端点**，差集 2 款为 `inclusionai/ling-3.1-flash-1019`、`stealth/crouton-alpha`（已上线网关、CLI 目录尚未收录）
-> - 🎯 **本文定位**：**同价位横向对比**。**$10 档**：OpenCode Go / CommandCode GOAT / OpenDesign Go（第一至三节）；**$20 档**：Ollama Pro / CommandCode Pro / OpenDesign Plus / OpenCode Go Teams（第五节）。Go 内部的 Teams / Plus 档位单列于**第四节**。
-> - 🎯 **额度口径（用户重点）**：**两平台同价 $10**。⚠️ **同一模型额度可能不同**：`deepseek-v4.1-flash` 双方**均为 $100**（现行同档），但 `glm-5.3-flash` 为 **Go $60 vs GOAT $100**——**两平台不可混用同一数字**。
-> - 月费：**$10 档** = Go $10 / GOAT $10 / OpenDesign Go $10；**$20 档** = Ollama Pro $20 / CommandCode Pro $20 / OpenDesign Plus $20 / Go Teams $20·成员；其余：Go Plus $40 / CommandCode Go $1 / Provider $15 / Max 10× $100 / Max 20× $200 / Team Pro $40 / OpenDesign Pro $100 / Max $200 / Ollama Max $100 / Team $500；折算汇率：1 美元 ≈ 6.7131 元人民币（中国外汇交易中心 2026-11-20 中间价，每轮重取）
-> - **Go Teams / Go Plus 简介**（详表见第四节）：三档 **Token 单价完全相同**，只差月度额度与成员数——**Teams = Go + $5/模型、每成员独立额度**；**Plus = Go × 2/3/4/8 倍、仅限单成员**。
-> - ⚠️ **退役现状**：`stealth/pixel-canary`、`stealth/space-bunny-alpha`、**`stealth/cat-jam:free`（GOAT 侧同步下架）**、**`space-bunny` / `space-bunny-free`（Go/Zen 全线退出）**——均已从网关 API 与 CLI 目录同步移除。
+> - **覆盖范围**：**$10 档**（OpenCode Go / CommandCode GOAT / **OpenDesign Go**）+ **$20 档**（**Ollama Pro** / CommandCode Pro / OpenCode Go Teams / **OpenDesign Go Plus**）。$10 档主对比见第一至三节，$20 档见第五节。
+> - **OpenCode Go**：官方文档 opencode.ai/docs/go（**5 张表**）、**Console Go 页 `opencode.ai/console/go`（公开页，无需登录；Limits / Pricing / Privacy / API 四 Tab）**、清单 API `/inference/go/v1/models`（**31 个 ID，且单价 / 三档额度 / ZDR / 峰谷倍率全在响应里**）。
+> - **CommandCode**：`commandcode.ai/docs/plans/goat`（**SSR 可 curl**，5 张表）；`/docs/resources/pricing-limits`（Deals 明细 + 套餐矩阵）；`/docs/resources/usage-limits`（滚动窗口表）；`/zh/pricing`（档位与等效用量）。**页头计数：GOAT 75 / All plans 106 / Deals 3 / Free 2**；**Pricing & Limits 页 Deals 小节实列 8 条**（两页口径不一致，引用须写页源）。
+> - **档位权威源**：CLI 包内官方目录 `command-code@1.93.0` → `package/dist/bundled/command-code-knowledge/reference/models.md`（**144 行 / 18,990 字节 / 104 款**）；**Provider API 在线 104 端点，与 CLI 目录逐 ID 一致、差集 0**。
+> - **OpenDesign**（open-design.ai/pricing）：**Go $10（首月 $8；年付 $84/年 = $7/月）/ Go Plus $20（首月 $16；$168/年 = $14/月）/ Go Pro $100（首月 $80）/ Go Max $200（首月 $160）**；**月额度上限 Go $220 / Plus $310 / Pro $780 / Max $1,410**；**Design Plan 已更名 Coding Plan**；**官方页已公布逐模型「Est. requests / 7 天」与「Monthly usage」双列**（11 款 Coding Plan 模型 × 4 档）。
+> - **Ollama**（ollama.com/pricing）：Pro **$20/月含 $60/月用量**（年付 $200/年 = $16.67/月），Max $100 含 $300，Team $500 含 $1,000 共享；**按 token 计费、取消 5 小时 / 每周窗口**，超出按同价 PAYG 继续。
+> - 🎯 **本文定位**：**同价位横向对比**。**$10 档**：OpenCode Go / CommandCode GOAT / OpenDesign Go（第一至三节）；**$20 档**：Ollama Pro / CommandCode Pro / OpenDesign Go Plus / OpenCode Go Teams（第五节）。Go 内部的 Teams / Plus 档位单列于**第四节**。
+> - 🎯 **额度口径（用户重点）**：**三平台同价 $10，但额度语义完全不同**——**Go 是"共享百分比池 + 逐模型 $ 分母"**（官方原话「paid models share one allowance」，$15 模型花 $1.50 与 $60 模型花 $6 都是 10%，**不可相加**）；**GOAT 是"逐模型 credits 累加成套餐级 Up to $100"**；**OpenDesign 是"Coding Plan 池 + Top Models 池"双池、且 Go 档 Top Models 为 $0**。
+> - 🎯 **同模型额度对照**：`deepseek-v4.1-flash` **Go $100 = GOAT $100**（持平）；`glm-5.3-flash` **Go $60 vs GOAT $100**（GOAT 高 67%）；`glm-5.3` **Go $500 vs GOAT $70**（促销期内 Go 高 7 倍，但 Go 侧 $500 属 11-22 到期促销）——**两平台不可混用同一数字**。
+> - 月费：**$10 档** = Go $10 / GOAT $10 / OpenDesign Go $10；**$20 档** = Ollama Pro $20 / CommandCode Pro $20 / OpenDesign Go Plus $20 / Go Teams $20·成员；其余：Go Plus $40 / CommandCode Go $1 / Provider $15 / Max 10× $100 / Max 20× $200 / Team Pro $40 / OpenDesign Go Pro $100 / Go Max $200 / Ollama Max $100 / Team $500；折算汇率：1 美元 ≈ 6.7131 元人民币（中国外汇交易中心 2026-11-20 中间价，每轮重取）
+> - **Go Teams / Go Plus 简介**（详表见第四节）：三档 **Token 单价完全相同**，只差月度额度与成员数——**Teams = Go + $5/模型、每成员独立额度**；**Plus = Go × 2 / 3 / 4 倍（上限 4x，无更高档）、仅限单成员**。
+> - ⚠️ **退役现状**：`stealth/pixel-canary`、`stealth/space-bunny-alpha`、**`stealth/cat-jam:free`（GOAT 侧同步下架）**、**`space-bunny` / `space-bunny-free`（Go/Zen 全线退出）**、`xiaomi/mimo-v2.5` 系——均已从网关 API 与 CLI 目录同步移除。
 
 ---
 
@@ -28,66 +29,69 @@ date: 2026-11-22
 
 | 维度 | **OpenCode Go** | **CommandCode GOAT** | **OpenDesign Go** |
 |---|---|---|---|
-| 月费 | **$10** | **$10** | **$10**（首月 $8；年付 $84/年 = $7/月） |
-| 官方定位 | Lower-cost access | 7x credits（$70 credits） | Design Plan 模型额度 |
-| 额度表述 | docs 现行**不披露倍数**（按模型分档 1.5x–8.0x） | 7x（配合 Deals 可超 $100，即 10x+） | 宣传「**每月最高 $120**」 |
-| **月额度上限** | **按模型分档**：$15 / $20 / $30 / $60 / $100 | **按模型分档**：$10 / $20 / $33 / $40 / $47 / $50 / $60 / $70 / $100（套餐级 **Up to $100**） | **$120**（**仅 Design Plan 模型**；plan-model credits = **$0**） |
-| 5 小时窗口 | 月额度 × 20%；套餐级参考 $12 | **Up to $20**（套餐级） | **$10** |
-| 7 天 / 周窗口 | 周 = 月额度 × 50%；参考 $30 | **Up to $50**（套餐级） | **$30**（7 天滚动，**不结转**） |
-| 模型范围 | **31 款正文**（API 实测 31 ID，差集 0） | **GOAT 75 款**（All 106 / 网关 104 / CLI 104） | **仅 Design Plan 清单**（无 premium） |
-| premium 模型 | 部分（GPT-6 Luna、Kimi K3 等） | 有（GPT-5.6 Sol、Claude Opus、Fable 等） | **不可用**（Claude Opus / GPT-6 Sol / Grok 4.7 / Kimi K3 均需 Plus 起） |
-| 免费 / 兜底 | Zen `-free` 9 款 + Big Pickle；**Use balance** 回退 Zen 按量 | 免费 4 款 + PAYG 回落；按需 credits 不受窗口约束 | Free 版**无托管额度**（仅本地 agent / BYOK）；付费版额度用尽后需升档 |
-| API 支持 | 三协议（`/inference/go/*`） | 三协议（Chat Completions / Responses / Messages） | **OpenDesign API key**，可用于 **Codex / Claude Code / OpenCode / Hermes**，**共享同一份额度** |
-| 并发 | 未公布 | 未公布 | **10 个并发任务** |
-| 成员数 | 仅限单成员 workspace | Team Pro / Enterprise 支持团队 | 多人需 Team 档（按席位，3 席起） |
+| 月费 | **$10** | **$10** | **$10**（首月 $8；**黑五首年 $84** = $7/月，次年 $120/年） |
+| 官方定位 | Lower-cost access | Up to $100 credits（10x） | Coding Plan 模型额度 |
+| 额度语义 | **共享百分比池 + 逐模型 $ 分母**（官方原话「paid models **share one allowance**」） | **逐模型 credits 累加**成套餐级 Up to $100 | **双池**：Coding Plan 池 + Top Models 池 |
+| **月额度上限** | **无套餐级总额**；逐模型分 **6 档**：$15 / $20 / $30 / $60 / $100 / **$500**（$500 仅 `glm-5.3`，**属 11-22 到期促销**） | 逐模型分档（$10 / $20 / $40 / $50 / $60 / $70 / $100），套餐级 **Up to $100** | **$220**（Coding Plan 最高 $220 + **Top Models $0**） |
+| 5 小时窗口 | **月额度 × 20%**（自首次使用起 5 小时） | **Up to $20**（套餐级） | 存在 5 小时窗口，**金额未在页面披露** |
+| 7 天 / 周窗口 | **月额度 × 50%**（周一 00:00 UTC 重置） | **Up to $50**（套餐级） | 逐模型给「**Est. requests / 7 天**」（如 DeepSeek V4 Pro 3,120 次） |
+| 模型范围 | **31 款**（API / docs / Console 三源一致） | **GOAT 75 款**（All plans 106 / 网关 104 / CLI 104） | **Coding Plan 11 款**（另有 Top Models 20 款**不含**） |
+| premium 模型 | 部分（`gpt-6-luna`、`kimi-k3`、`grok-4.7`、`claude-haiku-5-5` 等） | 有（GPT / Claude / Gemini 系，Opus 需 Max） | **Go 档完全不可用**（Claude / GPT-6 Astra / Gemini 4 系列需 **Go Plus** 起） |
+| 免费 / 兜底 | Zen `-free` 11 款 + Big Pickle；可开 **Extra Usage** 走 Console credits | 免费 2 款（各 1,000 次/日）+ PAYG 回落 | Free 版**无周期性额度**（仅注册送一次性体验额度）；额度用尽需升档 / 自动充值 / BYOK |
+| API 支持 | 三协议（`/inference/go/{openai,anthropic,google}/v1*`） | 三协议（Chat Completions / Responses / Messages） | **OpenDesign API key**，可用于 Codex / Claude Code / OpenCode / Hermes，**与 App 共用同一份额度** |
+| 并发 | 未公布 | 未公布 | **10 个共享并发任务**（按 workspace 计，加人不加名额） |
+| 成员数 | 仅限单成员 workspace | Team Pro / Enterprise 支持团队 | **邀请成员免费、人数不限**（额度与并发共享） |
 
-### 1.1 OpenDesign Go 的额度结构（与另两家口径不同）
+### 1.1 OpenDesign 的额度结构（与另两家口径不同）
 
 > OpenDesign 的付费计划**买的不是功能，而是托管模型额度**——App 本身开源免费，接本地 agent 或自带 key 则 $0 花费。
 
-**两类额度，决定能用哪些模型**：
+**两类额度池，决定能用哪些模型**：
 
-| 额度类型 | 覆盖模型 | Go 档额度 |
+| 额度池 | 覆盖模型 | Go 档额度 |
 |---|---|---|
-| **Design Plan credits** | Claude Haiku 5.5、GPT-6 Luna、DeepSeek V4.1 Flash、GLM-5.3 Flash / Flash-X、MiMo V2.6 Flash / Pro、Hunyuan H4 Preview、DeepSeek V4 Flash / Pro、Kimi K2.7 Code | **$120/月**（受 5h $10 / 7 天 $30 双窗口约束） |
-| **Plan-model credits** | Claude Opus 5.5 / Sonnet 5.5 / Fable 5.1、GPT-6 Astra / Sol、Gemini 3.8 Flash、Grok 4.7、Kimi K3、图像模型 | **$0**（Go 档不含，需 Plus $20 起） |
+| **Coding Plan** | 11 款：DeepSeek V4.1 Flash / **V4.1 Flash Eco** / V4 Flash / **V4 Pro**、MiniMax M3.1 Flash、GLM-5.3 Flash、Kimi K2.7 Code、Hy4 Preview、MiMo V2.6 Flash / Pro、**DeepSeek V4 Flash Vision Exp** | **最高 $220/月**（官方「Total monthly credits」） |
+| **Top Models** | 20 款：Claude Fable 5.2 / 5.1、Opus 5.5、GPT-6 Astra / Sol / 6.1 Terra、Gemini 4 Neon / Hydrogen / Argon、Kimi K3 / K3.1 Pro、Grok 4.7、Claude Sonnet 5.5、Muse 系等 | **$0（Go 档不含）** |
+| **图像 / 视频 / 音频** | 11 款（Seedream、SeeDance、GPT Image 2.x、Wan 2.7、ElevenLabs 等），**仅 API 可调、客户端不提供** | 需更高档 |
 
-**模型清单（官方页，2026-11-22 抓取）**：
+> 🔑 **扣费顺序官方原话**：「Coding Plan calls consume Coding Plan credits first, then remaining Top Model Credits (Go has none). Top Model calls consume Top Model Credits directly.」——**Go 档调用 premium 模型会直接失败，不是"扣更多"**。
+> 🔑 **额度不结转**：每计费周期重置；**体验额度不按 5 小时 / 7 天周期重置，且不能用于 API**。
 
-| 池 | 模型 | Go 是否可用 |
-|---|---|---|
-| **Design Plan（13 款）** | Claude Haiku 5.5、GPT-6 Luna、DeepSeek V4.1 Flash、MiniMax M3.1 Flash、GLM-5.3 Flash-X、MiMo V2.6 Flash、MiMo V2.6 Pro、Hunyuan H4 Preview、DeepSeek V4 Flash、DeepSeek V4 Flash Vision Exp、DeepSeek V4 Pro、GLM-5.3 Flash、Kimi K2.7 Code（**另 GPT-6.1 Sol 已并入 Design Plan，限时 2× usage**） | ✅ 全部可用 |
-| **Plan models（16 款）** | GPT-6 Astra、Claude Fable 5.1、Claude Opus 5.5、GPT-6 Sol、GPT-6.1 Terra、Kimi K3.1 Pro、Muse Spark 1.3、Gemini 4 Argon、Kimi K3、Grok 4.7、Gemini 3.8 Flash、Claude Sonnet 5.5、Muse Wonder、Seedream 5 Lite / Pro、Nano Banana 2、GPT Image 2 | ❌ **不含** |
+**全档位对照（官方页 11-22 抓取）**：
 
-> ⚠️ **逐模型额度与请求数：官方未公布**——OpenDesign 只给**总 credits 池**（Go $120 / Plus $160 / Pro $360 / Max $600 的 Design Plan 池，另加 plan-model 池），**不按模型拆分额度，也不提供「每月多少次请求」的换算表**。因此本工作区**不对其逐模型额度或请求数做任何估算**；需要与实际用量对齐时，只能靠平台后台的额度剩余百分比反推（属实测，非公布值）。
+| 档位 | 月付 | 首月价 | 年付首年 | 次年续费 | **月总额度** | Coding Plan | Top Models | 并发 | Top 模型数 |
+|---|---|---|---|---|---|---|---|---|---|
+| Free | $0 | — | — | — | 无周期性额度 | — | — | — | — |
+| **Go** | **$10** | $8 | **$84（$7/月）** | $120/年 | **$220** | $220 | **$0** | 10 | 11 款 |
+| **Go Plus** | **$20** | $16 | **$168（$14/月）** | $240/年 | **$310** | $290 | **$20** | 20 | 20 款 |
+| **Go Pro** | **$100** | $80 | **$720（$60/月）** | $1,200/年 | **$780** | $660 | $120 | 30 | 30 款 |
+| **Go Max** | **$200** | $160 | **$1,200（$100/月）** | $2,400/年 | **$1,410** | $1,110 | $300 | 50 | 50 款 |
 
-**🔑 DeepSeek 计费口径核实（2026-11-22 抓取）**：
+> ⚠️ **黑五促销进行中**（页面倒计时约 1 天 19 时）：年付首年折扣、Claude / GPT 系列 **9 折**、**DeepSeek V4.1 Flash 与 V4.1 Flash Eco 7 天无限用**。**首年价属促销，次年按上表续费价**，预算须按续费价算。
 
-官方页当前挂有促销横幅，逐字为：
+**Coding Plan 逐模型额度（官方页「Coding Plan usage」表，4 档全列）**：
 
-> **DeepSeek V4.1 Flash 1017 · Official API · All-day off-peak rates for one week**
+| 模型 | Go 7 天请求 / 月额度 | Go Plus | Go Pro | Go Max |
+|---|---|---|---|---|
+| **DeepSeek V4.1 Flash Eco** | **266,933 次 / $220** | 359,270 / $290 | 800,800 / $660 | 1,346,800 / $1,110 |
+| **DeepSeek V4.1 Flash** | 145,600 / $120 | 194,200 / $160 | 436,800 / $360 | 728,000 / $600 |
+| DeepSeek V4 Flash | 36,700 / $60 | 48,900 / $80 | 110,100 / $180 | 183,500 / $300 |
+| MiMo V2.6 Flash | 20,675 / $15 | 27,575 / $20 | 62,025 / $45 | 103,375 / $75 |
+| DeepSeek V4 Flash Vision Exp | 19,000 / $60 | 25,300 / $80 | 57,000 / $180 | 95,000 / $300 |
+| GLM-5.3 Flash | 18,000 / $60 | 24,000 / $80 | 54,000 / $180 | 90,000 / $300 |
+| MiniMax M3.1 Flash | 16,300 / $60 | 21,700 / $80 | 48,800 / $180 | 81,400 / $300 |
+| MiMo V2.6 Pro | 6,650 / $15 | 8,875 / $20 | 19,950 / $45 | 33,275 / $75 |
+| Hy4 Preview | 3,920 / $60 | 5,230 / $80 | 11,800 / $180 | 19,600 / $300 |
+| Kimi K2.7 Code | 3,750 / $60 | 5,000 / $80 | 11,200 / $180 | 18,800 / $300 |
+| DeepSeek V4 Pro | 3,120 / $60 | 4,160 / $80 | 9,360 / $180 | 15,600 / $300 |
 
-- **促销期内（一周）**：DS V4.1 Flash **全天按 off-peak 费率**计价（$0.15 / $0.60），对用户有利。
-- **促销期后**：恢复**标准峰谷计价**——工作日 **01–04 & 06–10 UTC** 为 peak，单价是 off-peak 的 **2 倍**（$0.30 / $1.20）。
-- **但"体感按高峰价"确有依据**：官方同时明示促销周的额度折算——**Go 的 Design Plan credits 按 off-peak 费率最多提供 $60 的 DeepSeek V4.1 Flash 用量等值**（Plus $80 / Pro $180 / Max $300）。即 **$120 面值 credits 只换到 $60 官方 API 等值用量，等效扣费率 2×**，与"全天按高峰价"的体感一致。
-- **口径结论**：`$120` 是 **credits 面值**，`$60` 是**官方自述的 DS 用量等值**，两者不可混为一谈；第三方网关实测的 $80 等值（66.5%）介于两者之间，属不同促销状态下的观察，**两者都已标注来源，互不替代**。
-
-**全档位对照**（官方页 2026-10-19）：
-
-| 档位 | 月付 | 年付（折月） | 月额度上限 | 其中 plan-model | 7 天窗口 | 5 小时窗口 | 并发 |
-|---|---|---|---|---|---|---|---|
-| Free | $0 | — | 无托管额度（本地 agent / BYOK） | — | — | — | — |
-| **Go** | **$10**（首月 $8） | $7（$84/年） | **$120** | **$0** | $30 | $10 | 10 |
-| Plus | $20（首月 $16） | $14（$168/年） | **$180** | $20 | $40 | 不设 | 20 |
-| Pro | $100（首月 $70） | $60（$720/年） | $480 | $120 | $90 | 不设 | 30 |
-| Max | $200（首月 $120） | $98（$1,176/年） | $900 | $300 | $150 | 不设 | 30 |
-
+> 🔑 **读法**：与 Go 的语义相同——「Monthly usage」是**该模型单独用到月额度上限时的分母**，**不是可累加的子额度**；表中「Go 7 天请求」是官方按典型用量估的**请求数**（OpenDesign 是唯一同时公布请求数与美元额度的平台）。
 > 🔑 **与另两家的三个结构性差异**：
-> 1. **额度分两池且 premium 另计**——Go 的 $120 **一分 premium 都不能用**，Claude Opus / GPT-6 Sol / Kimi K3 全部不可达；GOAT 与 Go 均可在同一额度池内选 premium 模型（受逐模型额度限制）。
-> 2. **三重窗口同时生效**——Go 受 5 小时 $10 + 7 天 $30 + 月 $120 三层约束，**周窗口 $30 是实际瓶颈**（月额度需四周各 $30 才能吃满）。
-> 3. **⚠️ 宣传额度 ≠ 官方 API 等值**——第三方网关实测（OctaFuse，经 DeepSeek 官方价表反推）：**7 天 $30 实际约合 $20 官方 API 等值，月 $120 约合 $80（≈66.5%）**。同口径下 CommandCode GOAT 的 $100 几乎无缩水。**采购应以实测等值为准，不能直接拿 $120 与 GOAT 的 $100 对比。**
+> 1. **双池且 premium 另计**——Go 的 $220 **一分 Top Models 都不能用**；GOAT 与 Go 均可在同一额度池内选 premium 模型（受逐模型额度限制）。
+> 2. **年付折扣力度最大**——黑五首年 Go $84 折 $7/月，是三家 $10 档里唯一有**年付 + 首年折扣**的。
+> 3. **⚠️ 面值 ≠ 官方 API 等值**——第三方网关实测（OctaFuse，经 DeepSeek 官方价表反推）显示其 credits 折算约为面值的 **66.5%**；同口径下 GOAT 的 $100 几乎无缩水。**采购应以实测等值为准。**
 
-### CommandCode 全档位矩阵（11-15）
+### CommandCode 全档位矩阵（11-22）
 
 | 计划 | 价格/月 | Credits/月 | 估算请求 | 5h / 周窗口 |
 |---|---|---|---|---|
@@ -100,22 +104,25 @@ date: 2026-11-22
 | **Team Pro** | $40 | $40 | ~35K | $12 / $24 |
 | **Enterprise** | $5,000+ | Custom | Custom pool | 无滚动窗口上限 |
 
-> **四源计数口径不同，引用必须写明来源**：网关 API **104** / CLI 1.93.0 目录 **104**（**两源已完全收敛，差集 0**）/ GOAT 页 **GOAT plan 75 / All plans 106 / Deals 3 / Free 2** / limits 页 All **106 / Free 2**。页面计数与目录口径不同，任一源单独引用都可能给出错误数。
+> **四源计数口径不同，引用必须写明来源**：网关 API **104** / CLI **1.93.0** 目录 **104**（**两源逐 ID 一致，差集 0**）/ GOAT 档位文档页头 **GOAT plan 75 / All plans 106 / Deals 3 / Free 2** / Pricing & Limits 页头 **All 108 / Deals 3 / Free 2**。⚠️ **Deals 徽章两页都写 3，但 Pricing & Limits 的 Deals 小节实际列了 8 条**——徽章数与条目数不是一回事，引用须写清。页面计数与目录口径不同，任一源单独引用都可能给出错误数。
 > **滚动窗口按"credit 价值"计量**，不是请求数——便宜模型（如 DeepSeek V4 Flash）能把同一份额度拉长得多。**套餐级额度按档位递进：Go $10 → GOAT $100 → Pro $110 → Max 10× $150 → Max 20× $300**（`Up to` 表示按逐模型分档累加的上限）。
 
 ### GOAT 功能与限制要点
 
 - **思考强度调节**：内置 `/effort [level]` + 全局 `effort` / 逐模型 `reasoningEffort`（low→max，**按模型支持**；不支持时提示 "effort isn't supported for that model"）。
 - **Provider API**：Chat Completions + Responses + Messages 三协议；**除 Command Code Go 计划外全部计划有 API 访问**（Go 计划用 Key 调 Provider API 返回 **403 `upgrade_required`**）；Provider 套餐 $15/月 + **$1.01 卡费**，PAYG 无加价、Deals 自动应用；模型命名 `provider/model-slug`（Claude 系无前缀，如 `claude-sonnet-5-5`）；流式 usage 自动回传，无需 opt-in；另有 **422 `cmd_zdr_no_providers`**（ZDR 下无可用 provider）。
-- **Deals 现为 3 条（11-22）**：`glyph-cluster-free`（stealth preview 期免费）、**`flint-v1.0:free`（新增）**、`minimax-m3` **2× usage（50% off）**。⚠️ **本轮退出**：`laguna-s-2.1-free`、`crouton-alpha-free`、**`beam-free`（CLI 1.89.0 明示 retire the free Beam 1.0 model）**；`jev-free` 仍为已到期残留记录，不计入生效 Deals。
-- **免费档现为 2 条**：**`recursive/flint-v1.0:free`**（Flint，262K）、`glyph-cluster:free`（每日 100 次，while the stealth preview lasts）。⚠️ **已退出**：`thinkingmachines/inkling-2-small:free`、`poolside/laguna-s-2.1-free`、`stealth/crouton-alpha`、`reflection/beam:free`、`minimax-m3.1-flash:free`、`ornith-1.5-122b:free`。
+- **Deals 清单（Pricing & Limits 页 Deals 小节实列 8 条）**：**提额 6 条** —— `deepseek-v4.1-flash`（$10 Go / **$100 GOAT** / $110 Pro）、`glm-5.3-flash`（同左，while capacity lasts）、`ling-3.1-flash`（$100 GOAT / $110 Pro）、`ling-3.1-flash-1019`（$100 GOAT / $110 Pro）、`glm-5.3`（$10 Go / $70 GOAT / $80 Pro）、`minimax-m3`（**2× usage**）；**免费 2 条** —— `glyph-cluster:free`、`flint-v1.0:free`（各 **1,000 次/日**，且不消耗额度）。
+- **免费档现为 2 条**：**`recursive/flint-v1.0:free`**（Flint，262K）、`glyph-cluster:free`（**各 1,000 次/日**，while the stealth preview lasts）。⚠️ **已退出**：`thinkingmachines/inkling-2-small:free`、`poolside/laguna-s-2.1-free`、`stealth/crouton-alpha`、`reflection/beam:free`、`minimax-m3.1-flash:free`、`ornith-1.5-122b:free`。
 - **地理限制**：**GPT-5.6 Luna（OpenAI）与 Gemini 3.7 / 3.8 Flash（Google）在中国内地不可用**（官方 Geo model limits 表）。
 - **⚠️ 额度是"共享单池"**：低额度模型按比例消耗更多 credits，**不可把各模型额度简单相加**；滚动窗口按月度额度比例自动生成（GOAT 套餐级 Up to $100 → 5h $20 / 周 $50）。
 - **开源仍未兑现**（页面口径 delay "later this month"）。
 
-> **🔄 新模型查询要求（每次核对必做）**：全目录以 `curl -s https://api.commandcode.ai/provider/v1/models`、CLI 包内目录（1.88.2 = 94 款）与 GOAT 页头计数（**72 / 98 / 5 / 4**）、Pricing & Limits 页 Deals 小节（**当前 Deals 5 条 = 免费 4 + 付费 1**）**四源交叉 diff**（⚠️ **网关 96 与 CLI 目录 94 存在 2 款差集，须同时记录**）。Go 侧用 `curl -sL https://opencode.ai/inference/go/v1/models`（**28 ID**）对 docs/go 正文（**30 款**）。**档位与价格以 CLI 包内官方目录为准**：`npm pack command-code@latest` → `tar xzOf command-code-*.tgz package/dist/bundled/command-code-knowledge/reference/models.md`（当前 = CLI **1.88.2**，含 Context/Efforts/$每1M/Min plan；CHANGELOG 同步取以捕捉退役公告）。⚠️ **包体约 4.2 MB，禁止全量 `tar xzf`（沙箱 /tmp 配额不足），必须 `tar xzOf` 流式取单文件**。**GOAT 页 10-18 起为 SSR**：请求数表、额度三表、模型表均可直接 `curl -sL` + HTML 解析，无需浏览器；Caps 列的 "+1" 展开值仍为客户端渲染。完整规则见 [OpenCode Go 模型配置指南](/model-intel/opencode-go-model-guide/) 同名节。
+> **🔄 新模型查询要求（每次核对必做）**：四源交叉 diff —— ① `curl -s https://api.commandcode.ai/provider/v1/models`（**104**）；② CLI 包内目录（`command-code@1.93.0`，**104 款 / 144 行 / 18,990 字节**）；③ GOAT 档位文档页头（**75 / 106 / 3 / 2**）；④ Pricing & Limits 页（**All 108 / Deals 3 / Free 2**，Deals 小节实列 **8 条**）。**四源现已收敛到 104 款（差集 0），但页面计数口径仍各不相同。**
+> Go 侧：`curl -sL https://opencode.ai/inference/go/v1/models`（**31 个 ID**）对 docs/go 正文（**31 款**）对 Console Go 页（**31 款**）——**三源一致**。
+> **档位与价格以 CLI 包内官方目录为准**：`npm pack command-code@latest` → `tar xzOf command-code-*.tgz package/dist/bundled/command-code-knowledge/reference/models.md`（含 Context / Efforts / $每1M / Min plan；CHANGELOG 同步取以捕捉退役公告）。⚠️ **包体约 4.3 MB，禁止全量 `tar xzf`（沙箱 /tmp 配额不足），必须 `tar xzOf` 流式取单文件**。
+> ⚠️ **`commandcode.ai/goat` 已改为用户主页（重定向 `/zh/goat`），档位页现为 `/docs/plans/goat`（SSR 可 curl）**；`/pricing` 与 `/zh/pricing` 亦为 SSR。完整规则见 [OpenCode Go 模型配置指南](/model-intel/opencode-go-model-guide/) 同名节。
 
-**关键差异**：GOAT 套餐级限额 **Up to $100** vs Go 参考值 $60，5 小时 **$20** vs $12、每周 **$50** vs $30。**但两平台额度都按模型分档**（Go：$15 / $20 / $30 / $60 / $100 五档；GOAT：$10~$100 十档），**套餐级数字只是默认参考值，比较必须落到逐模型，见第二节。**
+**关键差异**：GOAT 有**套餐级限额 Up to $100 / 5h $20 / 周 $50**；**Go 没有套餐级总额**，只有**逐模型 $ 分母 + 共享百分比池**（5h = 20%、周 = 50%）。**Go 逐模型分 6 档（$15 / $20 / $30 / $60 / $100 / $500），GOAT 分 8 档（$10 ~ $100）**——**套餐级数字只是默认参考值，比较必须落到逐模型，见第二节。**
 
 > **Go 内部档位（Teams / Plus）不与 GOAT 混比**——它们属于 OpenCode 生态内的升档选项，详见**第四节「OpenCode 内部档位对比」**。
 
@@ -123,92 +130,78 @@ date: 2026-11-22
 
 ## 二、逐模型额度对比
 
-### 2.1 两边均有：请求数对比（每5小时 / 每周 / 每月）
+### 2.1 两边均有：请求数与月额度对比
 
-> Go 列取 docs/go 请求数表（29 行）；GOAT 列取 GOAT 页请求数表（58 行）。**限时翻倍值单列在备注**。
+> **Go 列**取自 Console Go 页 Limits Tab 的「Est. requests / 5 hr」+ API 的 `go.monthly_usage.go`；**GOAT 列**取自 `docs/plans/goat` 的「Requests / 5 hours」表 + 月 credits 表（**65 款**有完整三列）。⚙️ 注意：**两张请求数表各自按自家"典型请求"估算，token 口径不同，不能当精确换算**。
 
-| 模型 | Go 5h/周/月 | GOAT 5h/周/月 | Go 月额度 | GOAT 月额度 | 差异结论 |
+| 模型 | Go 5h 请求 | GOAT 5h 请求 | Go 月额度 | GOAT 月额度 | 结论 |
 |---|---|---|---|---|---|
-| **DeepSeek V4.1 Flash** | 43,330 / 108,330 / **216,670** | **51,300 / 128,000 / 256,000** | **$100** | **$100** | **额度完全持平（10.0x）**；GOAT 请求数 +18%（同额度下其典型 token 口径更小） |
-| GLM-5.3 | 220 / 540 / 1,080 | 271 / 677 / 1,350 | $15 | $20 | GOAT +25% 请求、+33% 额度 |
-| GLM-5.2 | 880 / 2,150 / 4,300 | 947 / 2,370 / 4,740 | $60 | **$70** | GOAT +10% 请求、+17% 额度 |
-| **GLM-5.3 Flash** | 6,320 / 15,790 / 31,580 | 11,800 / 29,500 / 59,000 | **$60** | **$100** | **GOAT 额度反超 67%（10.0x vs 6.0x）** |
-| **Kimi K3.1 Pro** | 147 / 368 / 735 | **294 / 735 / 1,470** | $15 | $20 | **GOAT 请求 +100%、+33% 额度**（10-23 新上架） |
-| Kimi K3 | 110 / 250 / 490 | 196 / 490 / 980 | $15 | $20 | GOAT +78% 请求、+33% 额度 |
-| Kimi K2.7 Code | 1,350 / 3,380 / 6,750 | 1,080 / 2,710 / 5,420 | $60 | $60 | **Go +25% 请求**（额度持平） |
-| LongCat-2.0 | 11,400 / 28,600 / 57,200 | 12,800 / 32,100 / 64,100 | **$60** | $50 | **Go 额度更高**；GOAT 请求 +12% |
-| **Step 5 Preview** | 430 / 1,070 / 2,130（**限时 4x = 1,720 / 4,280 / 8,520**） | 1,040 / 2,600 / 5,210 | $15（**限时 $60**） | $20 | 常态 GOAT 请求 2.4x；**Go 限时窗口内额度反超 3x** |
-| MiMo-V2.5 | 30,100 / 75,200 / 150,400 | 19,500 / 48,700 / 97,400 | **$60** | $30 | **Go 大幅领先**（额度 2x、请求 1.54x） |
-| **MiMo-V2.6-Flash** | 30,100 / 75,200 / 150,400 | 13,000 / 32,500 / 64,900 | **$60** | $20 | **Go 3x 额度、2.3x 请求**（GOAT 侧为 up to 98% off 计费） |
-| MiMo-V2.5-Pro | 3,250 / 8,150 / 16,300 | 5,700 / 14,200 / 28,500 | $15 | $20 | GOAT +75% 请求、+33% 额度 |
-| MiMo-V2.6-Pro | 3,250 / 8,150 / 16,300 | 5,700 / 14,200 / 28,500 | $15 | $20 | 同上（与 V2.5-Pro 同口径） |
-| MiniMax M3 | 3,200 / 8,000 / 16,000 | 2,770 / 6,930 / 13,900 | **$60** | $47 | **Go +15% 请求、$60 > $47**（GOAT 侧标 2× usage） |
-| Muse Spark 1.3 Contributor | 45,300 / 113,300 / 226,600 | 18,200 / 45,500 / 90,900 | **$60** | $20 | **Go +149% 请求、3x 额度** |
-| Muse Spark 1.2 Contributor | 45,300 / 113,300 / 226,600 | 18,200 / 45,500 / 90,900 | **$60** | $20 | 同上 |
-| Qwen3.8 Max | 160 / 400 / 810 | 261 / 654 / 1,310 | $15 | $20 | GOAT +62% 请求、+33% 额度 |
-| Qwen3.8 Flash | 5,400 / 13,500 / 27,000 | 3,910 / 9,780 / 19,600 | **$30** | $20 | **Go +38% 请求、$30 > $20**（GOAT 输入价 $0.16 vs Go $0.15） |
-| Qwen3.7 Plus | 4,300 / 10,800 / 21,600 | 1,420 / 3,560 / 7,110 | **$60** | $33 | **Go +204% 请求、额度近 2x**（GOAT 缓存读 $0.08 vs Go $0.04） |
-| DeepSeek V4 Pro | 1,050 / 2,600 / 5,200 | 1,980 / 4,940 / 9,880 | $15 | $20 | GOAT +90% 请求、+33% 额度 |
-| Hy3 | 4,300 / 10,750 / 21,500 | 7,080 / 17,700 / 35,400 | $60 | **$70** | GOAT +65% 请求、+17% 额度 |
-| Hy4 preview | 1,350 / 3,380 / 6,770 | 1,220 / 3,060 / 6,120 | **$30** | $20 | **Go 请求 +11%、额度 $30 > $20** |
-| Grok 4.7 | 169 / 423 / 845 | 144 / 360 / 719 | $15 | $20 | **Go 请求 +17%**；GOAT 额度 +33% |
-| GPT 6 Luna | 4,230 / 10,560 / 21,130 | 6,060 / 15,200 / 30,300 | $15 | $20 | GOAT +43% 请求、+33% 额度（Go 单价更低 $0.10/$0.50） |
-| GPT 5.6 Luna | 2,050 / 5,100 / 10,250 | 2,960 / 7,400 / 14,800 | $15 | $20 | GOAT +44% 请求、+33% 额度 |
-| Claude Haiku 5.5 | 3,850 / 9,620 / 19,230 | 5,970 / 14,900 / 29,900 | $15 | $20 | GOAT +55% 请求、+33% 额度 |
-| Beam（免费） | Unlimited（`beam-free`） | 免费（`beam:free`，无日限） | 免费 | 免费 | 两侧均不消耗额度 |
-| **MiniMax M3.1 Flash Free** | Unlimited（`minimax-m3.1-flash-free`，限时） | 免费（`minimax-m3.1-flash:free`，无日限，限时） | 免费 | 免费 | 两侧均不消耗额度；GOAT 另有付费档（$20，4,230 / 10,600 / 21,200） |
+| **`deepseek-v4.1-flash`** | 43,300 | **51,300** | **$100** | **$100** | **额度完全持平**；GOAT 请求数 +18%（其典型 token 口径更小） |
+| **`glm-5.3-flash`** | 6,320 | **11,800** | $60 | **$100** | **GOAT 双高**：额度 +67%、请求 +87% |
+| **`glm-5.3`** | 6,600 | 947 | **$500**（促销） | $70 | **Go 额度 7 倍**——但 Go 侧 $500 属 11-22 到期促销，回落至 $15 后 GOAT 反超 |
+| `kimi-k3` | 98 | **196** | $15 | $20 | GOAT 请求 +100%、额度 +33% |
+| `kimi-k3.1-pro` | 147 | **294** | $15 | $20 | GOAT 请求 +100%、额度 +33% |
+| `kimi-k2.7-code` | 994 | **1,080** | **$60** | **$60** | 额度持平；GOAT 请求 +9% |
+| **`longcat-2.0`** | **11,400** | 12,800 | **$60** | $50 | **Go 额度 +20%**；GOAT 请求 +12% |
+| `step-5-preview` | 426 | **1,040** | $15 | $20 | GOAT 请求 **+144%**、额度 +33% |
+| `claude-haiku-5-5` | 3,850 | **5,970** | $15 | $20 | GOAT 请求 +55%、额度 +33% |
+| `gpt-6-luna` | 4,230 | **6,060** | $15 | $20 | GOAT 请求 +43%、额度 +33% |
+| `gpt-5.6-luna` | 2,050 | **2,960** | $15 | $20 | GOAT 请求 +44%、额度 +33% |
+| `qwen3.8-max` | 162 | **261** | $15 | $20 | GOAT 请求 +61%、额度 +33% |
+| `qwen3.7-plus` | **4,310** | 1,420 | **$60** | $33 | **Go 双高**：额度 +82%、请求 3 倍 |
+| `qwen3.8-flash` | **5,400** | 3,910 | **$30** | $20 | **Go 额度 +50%**、请求 +38% |
+| `minimax-m3` | **3,210** | 2,770 | **$60** | $47 | Go 额度 +28%；**GOAT 另有 `2× usage` Deal → 等效 $94**，实际反超 |
+| `minimax-m3.1-flash` | 3,880 | **4,230** | **$20** | **$20** | 额度持平；GOAT 请求 +9% |
+| `grok-4.7` | **169** | 144 | $15 | $20 | GOAT 额度 +33%；Go 请求 +17% |
+| `deepseek-v4-pro` | 1,040 | **1,980** | $15 | $20 | GOAT 请求 +90%、额度 +33% |
+| **`mimo-v2.6-flash`** | **30,100** | 13,000 | **$60** | $20 | **Go 额度 3 倍、请求 2.3 倍** |
+| `mimo-v2.6-pro` | 3,260 | **5,700** | $15 | $20 | GOAT 请求 +75%、额度 +33% |
+| **`muse-spark-1.3-contributor`** | **45,300** | 428 | **$60** | $20 | **Go 额度 3 倍、请求 106 倍**（GOAT 侧口径极保守） |
+| **`ling-3.1-flash` / `-1019`** | ❌ 未上架 | 5,850 | — | **$100** | **GOAT 独占**（Deal 后仍 $100） |
 
-**仅一侧收录**：
-
-| 模型 | Go | GOAT | 说明 |
-|---|---|---|---|
-| **Ornith 1.5 122B** | ❌ 未收录 | $20（3,180 / 7,960 / 15,900）+ 限时免费档 | **GOAT 独占**（OpenRouter 无此 slug，仅 CC） |
-| **LongCat 2.5 Preview Free** | ❌ 已退出正文 | ❌ 未收录 | 两侧均已下架（Zen 侧 `longcat-2.5-preview-free` 同步移除） |
-| **Gemini 4 Argon**（原 `gemini-4-argon-contributor` 更名） | $30（50% off 期；440 / 1,080 / 2,120） | ❌ 未收录 | **Go 独占**（GOAT 仅有 3.7/3.8 Flash） |
-
-#### 请求数差异要点
-
-1. **Go 占优（请求更多）**：Kimi K2.7 Code（+25%）、MiniMax M3（+15%）、MiMo-V2.5（+54%）、**MiMo-V2.6-Flash（+131%）**、Muse Spark Contributor（+149%）、Qwen3.7 Plus（+204%）、Qwen3.8 Flash（+38%）、Hy4 preview（+11%）、Grok 4.7（+17%）。
-2. **GOAT 占优（请求更多）**：DeepSeek V4.1 Flash（+18%）、GPT 5.6 / 6 Luna（+44% / +43%）、Hy3（+65%）、LongCat 2.0（+12%）、Claude Haiku 5.5（+55%）、MiMo-V2.5-Pro / V2.6-Pro（+75%）、DeepSeek V4 Pro（+90%）、Kimi K3（+78%）、**GLM-5.3 Flash（+49%）**、Step 5 Preview（+144%）。
-3. **额度分配策略不同**：Go 按模型分 **$15 / $20 / $30 / $60 / $100** 五档（+ 2 款限时免费不限量）；GOAT 分 **$100 / $80 / $70 / $60 / $50 / $47 / $40 / $33 / $20 / $10** 多档，**且 `planBudgetSteps` 会按日期自动切换档位**（deepseek 与 glm-5.3-flash 的 $100→$80 回落即由该机制驱动）。
+> **读数小结**：
+> - **GOAT 在"小额度档"（$15 → $20）普遍多给 33% 额度**，且请求数估算更宽松——Go 的 $15 档模型（`kimi-k3`、`qwen3.8-max`、`grok-4.7`、`deepseek-v4-pro`、`gpt-*`、`claude-haiku-5-5`、`step-5-preview`、`mimo-v2.6-pro`）**几乎全是 GOAT 更优**。
+> - **Go 在"高额度档"更慷慨**：`mimo-v2.6-flash`（$60 vs $20）、`muse-spark-1.3`（$60 vs $20）、`qwen3.7-plus`（$60 vs $33）、`longcat-2.0`（$60 vs $50）——这几款是 Go 的强项。
+> - **`glm-5.3-flash` 是 GOAT 最明显的优势项**（$100 vs $60），而 `glm-5.3` 反之（促销期）。
 
 ### 2.2 月额度（Credits）逐模型对比
 
-> 性价比口径：**月额度 ÷ 月费 $10**（Go 与 GOAT **同价 $10**，可直接比）。Go 侧升档（Teams / Plus）的性价比另见**第四节**。
+> 性价比口径：**月额度 ÷ 月费 $10**（Go 与 GOAT **同价 $10**，可直接比）。Go 侧升档（Teams / Plus）的性价比另见**第四节**。**Go 列取 `go.monthly_usage.go`，GOAT 列取 GOAT 页月 credits 表**，均为 11-22 实测。
 
 | 模型 | Go 月额度 | GOAT 月额度 | Go 性价比 | GOAT 性价比 | 胜出 |
 |---|---|---|---|---|---|
-| **DeepSeek V4.1 Flash** | **$100** | **$100** | **10.0x** | **10.0x** | **持平**（双方同为最高档） |
-| **GLM-5.3 Flash** | $60 | **$100** | 6.0x | **10.0x** | **GOAT**（额度 +67%） |
-| Ling 3.1 Flash | ❌ 未上架 | **$100** | — | **10.0x** | GOAT 独占 |
-| Qwen 3.8 27B | ❌ 未上架 | $70 | — | 7.0x | GOAT 独占 |
-| GLM-5.2 | $60 | $70 | 6.5x | 7.0x | GOAT |
+| DeepSeek V4.1 Flash | $100 | $100 | 10.0x | 10.0x | **持平** |
+| GLM-5.3 Flash | $60 | $100 | 6.0x | 10.0x | **GOAT** |
+| GLM-5.3 | $500 | $70 | 50.0x | 7.0x | **Go** |
+| Kimi K3 | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| Kimi K3.1 Pro | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| Kimi K2.7 Code | $60 | $60 | 6.0x | 6.0x | **持平** |
+| LongCat 2.0 | $60 | $50 | 6.0x | 5.0x | **Go** |
+| Step 5 Preview | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| Claude Haiku 5.5 | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| GPT-5.6 Luna | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| GPT-6 Luna | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| Qwen 3.8 Max | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| Qwen 3.7 Plus | $60 | $33 | 6.0x | 3.3x | **Go** |
+| Qwen 3.8 Flash | $30 | $20 | 3.0x | 2.0x | **Go** |
+| Qwen 4 Max | $15 | $15 | 1.5x | 1.5x | **持平** |
+| MiniMax M3 | $60 | $47 | 6.0x | 4.7x | **Go** |
+| MiniMax M3.1 Flash | $20 | $20 | 2.0x | 2.0x | **持平** |
+| Grok 4.7 | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| DeepSeek V4 Pro | $15 | $20 | 1.5x | 2.0x | **GOAT** |
 | Hy3 | $60 | $70 | 6.0x | 7.0x | **GOAT** |
-| Kimi K2.7 Code | $60 | $60 | **8.2x** | 6.0x | **Go**（额度同、请求更宽、单次成本更低） |
-| MiniMax M3 | $60 | $47 | 6.0x | 4.7x | Go |
-| Qwen 3.7 Plus | $60 | $33 | 6.0x | 3.3x | Go |
-| MiMo V2.5 | $60 | $30 | 6.0x | 3.0x | **Go 大幅领先** |
-| MiMo V2.6 Flash | **$60** | $20 | **6.0x** | 2.0x | **Go 大优（3x）** |
-| Muse Spark 1.3 / 1.2 Contributor | $60 | $20 | 6.0x | 2.0x | **Go 大优（3x）** |
-| DeepSeek V4 Flash | ❌ 未上架 | $60 | — | 6.0x | GOAT 独占 |
-| DeepSeek V4.1 Flash Fast | ❌ 未上架 | $60 | — | 6.0x | GOAT 独占 |
-| **MiniMax M3.1 Flash** | **$20**（3,880 / 9,690 / 19,380） | $20 | **2.0x** | 2.0x | **双方均已上架付费档**（Go 侧 Zen 免费端点已下架） |
-| LongCat 2.0 | $60 | $50 | 6.0x | 5.0x | **Go 略优** |
-| **GLM-5.3** | $15 | **$70** | 1.5x | **7.0x** | GOAT 现行额度；⚠️ **Go 侧「更高额度」窗口于 11-22 到期**（见 §四） |
-| Kimi K3 | $15 | $20 | 1.5x | 2.0x | GOAT |
-| MiMo V2.5 Pro / V2.6 Pro | $15 | $20 | 1.5x | 2.0x | GOAT |
-| Qwen 3.8 Max | $15 | $20 | 1.5x | 2.0x | GOAT |
-| DeepSeek V4 Pro | $15 | $20 | 1.5x | 2.0x | GOAT |
-| GPT-5.6 Luna / GPT-6 Luna | $15 | $20 | 1.5x | 2.0x | GOAT |
-| Grok 4.7 | $15 | $20 | 1.5x | 2.0x | GOAT 额度更高，Go 请求更多 |
-| Claude Haiku 5.5 | $15 | $20 | 1.5x | 2.0x | GOAT |
-| Step 5 Preview | $15（限时 **$60**） | $20 | 1.5x（限时 **6.0x**） | 2.0x | **限时窗口内 Go 反超 3x** |
-| Gemini 4 Argon Contributor | **$30**（限时 **$60**） | ❌ 未收录 | **3.0x**（限时 6.0x） | — | **Go 独占** |
-| Hy4 preview | **$30** | $20 | 3.0x | 2.0x | **Go 额度/请求均更优** |
-| Qwen3.8 Flash | **$30** | $20 | 3.0x | 2.0x | **Go 额度/请求更优** |
-| Ornith 1.5 122B | ❌ 未收录 | **$20** | — | 2.0x | **GOAT 独占**（262K、$0.16/$0.64/$0.02，无推理档位公布） |
-| LongCat 2.5 Preview Free | 限时免费不限量 | ❌ 未收录 | — | — | **Go 独占** |
-| Beam（免费） | 限时免费不限量 | 免费无日限 | — | — | 两侧均免费 |
+| Hy4 | $60 | $20 | 6.0x | 2.0x | **Go** |
+| Hy4 preview | $30 | $20 | 3.0x | 2.0x | **Go** |
+| MiMo V2.6 Flash | $60 | $20 | 6.0x | 2.0x | **Go** |
+| MiMo V2.6 Pro | $15 | $20 | 1.5x | 2.0x | **GOAT** |
+| Muse Spark 1.2 Contributor | $60 | $20 | 6.0x | 2.0x | **Go** |
+| Muse Spark 1.3 Contributor | $60 | $20 | 6.0x | 2.0x | **Go** |
+| Gemini 4 Argon | $30 | ❌ 未上架 | 3.0x | — | **Go 独占** |
+
+> **四项持平**：`deepseek-v4.1-flash`（$100）、`kimi-k2.7-code`（$60）、`qwen4-max`（$15）、`minimax-m3.1-flash`（$20）——**同额度，选哪边取决于请求数与生态**。
+> **Go 优势项（9 款）**：`glm-5.3`（$500 促销）、`hy4`（$60 vs $20）、`mimo-v2.6-flash`（$60 vs $20）、`muse-spark-1.2/1.3-contributor`（$60 vs $20）、`qwen3.7-plus`（$60 vs $33）、`qwen3.8-flash`（$30 vs $20）、`minimax-m3`（$60 vs $47，但 GOAT 有 `2× usage` Deal → 等效 $94 反超）、`longcat-2.0`（$60 vs $50）、`hy4-preview`（$30 vs $20）。
+> **GOAT 优势项（12 款）**：`glm-5.3-flash`（$100 vs $60）、`hy3`（$70 vs $60），以及**全部 $15 档模型**（`kimi-k3`、`kimi-k3.1-pro`、`qwen3.8-max`、`grok-4.7`、`deepseek-v4-pro`、`gpt-5.6-luna`、`gpt-6-luna`、`claude-haiku-5-5`、`step-5-preview`、`mimo-v2.6-pro`）——GOAT 统一给 $20。
+> ⚠️ **Go 的 $15 档是最大劣势**：Go 侧 12 款模型停在 $15，GOAT 同款给 $20（+33%）；而 Go 的高额度集中在 `mimo` / `muse` / `qwen-plus` 这几个族。
 
 ### 2.3 内部单价差异（仅列出两平台不同的项）
 
@@ -218,7 +211,7 @@ date: 2026-11-22
 | Qwen3.8 Flash | **$0.15** / $0.47 / $0.016 | **$0.16** / $0.47 / $0.016 | GOAT 输入贵 6.7% |
 | Step 5 Preview | $1.00 / $2.70 / **$0.10** | $1.00 / $2.70 / **$0.05** | GOAT 缓存读便宜一半 |
 | MiMo V2.6 Pro | $0.435 / $0.87 / $0.003625 | $0.435 / $0.87 / $0.0036 | 四舍五入差异 |
-| 其余共有模型 | — | — | **完全一致**（GLM-5.3/5.2、Kimi K3 / K2.7 Code、LongCat 2.0、DS V4.1 Flash / V4 Pro、MiMo V2.5 系、MiniMax M3、Muse Spark Contributor、Qwen3.8 Max、Hy3、Hy4、Grok 4.7、GPT-6/5.6 Luna、Claude Haiku 5.5） |
+| 其余共有模型 | — | — | **完全一致**（GLM-5.3 / Kimi K3 / Kimi K3.1 Pro / Kimi K2.7 Code、LongCat 2.0、DS V4.1 Flash / V4 Pro、MiMo V2.6 Flash / Pro、MiniMax M3 / M3.1 Flash、Muse Spark Contributor、Qwen4 Max、Qwen3.8 Max、Hy3 / Hy4 / Hy4 preview、Grok 4.7、GPT-5.6 Luna / GPT-6 Luna、Claude Haiku 5.5） |
 
 ### 2.4 GOAT 独占模型（Go 未上架，含额度与请求数）
 
@@ -255,22 +248,23 @@ date: 2026-11-22
 
 | 方向 | 模型 |
 |---|---|
-| **GOAT 更大方** | **GLM-5.3 Flash（$100 vs Go $60）**、GLM-5.2 / Hy3（$70 vs $60）、Kimi K3 / GPT-6 Luna / GPT-5.6 Luna / Claude Haiku 5.5 / Grok 4.7 / MiMo V2.5-Pro / V2.6-Pro / Qwen 3.8 Max / DS V4 Pro / **GLM-5.3（$70 vs Go $15，涨 3.5 倍）**、Ling 3.1 Flash（$100）、Qwen 3.8 27B（$70）、DS V4.1 Flash Fast（$60）、**DS V4.1 Flash Ultrafast（$20，独占）**、**Muse Ember（$20，独占）** |
-| **Go 更大方** | **MiMo-V2.6-Flash / Muse Spark Contributor（$60 vs $20）**、MiMo-V2.5（$60 vs $30）、Qwen3.7 Plus（$60 vs $33）、MiniMax M3（$60 vs $47）、LongCat-2.0（$60 vs $50）、Hy4 preview（$30 vs $20）、Qwen3.8 Flash（$30 vs $20）、**Gemini 4 Argon / LongCat 2.5 Preview Free（GOAT 无对应）** |
-| **持平** | **DeepSeek V4.1 Flash（双方均 $100，同为现行最高档 10.0x）** |
-| **Go 单次成本更优** | Kimi K2.7 Code（同 $60，请求 6,750 vs 5,420）、Qwen3.7 Plus（缓存读半价）、Step 5 Preview（缓存读 $0.10 vs $0.05 为 GOAT 优，但限时额度 Go 反超） |
+| **GOAT 更大方（12 款）** | **`glm-5.3-flash`（$100 vs Go $60）**、`hy3`（$70 vs $60），以及**全部 Go $15 档**：`kimi-k3`、`kimi-k3.1-pro`、`qwen3.8-max`、`grok-4.7`、`deepseek-v4-pro`、`gpt-5.6-luna`、`gpt-6-luna`、`claude-haiku-5-5`、`step-5-preview`、`mimo-v2.6-pro`——GOAT 统一 $20 |
+| **Go 更大方（9 款）** | **`mimo-v2.6-flash` / `muse-spark-1.2` / `muse-spark-1.3`（$60 vs $20）**、`hy4`（$60 vs $20）、`qwen3.7-plus`（$60 vs $33）、`minimax-m3`（$60 vs $47，**但 GOAT 有 2× Deal → 等效 $94 反超**）、`longcat-2.0`（$60 vs $50）、`hy4-preview`（$30 vs $20）、`qwen3.8-flash`（$30 vs $20） |
+| **持平（4 款）** | `deepseek-v4.1-flash`（**双方 $100**）、`kimi-k2.7-code`（$60）、`qwen4-max`（$15）、`minimax-m3.1-flash`（$20） |
+| **GOAT 独占（Go 无对应）** | `ling-3.1-flash` / `-1019`（$100）、`qwen 3.8 27b`（$70）、`deepseek-v4.1-flash fast`（$60）、`ds v4.1 flash ultrafast`（$20）、`qwen 3.8 omni flash`、`glm-5.3-flashx`、`step 3.x flash`、`inkling`、`jev`（**595,000 次/月**）、`mimo v2.6 pro ultraspeed`（$10）、`muse ember` |
+| **Go 独占（GOAT 无对应）** | `gemini-4-argon`（$30，**12-01 起单价翻倍**）、`longcat-2.5-free`、`hy4-flash-free`、`iceman-contributor-free` |
 
 ### 3.2 P0 决策
 
-1. **主力是 DeepSeek V4.1 Flash** → 两平台**完全等价**（均 **$100** 额度、10.0x）；选 Go 可保留 OpenCode 生态与 Responses 三协议，选 GOAT 则请求数多 18%。
-2. **主力是 MiMo-V2.6-Flash / Muse Spark / MiMo-V2.5** → **必须留 Go**（额度 2–3 倍）。
-3. **主力是 GLM-5.3 Flash** → **GOAT 明显更划算**（**$100 vs $60，10.0x vs 6.0x**，额度多 67%）。
-4. **主力是 GLM-5.3** → GOAT 仅 $20；若坚持留在 OpenCode 生态，**Go Plus 是唯一「升档即省钱」的模型（8x）**——属内部档位话题，见第四节。
-5. **需要窄领域独占模型**（Ling 3.1 Flash、Qwen 3.8 Omni Flash、GLM-5.3 FlashX、Step 3.x Flash、Inkling、Jev、MiMo UltraSpeed）→ **GOAT 独有**，Go 无替代。
-6. **需要单模型超长上下文 + 高请求量** → Go 的 **Muse Spark（226,600 次/月）** 与 **MiMo-V2.6-Flash（150,400 次/月）** 仍是天花板；GOAT 的请求量天花板是 **Jev（595,000 次/月）**，但为决策模型（非通用编码）。
-7. **价格稳定性**：两平台内部价均与 OpenRouter 渠道价格战解耦；**GOAT 独有的 `planBudgetSteps` 会按日期自动切档**（促销窗口的起止由该机制驱动），**引用额度必须带日期**。
-8. **🔑 OpenDesign Go 的加入改变了 $10 档的排序**：宣传额度 $120 看似最高（Go 逐模型最高 $100、GOAT 套餐级 Up to $100），但**它一分 premium 额度都没有**，且第三方实测显示宣传值约缩水到 **$80 等值（66.5%）**。→ **按实测等值**：GOAT（$100，几乎无缩水）≈ Go（DS V4.1 Flash $100）**> OpenDesign Go（约 $80 等值）**。**OpenDesign Go 只适合"主力是 Design Plan 模型 + 不需要 premium"的场景**；要 premium 必须上 Plus $20。
-9. **需要 $20 档 → 见第五节**：Ollama Pro（$60，唯一无窗口限制）/ CommandCode Pro（Up to $110，5.5x）/ OpenDesign Plus（$180，9.0x）/ Go Teams（$20·成员，唯一多成员）。
+1. **主力是 `deepseek-v4.1-flash`** → 两平台**额度完全等价**（均 **$100**、10.0x）；选 Go 保留 OpenCode 生态与三协议端点，选 GOAT 则**请求数多 18%**（51,300 vs 43,300 / 5h）。
+2. **主力是 `mimo-v2.6-flash` / `muse-spark` / `hy4`** → **必须留 Go**（额度 3 倍）。
+3. **主力是 `glm-5.3-flash`** → **GOAT 明显更划算**（**$100 vs $60，10.0x vs 6.0x**，额度多 67%）。
+4. **主力是 `glm-5.3`** → **Go 在促销期内大幅领先（$500 vs GOAT $70）**，但**该 $500 于 2026-11-22 到期**，长期档位为 $15——**若届时回落，GOAT 的 $70 反超 4.7 倍**。**这是全套数据里时效性最强的一项，决策前必须重抓。**
+5. **需要窄领域独占模型**（Ling、Qwen 3.8 27B、GLM-5.3 FlashX、Step 3.x Flash、Inkling、Jev、MiMo UltraSpeed、Muse Ember）→ **GOAT 独有**，Go 无替代。
+6. **需要单模型超高请求量** → Go 侧天花板是 `muse-spark-1.2/1.3-contributor` 与 `deepseek-v4.1-flash`（**45,300 / 43,300 次每 5 小时**）；GOAT 侧是 `deepseek-v4.1-flash` 51,300、`jev` 119,000（决策模型，非通用编码）。
+7. **价格稳定性**：两平台内部价均与 OpenRouter 渠道价格战解耦；**GOAT 独有的 `planBudgetSteps` 会按日期自动切档**（促销窗口起止由该机制驱动），**引用额度必须带日期**。
+8. **🔑 OpenDesign Go 的定位**：面值 **$220** 看似最高（Go 逐模型最高 $500 促销 / GOAT 套餐级 Up to $100），但**它一分 Top Models 额度都没有**，且第三方实测显示宣传值约缩水到**面值的 66.5%（$220 → 约 $146 等值）**。→ **按实测等值**：GOAT（$100，几乎无缩水）≈ Go（`deepseek-v4.1-flash` $100）**> OpenDesign Go（约 $146 面值 / $97 等值）** 三者基本同档。**OpenDesign Go 只适合"主力是 Coding Plan 模型 + 不需要 premium"的场景**；要 premium 必须上 **Go Plus $20**。
+9. **需要 $20 档** → 见第五节：**OpenDesign Go Plus**（$310 面值，15.5x）/ **CommandCode Pro**（Up to $110，5.5x）/ **Ollama Pro**（$60，唯一无窗口限制）/ **Go Teams**（$20·成员，唯一多成员）。
 
 ---
 
@@ -282,111 +276,113 @@ date: 2026-11-22
 
 | 档位 | 月费 | 额度规则 | 成员数 | 官方表述 |
 |---|---|---|---|---|
-| **Go** | **$10** | 逐模型分档 **$15 / $20 / $30 / $60 / $100** | **单成员** | Lower-cost access |
+| **Go** | **$10** | 逐模型分档 **$15 / $20 / $30 / $60 / $100 / $500**（**共享百分比池 + 逐模型 $ 分母**） | **单成员** | Lower-cost access |
 | **Go Teams** | **$20 / 成员 / 月** | **= Go 档 + $5 / 模型**（固定加数，非倍率） | **每成员独立额度** | Every member gets their own limits, **$5/month higher than Go on every model** |
-| **Go Plus** | **$40** | **= Go 档 × 2 / 3 / 4 / 8**（按模型倍率） | **单成员** | Higher usage limits |
+| **Go Plus** | **$40** | **= Go 档 × 2 / 3 / 4**（按模型倍率，**上限 4x**） | **单成员** | Higher usage limits |
 
-> 🔑 **这是三条完全不同的加成逻辑**：Teams 是**加数**（+$5）、Plus 是**乘数**（×2~×8）、Go 是基准。**加数对高额度模型几乎无感、对低额度模型提升明显；乘数反之**——这一点决定了两者的适用场景完全不同。
+> 🔑 **这是三条完全不同的加成逻辑**：Teams 是**加数**（+$5）、Plus 是**乘数**（×2~×4）、Go 是基准。**加数对高额度模型几乎无感、对低额度模型提升明显；乘数反之**——这一点决定了两者的适用场景完全不同。
+> 🔑 **额度是共享的**：官方原话「The paid models you use on Go **share one allowance**」「**Switching models draws from the same allowance**」——**逐模型 $ 数字只是该模型"独用到 100%"时的分母**，不是可累加的子额度。
 
-### 4.2 逐模型额度全表（按 Plus 倍率分组，共 28 款有额度模型）
+### 4.2 逐模型额度全表（27 款付费模型 + 4 款免费，按 Plus 倍率分组）
 
-| Plus 倍率 | 模型 | Go $10 | Teams $20 | Plus $40 |
+| Plus 倍率 | 模型 | Go $10 | Teams $20·成员 | Plus $40 |
 |:--:|---|---:|---:|---:|
-| **8x** | **GLM-5.3** | $15 | $20 | **$120** |
-| **4x**（$15 → $60） | Kimi K3.1 Pro | $15 | $20 | $60 |
-| | Kimi K3 | $15 | $20 | $60 |
-| | Step 5 Preview | $15 | $20 | $60 |
-| | MiMo-V2.6-Pro | $15 | $20 | $60 |
-| | MiMo-V2.5-Pro | $15 | $20 | $60 |
-| | Qwen3.8 Max | $15 | $20 | $60 |
-| | DeepSeek V4 Pro | $15 | $20 | $60 |
-| | Grok 4.7 | $15 | $20 | $60 |
-| | GPT 6 Luna | $15 | $20 | $60 |
-| | GPT 5.6 Luna | $15 | $20 | $60 |
-| | Claude Haiku 5.5 | $15 | $20 | $60 |
-| **4x**（$20 / $30 / $60 档） | MiniMax M3.1 Flash | $20 | $25 | $80 |
-| | **Hy4（正式版，新）** | **$60** | **$65** | **$240** |
-| | Hy4 preview | $30 | $35 | $120 |
-| | Gemini 4 Argon（50% off 期） | $30 | $35 | $120 |
-| | LongCat-2.0 | $60 | $65 | **$240** |
-| | Hy3 | $60 | $65 | **$240** |
-| **3x** | Qwen3.8 Flash | $30 | $35 | $90 |
-| | GLM-5.3-Flash | $60 | $65 | $180 |
-| | GLM-5.2 | $60 | $65 | $180 |
-| | Kimi K2.7 Code | $60 | $65 | $180 |
-| | MiniMax M3 | $60 | $65 | $180 |
-| | Qwen3.7 Plus | $60 | $65 | $180 |
-| **2x** | DeepSeek V4.1 Flash | **$100** | $105 | $200 |
-| | MiMo-V2.6-Flash | $60 | $65 | $120 |
-| | MiMo-V2.5 | $60 | $65 | $120 |
-| | Muse Spark 1.3 Contributor | $60 | $65 | $120 |
-| | Muse Spark 1.2 Contributor | $60 | $65 | $120 |
+| **2x**（5 款） | | | | |
+| | `muse-spark-1.2-contributor` | $60 | $65 | $120 |
+| | `muse-spark-1.3-contributor` | $60 | $65 | $120 |
+| | `mimo-v2.6-flash` | $60 | $65 | $120 |
+| | **`deepseek-v4.1-flash`** | $100 | $105 | $200 |
+| | **`glm-5.3`** | $500 | $505 | $1,000 |
+| **3x**（5 款） | | | | |
+| | `qwen3.8-flash` | $30 | $35 | $90 |
+| | `glm-5.3-flash` | $60 | $65 | $180 |
+| | `kimi-k2.7-code` | $60 | $65 | $180 |
+| | `minimax-m3` | $60 | $65 | $180 |
+| | `qwen3.7-plus` | $60 | $65 | $180 |
+| **4x**（17 款） | | | | |
+| | `deepseek-v4-pro` | $15 | $20 | $60 |
+| | `grok-4.7` | $15 | $20 | $60 |
+| | `gpt-5.6-luna` | $15 | $20 | $60 |
+| | `gpt-6-luna` | $15 | $20 | $60 |
+| | `claude-haiku-5-5` | $15 | $20 | $60 |
+| | `kimi-k3` | $15 | $20 | $60 |
+| | `mimo-v2.6-pro` | $15 | $20 | $60 |
+| | `step-5-preview` | $15 | $20 | $60 |
+| | `qwen3.8-max` | $15 | $20 | $60 |
+| | `kimi-k3.1-pro` | $15 | $20 | $60 |
+| | `qwen4-max` | $15 | $20 | $60 |
+| | `minimax-m3.1-flash` | $20 | $25 | $80 |
+| | `hy4-preview` | $30 | $35 | $120 |
+| | `gemini-4-argon` | $30 | $35 | $120 |
+| | `hy3` | $60 | $65 | $240 |
+| | `longcat-2.0` | $60 | $65 | $240 |
+| | `hy4` | $60 | $65 | $240 |
 
-> 免额度款：**Beam Free**、**Iceman Contributor Free** 三档均标 `Unlimited limited time`，不参与额度比较。
-> ⚠️ **本轮 Go 侧清单变化**：`glm-5.2` 与 `mimo-v2.5` 系已退出 docs 与 API；**新增 `qwen4-max`**（Qwen 4 Max，$1.5/$4.5）与 **`hy4-flash-free`**（免费档，不参与额度表）。**docs/go 已于 11-22 改版**，逐模型价目表移至需登录的 Console Go 页，本表为 Console 口径快照。
-> ⚠️ **时效项**：`GLM-5.3` 的更高额度窗口 **至 2026-11-22 到期**；`Gemini 4 Argon` 的 **50% 折扣至 11-30**；`Beam Free` 为限时且**中国含港澳不可用**。
-
-> 倍率分布：**8x × 1 款 / 4x × 16 款 / 3x × 6 款 / 2x × 5 款**——**Plus 的加成重心在 4x（过半模型）**。
+> 免额度款：`beam-free`、`hy4-flash-free`、`iceman-contributor-free`、`longcat-2.5-free` 三档均标 **∞**，不参与额度比较。
+> **倍率分布：2x × 5 款 / 3x × 5 款 / 4x × 17 款**——**Plus 的加成重心在 4x（17 款，占 63%）**。
+> ⚠️ **`glm-5.3` 的 $500 / $1,000 是促销值**（官方：「Higher usage limits apply through November 22, 2026」），**其长期档位为 $15 / $120（8x）**，回落判断须重抓。
+> ⚠️ **`gemini-4-argon` 的 $2/$10 是 50% 折扣价，12-01 起翻倍为 $4/$20**（额度不变）。
 
 ### 4.3 单位价值（每 1 美元买到多少额度）
 
 > 口径：**单位价值 = 月额度 ÷ 月费**；**相对 Go** = 该档单位价值 ÷ Go 单位价值（**>1 表示升档后每美元买到更多额度，<1 表示变贵**）。
 
-| 模型档（Go 额度） | Go $10 | Teams $20 | Plus $40 | **Teams 相对 Go** | **Plus 相对 Go** |
+| 模型档（Go 额度） | Go $10 | Teams $20·成员 | Plus $40 | **Teams 相对 Go** | **Plus 相对 Go** |
 |---|---:|---:|---:|:--:|:--:|
-| $15 档（4x 模型，如 Kimi K3 / Haiku 5.5） | 1.50 | 1.00 | 1.50 | **0.67x** | **1.00x（持平）** |
-| $60 档（4x 模型，如 LongCat / Hy3） | 6.00 | 3.25 | 6.00 | **0.54x** | **1.00x（持平）** |
-| $15 档（8x：GLM-5.3） | 1.50 | 1.00 | **3.00** | **0.67x** | **2.00x（翻倍）** |
-| $60 档（3x 模型，如 GLM-5.3-Flash / GLM-5.2） | 6.00 | 3.25 | 4.50 | **0.54x** | **0.75x（变贵 25%）** |
-| $100 档（2x：DeepSeek V4.1 Flash） | **10.00** | 5.25 | 5.00 | **0.53x** | **0.50x（腰斩）** |
-| $60 档（2x：MiMo-V2.6-Flash / Muse Spark Contributor） | 6.00 | 3.25 | 3.00 | **0.54x** | **0.50x（腰斩）** |
+| **$15 档**（4x 的 11 款，如 `kimi-k3` / `deepseek-v4-pro` / `step-5-preview`） | 1.50 | 1.00 | 1.50 | **0.67x** | **1.00x（持平）** |
+| **$20 档**（4x：`minimax-m3.1-flash`） | 2.00 | 1.25 | 2.00 | **0.63x** | **1.00x（持平）** |
+| **$30 档**（4x 的 `hy4-preview` / `gemini-4-argon`；3x 的 `qwen3.8-flash`） | 3.00 | 1.75 | 3.00（4x）/ 2.25（3x） | **0.58x** | **1.00x / 0.75x** |
+| **$60 档**（4x 的 `hy3` / `longcat-2.0` / `hy4`；3x 的 4 款；2x 的 3 款） | 6.00 | 3.25 | 6.00 / 4.50 / 3.00 | **0.54x** | **1.00x / 0.75x / 0.50x** |
+| **$100 档**（2x：`deepseek-v4.1-flash`） | **10.00** | 5.25 | 5.00 | **0.53x** | **0.50x（腰斩）** |
+| **$500 档**（2x：`glm-5.3`，促销） | **50.00** | 25.25 | 25.00 | **0.51x** | **0.50x（腰斩）** |
 
 **读法**：
-- **Go 永远是单位价值基准（1.00x）**，任何升档都不可能在"每美元额度"上超过 Go，只有 Plus 在 8x 模型上能反超（2.00x）。
-- **Teams 在所有档位上都是 0.53~0.67x**——付 2 倍钱只多拿 `$5/额度档` 的额度，**额度效率必然下降**。它的价值不在效率，在**成员数与额度隔离**。
-- **Plus 的盈亏平衡点是 4x**：4x 模型持平、8x 翻倍、3x 亏 25%、2x 亏 50%。**当前只有 GLM-5.3 一款达到 8x**。
+- **Go 永远是单位价值基准（1.00x）**，**Plus 在任何模型上都超不过 1.00x**——最好只是持平（4x 的 17 款）。
+- **Teams 在所有档位上都是 0.51x–0.67x**——付 2 倍钱只多拿固定 `$5` 额度，**额度效率必然下降**；且**档位越高越亏**（$15 档 0.67x → $500 档 0.51x）。
+- **Plus 的盈亏平衡点是 4x**：4x 持平、3x 亏 25%、2x 亏 50%。**现行清单内无 8x 档**（`glm-5.3` 促销期只有 2x）。
 
 ### 4.4 选型结论（P0→P2）
 
-- **P0 单人、想省钱** → **留 Go $10**。除 GLM-5.3 外，升 Plus 全部是「单位成本持平或上升」；升 Teams 则一律上升。
-- **P0 主力是 GLM-5.3** → **升 Plus $40**（唯一 2.00x 单位价值的模型，8x 加成）；Teams 只给 $20，不划算。
-- **P0 团队多人、各自独立额度** → **选 Teams $20/成员**。**这是 Teams 存在的唯一理由**：`Go / Plus 均限单成员 workspace`，只有 Teams 能让每人拿到独立额度而不互相挤占。⚠️ 但**人均额度效率低于 Go**（0.53~0.67x），人数越多、总成本越高——3 人 Teams = $60/月，已超过 Plus 单人 $40。
-- **P1 单人、主力是 2x 档（DS V4.1 Flash / MiMo-V2.6-Flash / Muse Spark / MiMo-V2.5）** → **绝对留 Go**。升 Plus 单位价值腰斩（$100 → 每美元 $5 额度），是所有升档动作里最亏的一档。
-- **P1 单人、主力是 3x 档（GLM-5.3-Flash / GLM-5.2 / Kimi K2.7 Code）** → **留 Go 或换 GOAT**（GOAT 的 GLM-5.3-Flash 给 $100），**不要升 Plus**（-25%）。
-- **P2 需要 Teams 又要高额度** → **Teams + 按需 credits**（Teams 成员同样受 5h=20% / 周=50% / 月=100% 比例窗口约束，超限可走 Zen 余额按量付费，不自动回落）。
+- **P0 单人、想省钱** → **留 Go $10**。**没有任何模型能让 Plus 的单位成本低于 Go**（最好持平），升 Teams 则一律变贵。
+- **P0 团队多人、各自独立额度** → **选 Teams $20/成员**。**这是 Teams 存在的唯一理由**：`Go / Plus 均限单成员 workspace`，只有 Teams 能让每人拿到独立额度而不互相挤占。⚠️ 但**人均额度效率低于 Go**（0.51~0.67x），人越多越明显——3 人 Teams = $60/月，已超过单人 Plus $40。
+- **P1 需要"更长的天花板"而非"更便宜"** → **Plus $40** 只在 **4x 档 17 款**上做到持平；用于大项目 / 长会话防撞墙，**不要期待省钱**。
+- **P1 主力是 2x 档（`deepseek-v4.1-flash` / `mimo-v2.6-flash` / `muse-spark-1.2` / `muse-spark-1.3`）** → **绝对留 Go**。升 Plus 单位价值腰斩，是所有升档动作里最亏的一档。
+- **P1 主力是 3x 档（`glm-5.3-flash` / `kimi-k2.7-code` / `minimax-m3` / `qwen3.7-plus` / `qwen3.8-flash`）** → **留 Go 或换 GOAT**（GOAT 的 `glm-5.3-flash` 给 $100，Go 只有 $60），**不要升 Plus**（−25%）。
+- **P2 需要 Teams 又要高额度** → **Teams + 按需 credits**（Teams 成员同样受 5h=20% / 周=50% / 月=100% 比例窗口约束，超限可开 **Extra Usage** 走 Console credits 按量付费，不自动回落）。
+- **P2 若 `glm-5.3` 促销在 11-22 后回落至 $15** → **Plus 重新变成 8x（2.00x 单位价值）**，那时它才是唯一值得升 Plus 的模型；**决策前必须重抓该模型的 `go.monthly_usage`**。
 
-> ⚠️ **两档都不能解决"额度效率"问题**：三档 Token 单价完全相同，**加额度只能靠加钱**。若目标是"同样的钱跑更多 token"，正解是换更便宜的模型（见 [国产大模型官方 API vs OpenRouter 价格对比](/model-intel/china-llm-api-vs-openrouter-pricing/)）或走 GOAT（见第一至三节）。
+> ⚠️ **两档都不能解决"额度效率"问题**：三档 Token 单价完全相同，**加额度只能靠加钱**。若目标是"同样的钱跑更多 token"，正解是换更便宜的模型（见 [国产大模型官方 API vs OpenRouter 各渠道价格对比](/model-intel/china-llm-api-vs-openrouter-pricing/)）或走 GOAT（见第一至三节）。
 
 ---
 
-## 五、$20 档横向对比（Ollama Pro / CommandCode Pro / OpenDesign Plus / OpenCode Go Teams）
+## 五、$20 档横向对比（Ollama Pro / CommandCode Pro / OpenDesign Go Plus / OpenCode Go Teams）
 
 > 同一 $20 月费档的四个选项。**性价比口径统一为「月额度 ÷ 月费」**，与第二、四节一致。
 
 | 平台 / 档位 | 月费 | 月额度 | **性价比** | 窗口限制 | 模型范围 | 额度能否跨模型混用 |
 |---|---|---:|---:|---|---|---|
-| **OpenDesign Plus** | $20（年付 $14） | **$180**（$160 Design + $20 plan-model） | **9.0x** | 7 天 **$40**，**无 5h 窗口** | Design Plan + **少量 premium**（可跑 Claude Opus 5.5 / GPT-6 Sol） | 两池独立，plan-model 仅 $20 |
-| **CommandCode Pro** | $20 | **Up to $110** | **5.5x** | 5h **$22** / 周 **$55** | **GOAT 全部 + 更多 premium**（Claude Sonnet、GPT-5.4/5.5、GPT-6 Sol、Gemini 4 Argon、Opus/Fable 仍需 Max） | 按模型分档，单池 |
+| **OpenDesign Go Plus** | $20（首月 $16；黑五首年 $168 = $14/月，次年 $240/年） | **$310**（Coding Plan $290 + Top Models $20） | **15.5x** | 5 小时 + 7 天（**金额未披露**） | Coding Plan 11 款 **+ Top Models 20 款**（可跑 Claude Opus 5.5 / GPT-6 Astra / Gemini 4 系列） | **两池独立**，Top Models 仅 $20 |
+| **CommandCode Pro** | $20 | **Up to $110** | **5.5x** | 5h **$22** / 周 **$55** | GOAT 全部 + 更多 premium（Claude Sonnet 5.5、GPT-6 Sol 等；Opus / Fable 仍需 Max） | 按模型分档，单池 |
 | **Ollama Pro** | $20（年付 $16.67） | **$60 用量** | **3.0x** | **无 5 小时 / 无每周限制** | 开放权重模型（含 pro models、Kimi K3 等） | 单池，按 token 计费 |
-| **OpenCode Go Teams** | **$20 / 成员** | **逐模型 = Go + $5**（$15→$20、$60→$65、$100→$105） | **0.53~0.67x**（相对 Go，见 §4.3） | 5h = 月额度 20% / 周 50% | 与 Go 同（31 款正文） | 按模型分档，**每成员独立** |
+| **OpenCode Go Teams** | **$20 / 成员** | **逐模型 = Go + $5**（$15→$20、$60→$65、$100→$105、$500→$505） | **0.51~0.67x**（相对 Go，见 §4.3） | 5h = 月额度 20% / 周 50% | 与 Go 同（31 款） | 按模型分档，**每成员独立** |
 
 ### 5.1 四家的结构性差异
 
-1. **OpenDesign Plus 额度最高，但 premium 池极小**——$180 里有 **$160 只能用于 Design Plan 模型**，plan-model 仅 $20。若主力是 Claude Opus / GPT-6 Sol，$20 的 premium 额度很快见底；若主力是 DeepSeek V4.1 Flash / GLM-5.3 Flash 这类 Design Plan 模型，则 $160 的性价比极高。
-   > ⚠️ **Plus 档未做第三方实测**：Go 档实测显示宣传额度约缩水到 66.5%（$120 → 约 $80 等值），**Plus 的 $180 是否同样缩水尚无公开实测**，采购前建议自行核账。
-2. **CommandCode Pro 是唯一"纯加钱换额度"的档位**——与 GOAT **同样的 Token 单价**、同样的按模型分档，只是把套餐级额度整体抬高：**Up to $100 → Up to $110**、5h **$20 → $22**、周 **$50 → $55**；同时把模型面扩到 Claude Sonnet、GPT-5.4/5.5、GPT-6 Sol、Gemini 4 Argon（Opus / Fable 仍需 Max）。**单位价值 5.5x，是 $20 档里额度效率第二高的。**
+1. **OpenDesign Go Plus 额度面值最高（$310，15.5x），但 premium 池仍很小**——$310 里 **$290 只能用于 Coding Plan 模型**，Top Models 仅 $20。若主力是 Claude Opus / GPT-6 Astra，$20 的 premium 额度很快见底；若主力是 DeepSeek V4.1 Flash Eco / GLM-5.3 Flash 这类 Coding Plan 模型，$290 的性价比极高。
+   > ⚠️ **面值需打折读**：Go 档第三方实测显示宣传 credits 约缩水到 **66.5%**。按同比例折算，**$310 × 0.665 ≈ $206 等值 → 约 10.3x**，与 Go 的 `deepseek-v4.1-flash`（10.0x）基本持平。**Plus 档本身仍无公开实测，采购前建议自行核账。**
+2. **CommandCode Pro 是唯一"纯加钱换额度"的档位**——与 GOAT **同样的 Token 单价**、同样的按模型分档，只把套餐级额度整体抬高：**Up to $100 → Up to $110**、5h **$20 → $22**、周 **$50 → $55**；同时把模型面扩到 Claude Sonnet 5.5、GPT-6 Sol 等（Opus / Fable 仍需 Max）。**单位价值 5.5x。**
 3. **Ollama Pro 是唯一无窗口限制的**——**取消 5h / 周限制**是它相对另三家的最大差异：突发大用量不会被 5 小时窗口卡住，超出 $60 后按同价 PAYG 继续。代价是额度绝对值最低（$60），且只覆盖开放权重模型。
-4. **Go Teams 是唯一支持多成员独立额度的**——但它不是"买更多额度"，而是"买多份独立额度"，**人均额度效率低于 Go 本身**（0.53~0.67x）。人数越多总成本越高：3 人 = $60/月，已超过 OpenDesign Plus 单人的 $180 额度。
+4. **Go Teams 是唯一支持多成员独立额度的**——它不是"买更多额度"，而是"买多份独立额度"，**人均额度效率低于 Go 本身**（0.51~0.67x）。人数越多总成本越高：3 人 = $60/月。
 
 ### 5.2 $20 档选型结论（P0→P2）
 
-- **P0 主力是 Design Plan 模型（DeepSeek V4.1 Flash / GLM-5.3 Flash / MiMo V2.6 / Kimi K2.7 Code）+ 需要最大额度** → **OpenDesign Plus $20**（9.0x，$160 可用）。⚠️ 但**必须自行核账**——Go 档实测显示宣传值缩水约 1/3，Plus 未实测。
-- **P0 需要最广模型面 + 需要 premium（GPT-6 Sol / Claude Sonnet / Gemini 4 Argon）** → **CommandCode Pro $20**（4.0x，模型面 80+）。
-- **P0 团队多人、各自独立额度** → **Go Teams $20/成员**（唯一多成员选项），但接受额度效率 0.53~0.67x。
+- **P0 主力是 Coding Plan 模型（DeepSeek V4.1 Flash / Eco、GLM-5.3 Flash、MiMo V2.6、Kimi K2.7 Code）+ 需要最大额度** → **OpenDesign Go Plus $20**（**面值 15.5x，按 66.5% 折算约 10.3x**）。⚠️ 但**必须自行核账**——Go 档实测显示宣传值缩水约 1/3，Plus 未实测。
+- **P0 需要最广模型面 + premium（GPT-6 Sol / Claude Sonnet 5.5）且不想吃折算损耗** → **CommandCode Pro $20**（5.5x，模型面 100+，几乎无缩水）。
+- **P0 团队多人、各自独立额度** → **Go Teams $20/成员**（唯一多成员选项），但接受额度效率 0.51~0.67x。
 - **P1 用量突发性强、怕被 5 小时窗口卡住** → **Ollama Pro $20**（唯一无窗口限制），代价是额度仅 $60 且仅开放权重模型。
-- **P2 纯省钱** → **不要升任何 $20 档**：留在 $10 档，OpenCode Go 的 `deepseek-v4.1-flash` 单位价值 **10.0x**、GOAT 的 `glm-5.3-flash` 也是 **10.0x**，**均高于上述所有 $20 档**（最高 OpenDesign Plus 9.0x）。**$20 档买的是"更大额度池"与"更少约束"，不是更高的每美元额度。**
+- **P2 纯省钱** → **留在 $10 档更稳**：OpenCode Go 的 `deepseek-v4.1-flash` **10.0x**、GOAT 的 `glm-5.3-flash` **10.0x**，与 OpenDesign Go Plus 的折算值（约 10.3x）基本同档，但**门槛只有一半**。**$20 档买的是"更大额度池"与"更少约束"，不是更高的每美元额度。**
 
-> ⚠️ **跨平台不可简单比 $120 / $180 这类宣传值**：OpenDesign 的宣传额度是 **credits 面值**，与官方 API 等值存在换算差（第三方实测 Go 档约 66.5%）；Ollama 的 $60 是**按 token 实付**、无窗口损耗；CommandCode 的 $100 是**官方 API 等值的 credit**。三者的"1 美元额度"含金量不同。
+> ⚠️ **跨平台不可简单比 $310 / $110 这类宣传值**：OpenDesign 的宣传额度是 **credits 面值**（第三方实测 Go 档约 66.5%）；Ollama 的 $60 是**按 token 实付**、无窗口损耗；CommandCode 的 $100/$110 是**官方 API 等值的 credit**。三者的"1 美元额度"含金量不同。
 
 ### 5.3 Ollama 逐模型价格表（每百万 token，官网 2026-11-22 抓取）
 

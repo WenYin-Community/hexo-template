@@ -3,7 +3,7 @@ title: CommandCode 全模型推理档位速查
 date: 2026-11-22
 ---
 
-> 104 款模型的推理档位、上下文与网关价。数据抓取日 **2026-11-22**。
+> 104 款模型的推理档位、上下文、网关价与套餐门槛，取自 CLI 1.93.0 官方目录。数据抓取日 **2026-11-22**。
 
 [← 返回「模型情报」合集](/model-intel/)
 
@@ -19,8 +19,8 @@ date: 2026-11-22
 
 | 数据 | 来源 | 说明 |
 |---|---|---|
-| 在线模型全名单（**104**） | `GET https://api.commandcode.ai/provider/v1/models` | 官方 Provider API，**2026-11-22 匿名抓取**；返回字段含 `context_length` / `supported_endpoints`，**不含价格与推理档位**；与 CLI 1.88.2 目录差集 2 款（`inclusionai/ling-3.1-flash-1019`、`stealth/crouton-alpha` 网关独有） |
-| 推理能力 / 可选档位 / 网关价 / 套餐下限（**权威**） | `npm pack command-code@latest` → `package/dist/bundled/command-code-knowledge/reference/models.md` | CLI 官方模型目录，含 Id / Name / Context / **Efforts** / $每1M / **Min plan** / Best for；**版本 1.88.2，共 94 款（17,296 字节 / 134 行）** |
+| 在线模型全名单（**104**） | `GET https://api.commandcode.ai/provider/v1/models` | 官方 Provider API，**2026-11-22 匿名抓取**（20,410 字节）；返回字段含 `context_length` / `supported_endpoints`，**不含价格与推理档位**；**与 CLI 1.93.0 目录逐 ID 一致，差集 0** |
+| 推理能力 / 可选档位 / 网关价 / 套餐下限（**权威**） | `npm pack command-code@latest` → `package/dist/bundled/command-code-knowledge/reference/models.md` | CLI 官方模型目录，含 Id / Name / Context / **Efforts** / $每1M / **Min plan** / Best for；**版本 1.93.0，共 104 款（18,990 字节 / 144 行）**；其中 **77 款有档位、27 款为 `—`** |
 | 收录版本 / 退役事件 | 同上 → `package/CHANGELOG.md` | 各模型进入官方目录的 CLI 版本、以及退役公告（见第四节） |
 | 档位口径（快照，已过时） | [`pi-commandcode-provider`](https://www.npmjs.com/package/pi-commandcode-provider) | 由旧版 CLI 生成的静态快照；滞后于 CLI，仅作对照，**禁止作为档位依据** |
 
@@ -173,18 +173,18 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 ## 四、最新收录 / 退役端点档位（CLI 1.93.0 官方目录）
 
 来源：`command-code` **CLI 1.93.0** 包内 `dist/bundled/command-code-knowledge/reference/models.md`；「最早收录版本」由同包 `CHANGELOG.md` 逐条反查（取**最早出现该模型的版本号**），**不是改动记录**。
+> ⚠️ **1.93.0 包内的 `CHANGELOG.md`（3,788 行）已不再单列 `Kimi K3.1 Pro`、`GPT-6.1 Terra`、`ornith-1.5-122b`、`ling-3.1-flash-1019` 的增删条目**（现仅剩功能/修复行），故这 4 款的版本列标「—」，**只以 `models.md` 的实际存在为准**，不得倒推版本。
 
 | 模型 ID | 名称 | 上下文 | 可选推理档位 | 网关价（in/out · cache读） | 最低套餐 | CLI 最早收录 |
 |---|---|---|---|---|---|---|
-| `moonshotai/Kimi-K3.1-Pro` | **Kimi K3.1 Pro** | 1.05M | low, high, max | $2/$10 · $0.2 | Go and above | **1.88.0** |
-| `gpt-6.1-terra` | **GPT-6.1 Terra** | 1.05M | low, medium, high, xhigh, max | $1/$5 · $0.05（wr $1.25） | Pro and above | **1.88.0** |
-| `inclusionai/ling-3.1-flash-1019` | **Ling 3.1 Flash 1019**（网关已上线，**CLI 目录未收录**） | 1M | — | $0.3/$0.9 · $0.06 | Go and above | — |
-| `ornith/ornith-1.5-122b` | **Ornith 1.5 122B**（限时免费档 `:free` 免费期已结束，已自目录移除） | 262K | — | $0.16/$0.64 · $0.02 | Go and above | **1.86.0** |
+| `moonshotai/Kimi-K3.1-Pro` | **Kimi K3.1 Pro** | 1.05M | low, high, max | $2/$10 · $0.2 | Go and above | —（1.93.0 CHANGELOG 未单列） |
+| `gpt-6.1-terra` | **GPT-6.1 Terra** | 1.05M | low, medium, high, xhigh, max | $1/$5 · $0.05（wr $1.25） | Pro and above | —（1.93.0 CHANGELOG 未单列） |
+| `ornith/ornith-1.5-122b` | **Ornith 1.5 122B**（**付费行仍在目录**；仅 `:free` 限时免费档已移除） | 262K | — | $0.16/$0.64 · $0.02 | Go and above | —（1.93.0 CHANGELOG 未单列） |
 | `minimax/minimax-m3.1-flash` | **MiniMax M3.1 Flash**（限时免费档 `:free` 已自目录移除） | 1M | low, medium, high, xhigh, max | $0.15/$0.6 · $0.015 | Go and above | **1.85.0** |
 | ~~`stealth/cat-jam:free`~~ | Cat Jam（**已下架并自目录移除**） | 1.05M | low, medium, high, xhigh, max | 免费（$0/$0） | — | 1.84.0 尚在目录 → **1.85.0 目录移除** |
 | `gpt-6.1-sol` | **GPT-6.1 Sol** | 1.05M | low, medium, high, xhigh, max | $2/$10 · $0.1（wr $2.5） | **Max** | **1.71.0** |
 | `inclusionai/ling-3.1-flash` | **Ling 3.1 Flash**（原 `:free`，**已转付费**） | 262K | low, medium, high | $0.3/$0.9 · $0.06 | Go and above | **1.70.0** |
-| `inclusionai/ling-3.1-flash-1019` | **Ling 3.1 Flash 1019**（网关收录） | 1M | low, medium, high | $0.3/$0.9 · $0.06 | Go and above | **1.88.2** |
+| `inclusionai/ling-3.1-flash-1019` | **Ling 3.1 Flash 1019**（**1.93.0 目录已收录**，与网关逐 ID 一致） | 1M | low, medium, high | $0.3/$0.9 · $0.06 | Go and above | —（1.93.0 CHANGELOG 未单列） |
 | `claude-sonnet-5-5` | **Claude Sonnet 5.5** | 1M | low, medium, high, xhigh, max | $2/$10 · $0.2（wr $2.5） | **GOAT and above** | **1.68.0** |
 | `deepseek/deepseek-v4.1-flash-fast` | DeepSeek V4.1 Flash Fast | 1M | low, high, max | $0.16/$0.58 · $0.016 | Go and above | **1.67.0** |
 | ~~`stealth/pixel-canary`~~ | Pixel Canary（**已退役并自目录移除**） | 262K | low, medium, xhigh | 免费（$0/$0） | — | 1.66.0 收录 → **1.73.1 公告退役 → 1.74.1 目录移除** |
@@ -203,7 +203,7 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 | `gpt-6-astra` | GPT-6 Astra | 1.05M | low, medium, high, xhigh, max | $10/$50 · $1（wr $12.5） | Max | 1.49.0 |
 | `deepseek/deepseek-v4-flash-fast` | DeepSeek V4 Flash Fast | 1M | low, high, max | $0.28/$0.56 · $0.07 | Go and above | CHANGELOG **未单列**（仅见于目录 `models.md`） |
 
-> **收录版本口径**：表内版本号为 CHANGELOG 中**最早出现该模型的条目**。⚠️ CHANGELOG 只记 feature 行，**未单列的模型不得倒推版本**（如 `deepseek-v4-flash-fast`）。**当前 CLI 1.93.0，官方目录共 104 款**；Provider API 在线 104 端点，差集 2 款为网关独有的 `inclusionai/ling-3.1-flash-1019`、`stealth/crouton-alpha`（CLI 目录未收录）。1.85.0 **新增 Beam 1.0 free 与 MiniMax M3.1 Flash（含限时免费档），同版移除 `stealth/cat-jam:free`**；1.86.0 **新增 Ornith 1.5 122B（含限时免费档）**；1.87.x 为功能与修复版（`/btw` 侧问指令、permission mode aliases、BYOK 包更新）；**1.88.0 起新增 Kimi K3.1 Pro 与 GPT-6.1 Terra，同版移除 MiniMax M3.1 Flash 与 Ornith 1.5 122B 两个限时免费档及 `xiaomi/mimo-v2.5` 系（目录 96 → 94 款）**；1.88.0–1.88.2 另有后台任务改用免费模型、更新器改进与安装目录替换不中断会话等修复。
+> **收录版本口径**：表内版本号为 CHANGELOG 中**最早出现该模型的条目**。⚠️ CHANGELOG 只记 feature 行，**未单列的模型不得倒推版本**（如 `deepseek-v4-flash-fast`）。**当前 CLI 1.93.0，官方目录共 104 款**；Provider API 在线 104 端点，**逐 ID 一致、差集 0**——`inclusionai/ling-3.1-flash-1019` 已被 1.93.0 目录收录；`stealth/crouton-alpha` 则**已从网关整条移除**（现仅存 `stealth/glyph-cluster:free` 一款 stealth）。1.85.0 **新增 Beam 1.0 free 与 MiniMax M3.1 Flash（含限时免费档），同版移除 `stealth/cat-jam:free`**；1.86.0 **新增 Ornith 1.5 122B（含限时免费档）**；1.87.x 为功能与修复版（`/btw` 侧问指令、permission mode aliases、BYOK 包更新）；**1.88.0 起新增 Kimi K3.1 Pro 与 GPT-6.1 Terra，同版移除 MiniMax M3.1 Flash 与 Ornith 1.5 122B 两个限时免费档及 `xiaomi/mimo-v2.5` 系（目录 96 → 94 款）**；1.88.0–1.88.2 另有后台任务改用免费模型、更新器改进与安装目录替换不中断会话等修复。
 
 > **档位口径补充**：① `Min plan = Go and above` 指 **Command Code 自家 Go 档（$1/月）**即可用（GOAT/Pro/Max 同样可用）——与本报告另一处「GOAT 独占」（指 OpenCode Go 未上架）口径不同，勿混用；② CLI 目录同时给出全部 94 款的网关价与套餐下限，**可作 [AI 订阅档位横向对比](/model-intel/ai-subscription-tiers/) 与价格对比文档的价格交叉校验源**；③ **未公布档位 ≠ 不推理**，只是不让调用方指定 `reasoning_effort`；④ CLI 目录末注原文：「Rates are the advertised price list resolved from the billing source of truth (**promos are already baked in**)」——**表内价格已含 Deals 折后价**。
 
@@ -216,7 +216,7 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 | `/v1/chat/completions` | OpenAI Chat Completions | 通用兼容 |
 | `/v1/responses` | OpenAI Responses | 自 CLI 1.55.0 起支持；**与 OpenCode Go 的套餐 API 协议能力一致** |
 | `/v1/messages` | Anthropic Messages | Claude 系与 Qwen / MiniMax 等 |
-| `/v1/models` | 目录 | **11-04 返回 96 个 ID**（CLI 1.88.2 目录 94 款，差集 2 款为网关独有的 `ling-3.1-flash-1019`、`crouton-alpha`） |
+| `/v1/models` | 目录 | **11-22 返回 104 个 ID**（CLI 1.93.0 目录 104 款，**逐 ID 一致、差集 0**） |
 
 **套餐矩阵（11-04，官方 Pricing & Limits 页）**：
 
@@ -233,11 +233,10 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 
 > **额度机制原文要点**：① 限额以 **credit value 计量，不是请求数**（"Limits are measured in credit value, not request count"）；② 两个滚动窗口从**首次使用起滚动**，非固定时钟；③ **滚动窗口只约束套餐内月度 credits**——按需（on-demand）credits 任何套餐都不受节流，免费/纯余额用量与 Enterprise 池也无窗口上限；④ 达窗口后可继续走按需 credits 或等窗口重置，**不会被硬停**；⑤ 超出额度后可在 Studio > Billing 按模型成本补买 credits，**credits 永不过期、可结转**。
 
-> **Deals（11-04，GOAT 计划页内嵌数据；页头计数 Deals 5 / Free 4）**：
-> 2. **`glyph-cluster:free` free** —— 每日上限 100 次请求「while the stealth preview lasts」；
-> 3. **`crouton-alpha-free` free** —— 「while the stealth preview lasts」；
-> 4. **`beam:free` free** —— **无每日请求上限**「while capacity lasts」；
-> 5. **`minimax-m3` 2× usage**（50% off） —— 每份 credit 用得更久（目录价 $0.30/$1.20 · $0.06）。
+> **Deals（11-22 实测；页头徽章 = Deals 3 / Free 2，但 Pricing & Limits 页 Deals 小节实列 8 条——徽章数 ≠ 条目数）**：
+> **免费档仅 2 条**：① **`recursive/flint-v1.0:free`**（Flint，262K，「Free while the free tier lasts」，每次请求计 $0）；② **`stealth/glyph-cluster:free`**（每日上限 100 次请求，「while the stealth preview lasts」）。
+> **提额档 6 条**：`deepseek-v4.1-flash`（**$10 Go / $100 GOAT / $110 Pro**）、`glm-5.3-flash`（同上前三档，「while capacity lasts」）、`ling-3.1-flash`（**$100 GOAT / $110 Pro**）、`muse-spark-1.3-contributor`、`mimo-v2.6-flash`、`minimax-m3`（**2× usage，50% off**，目录价 $0.30/$1.20 · $0.06）。
+> ⚠️ **`crouton-alpha-free` 与 `beam:free` 均已退出**（前者连同 `stealth/crouton-alpha` 整条移除，后者免费期结束）——网关现仅存 2 个 `:free` 端点，与页头 `Free 2` 一致。
 >
 > **额度加成 Deals**：GOAT 页内嵌 `creditDeal` 字段当前**无 `liveAtBuild=true` 的条目**——`deepseek-v4.1-flash` 的 $100 促销（through Oct 21st）与 `mistral-large-4` 的 $40 促销（through Oct 20th）均已到期，**现行额度分别转为常态 $100 与 $20**。
 >
@@ -258,4 +257,4 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 
 > ⚠️ **DeepSeek 系分时价（GOAT 页内嵌 `timeOfDay` 字段）**：`DeepSeek V4.1 Flash (latest)`、`DeepSeek V4 Flash (latest)`、`DeepSeek V4 Flash Vision (exp)` 均为 **off-peak $0.15/$0.60，peak $0.30/$1.20（01–04 & 06–10 UTC，周一至周五，7h/day，17h/day 为 off-peak）**；`DeepSeek V4 Pro (latest)` 为 **off-peak $0.66/$1.98，peak $1.32/$3.96**（同一窗口）。**额度表内价均为 off-peak 标价**。
 
-> **页头计数（11-04）**：GOAT 页 **GOAT plan 72 款 / All plans 98 / Deals 5 / Free 4**；Pricing & Limits 页 **All 102 / Free 6**——**两页互相不一致**（Pricing & Limits 页计数滞后），且与网关 API 96、CLI 1.88.2 目录 94 均不同，属页面计数口径差异，引用时须标来源页。
+> **页头计数（11-22 实测，三套并存）**：GOAT 档位页 `/docs/plans/goat` = **GOAT plan 75 / All plans 106 / Deals 3 / Free 2**；Pricing & Limits 页 `/docs/resources/pricing-limits` = **All 108 / ⚡ Deals 3 / Free 2**；而 **网关 API 104 = CLI 1.93.0 目录 104（差集 0）**。**四处数字互不相同，引用时必须标来源页/源**——`All plans 106` 与 `All 108` 均含 Go 及以上套餐的重复计项，不等于在线端点数。
