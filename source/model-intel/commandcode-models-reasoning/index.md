@@ -1,46 +1,46 @@
 ---
 title: CommandCode 全模型推理档位速查
-date: 2026-11-15
+date: 2026-11-22
 ---
 
-> 98 款模型的推理档位、上下文与网关价。数据抓取日 **2026-11-15**。
+> 104 款模型的推理档位、上下文与网关价。数据抓取日 **2026-11-22**。
 
 [← 返回「模型情报」合集](/model-intel/)
 
 ---
 
-> 覆盖 **command-code 网关 Provider API 98 个端点** 与 **CLI 1.89.1 官方目录 98 款**（抓取日 **2026-11-15**）。
+> 覆盖 **command-code 网关 Provider API 104 个端点** 与 **CLI 1.93.0 官方目录 104 款**（抓取日 **2026-11-22**）。
 > ✅ **档位唯一口径 = CLI 包内 `models.md`**：在线 Provider API 只返回 ID / `context_length` / `supported_endpoints`，**不含价格与推理档位**。
-> ✅ **两源已完全收敛**：网关 API **98 款 = CLI 1.89.1 目录 98 款，差集 0**（11-04 时的 2 款差集 `ling-3.1-flash-1019`、`crouton-alpha` 均已补齐/下架）。逐 ID 一致，可任选一源。
+> ✅ **两源已完全收敛**：网关 API **104 款 = CLI 1.93.0 目录 104 款，差集 0**，逐 ID 一致，可任选一源。
 > **档位说明**：① `deepseek/*` 全线含 **`off`**（可关闭思考）；② `claude-*` / `gpt-*` 多为五档 `low, medium, high, xhigh, max`；③ `Qwen 3.8` 系为 `low, medium, xhigh`（**无 high**）；④ `zai-org/GLM-5.2` 仅 `high, max` 两档。
-> 本文档为**当前状态速查**：档位、价格、套餐门槛全部取自 `command-code` **CLI 1.89.1** 包内官方目录与 Provider API（2026-11-15 抓取），不含历史版本对照。
+> 本文档为**当前状态速查**：档位、价格、套餐门槛全部取自 `command-code` **CLI 1.93.0** 包内官方目录与 Provider API（2026-11-22 抓取），不含历史版本对照。
 
 ## 数据源与刷新方法
 
 | 数据 | 来源 | 说明 |
 |---|---|---|
-| 在线模型全名单（**98**） | `GET https://api.commandcode.ai/provider/v1/models` | 官方 Provider API，**2026-11-15 匿名抓取**；返回字段含 `context_length` / `supported_endpoints`，**不含价格与推理档位**；与 CLI 1.88.2 目录差集 2 款（`inclusionai/ling-3.1-flash-1019`、`stealth/crouton-alpha` 网关独有） |
+| 在线模型全名单（**104**） | `GET https://api.commandcode.ai/provider/v1/models` | 官方 Provider API，**2026-11-22 匿名抓取**；返回字段含 `context_length` / `supported_endpoints`，**不含价格与推理档位**；与 CLI 1.88.2 目录差集 2 款（`inclusionai/ling-3.1-flash-1019`、`stealth/crouton-alpha` 网关独有） |
 | 推理能力 / 可选档位 / 网关价 / 套餐下限（**权威**） | `npm pack command-code@latest` → `package/dist/bundled/command-code-knowledge/reference/models.md` | CLI 官方模型目录，含 Id / Name / Context / **Efforts** / $每1M / **Min plan** / Best for；**版本 1.88.2，共 94 款（17,296 字节 / 134 行）** |
 | 收录版本 / 退役事件 | 同上 → `package/CHANGELOG.md` | 各模型进入官方目录的 CLI 版本、以及退役公告（见第四节） |
 | 档位口径（快照，已过时） | [`pi-commandcode-provider`](https://www.npmjs.com/package/pi-commandcode-provider) | 由旧版 CLI 生成的静态快照；滞后于 CLI，仅作对照，**禁止作为档位依据** |
 
 **刷新方法**：重新执行
 ```bash
-curl -s https://api.commandcode.ai/provider/v1/models          # 在线全模型名单（11-15 = 98 个 ID）
-npm view command-code version                                   # CLI 最新版（11-15 = 1.89.1）
+curl -s https://api.commandcode.ai/provider/v1/models          # 在线全模型名单（11-22 = 104 个 ID）
+npm view command-code version                                   # CLI 最新版（11-22 = 1.93.0）
 ```
 ```bash
 mkdir -p /tmp/cc && cd /tmp/cc && npm pack command-code@latest >/dev/null 2>&1
 tar xzOf command-code-*.tgz package/dist/bundled/command-code-knowledge/reference/models.md > m.md
 tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 ```
-> ⚠️ **沙箱注意**：包体约 4.2 MB（1.89.1 实测 4,174,185 字节）且解压后远超 /tmp 配额，**禁止 `tar xzf` 全量解压**（会报「设备上没有空间」）；必须用 `tar xzOf <tgz> <包内路径>` 直接流式取单个文件。先 `tar tzf | grep models.md` 确认路径。
+> ⚠️ **沙箱注意**：包体约 4.3 MB（1.93.0 实测 4,283,049 字节）且解压后远超 /tmp 配额，**禁止 `tar xzf` 全量解压**（会报「设备上没有空间」）；必须用 `tar xzOf <tgz> <包内路径>` 直接流式取单个文件。先 `tar tzf | grep models.md` 确认路径。
 
 **新模型核实要求**：先 diff Provider API 全名单与本文表内条目，新增端点**直接读 CLI 包内 `models.md` 取档位与价格**；**禁止按同族模型外推**。注意：**未列入下表档位列的模型，不代表不推理**——见第二节「自动档」。
 
 ---
 
-## 一、支持可选推理档位（72 个）
+## 一、支持可选推理档位（77 个）
 
 档位值即网关上 `reasoning_effort` 参数接受的拼写（恒等直译）。**价格为 CLI 目录公开的 input/output · cache read（每 1M tokens）**。
 
@@ -109,7 +109,12 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 | `google/gemini-4-argon` | **Gemini 4 Argon** | 1,000,000 | low, medium, high | $2/$10 · $0.1 | **Pro and above** |
 | `google/gemini-4-carbon` | **Gemini 4 Carbon** | 1,000,000 | low, medium, high | **$2/$10 · $0.1** | **Pro and above** |
 | `mistral/mistral-large-4` | **Mistral Large 4** | 524,288 | low, medium, high | $1.36/$4.18 · $0.14 | Go and above |
-| `thinkingmachines/inkling-2-small:free` | **Inkling 2 Small（免费）** | 1,048,576 | low, medium, high, xhigh, max | **免费（$0/$0）** | Go and above |
+| `Qwen/Qwen4-Max` | **Qwen 4 Max** | 1,000,000 | off, low, high, xhigh | **$1.5/$4.5 · $0.075（wr $1.875）** | Go and above |
+| `google/gemini-4-neon` | **Gemini 4 Neon** | 1,000,000 | low, medium, high, xhigh | **$3/$15 · $0.15** | **Pro and above** |
+| `gpt-6.2-astra` | **GPT-6.2 Astra** | 1,048,576 | low, medium, high, xhigh, max | **$8/$40 · $0.4（wr $10）** | **Max** |
+| `gpt-6.2-sol` | **GPT-6.2 Sol** | 1,048,576 | low, medium, high, xhigh, max | **$2/$10 · $0.1（wr $2.5）** | **Pro and above** |
+| `tencent/hy4` | **Tencent Hy4** | 1,020,000 | low, medium, high | **$0.834/$2.501 · $0.042** | Go and above |
+| `tencent/hy4-flash` | **Tencent Hy4 Flash** | 1,020,000 | off, high | **$0.07/$0.281 · $0.003** | Go and above |
 | `Qwen/Qwen3.8-Max-Prime` | **Qwen 3.8 Max Prime** | 1,000,000 | low, medium, xhigh | $4/$12 · $0.5（wr $5） | **GOAT and above** |
 | `nvidia/nemotron-3.5-super-vl` | **Nemotron 3.5 Super VL** | 262,144 | low, medium, high | $0.2/$0.5 · $0.04 | Go and above |
 | `inclusionai/ling-3.1-flash` | **Ling 3.1 Flash** | 262,144 | low, medium, high | $0.3/$0.9 · $0.06 | Go and above |
@@ -119,7 +124,7 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 | `stealth/glyph-cluster:free` | **Glyph Cluster** | 262,144 | low, medium, high, xhigh | $0/$0 · $0 | Go and above |
 | `minimax/minimax-m3.1-flash` | **MiniMax M3.1 Flash** | 1,000,000 | low, medium, high, xhigh, max | $0.15/$0.6 · $0.015 | Go and above |
 
-## 二、会推理、深度由 CommandCode 自动选择（26 个）
+## 二、会推理、深度由 CommandCode 自动选择（27 个）
 
 模型支持推理，但官方 CLI catalog **未公布可选档位**（`Efforts` 列为 `—`），不发送 `reasoning_effort`（发送反而会被网关拒绝）。
 
@@ -149,11 +154,12 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 | `tencent/hy3-paid` | Tencent Hy3 | 262,144 | _自动（官方未公布档位）_ | $0.14/$0.58 · $0.035 | Go and above |
 | `nvidia/nemotron-3-ultra-550b-a55b` | Nemotron 3 Ultra | 1,000,000 | _自动（官方未公布档位）_ | $0.6/$2.4 · $0.12 | Go and above |
 | `thinkingmachines/inkling` | Inkling | 256,000 | _自动（官方未公布档位）_ | $1/$4.05 · $0.17 | Go and above |
+| `recursive/flint-v1.0:free` | **Flint（免费）** | 262,000 | _自动（官方未公布档位）_ | 免费（$0/$0） | Go and above |
 | `thinkingmachines/inkling-small` | Inkling Small | 1,000,000 | _自动（官方未公布档位）_ | $0.5/$1.2 · $0.1 | Go and above |
 | `ornith/ornith-1.5-122b` | **Ornith 1.5 122B** | 262,144 | _自动（官方未公布档位）_ | $0.16/$0.64 · $0.02 | Go and above |
 
-> 计数核对：**72 + 26 = 98**，与 CLI **1.89.1** 官方目录 98 款一致（`Efforts` 列非 `—` 者 72 款、为 `—` 者 26 款）；**Provider API 实测 98 个 ID，与目录逐 ID 一致（差集 0）**。
-> ⚠️ **本表分档一律以 CLI `Efforts` 列为准**：当前两个免费端点 `glyph-cluster:free` 与 `thinkingmachines/inkling-2-small:free` 官方均公布了可选档位。
+> 计数核对：**77 + 27 = 104**，与 CLI **1.93.0** 官方目录 104 款一致（`Efforts` 列非 `—` 者 77 款、为 `—` 者 27 款）；**Provider API 实测 104 个 ID，与目录逐 ID 一致（差集 0）**。
+> ⚠️ **本表分档一律以 CLI `Efforts` 列为准**：当前免费端点 `recursive/flint-v1.0:free` **未公布可选档位**（列于 §二），`glyph-cluster:free` 公布了档位。
 
 ## 三、免费 / 零消耗端点
 
@@ -161,12 +167,12 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 |---|---|---|---|---|---|---|
 | `stealth/glyph-cluster:free` | Glyph Cluster | 256K | low, medium, high, xhigh | 全部请求零消耗 | 每日上限 100 次请求「while the stealth preview lasts」 | ✅ API 在线 |
 
-> **当前在线免费端点共 2 款**（Glyph Cluster + **Inkling 2 Small**）；**GOAT 计划页页头计数 Free 2 与此一致**。⚠️ **Beam 1.0 已于 CLI 1.89.0 退役**（CHANGELOG: `retire the free Beam 1.0 model`），Laguna S 2.1 与 Crouton Alpha 亦已下架。
+> **当前在线免费端点共 2 款**（**Flint** + Glyph Cluster）；**GOAT 计划页页头计数 Free 2 与此一致**。⚠️ `thinkingmachines/inkling-2-small:free` 免费档已退出 CC 网关（模型本体仍在），Beam 1.0 已于 CLI 1.89.0 退役。
 > ⚠️ **已退出免费清单（切勿再写进配置）**：**`minimax/minimax-m3.1-flash:free`**（限时免费已结束，已自网关 API 与 CLI 1.87.3 目录移除；付费 slug `minimax/minimax-m3.1-flash` 仍在）、**`ornith/ornith-1.5-122b:free`**（免费截止 2026-10-21 23:00 PT，已自网关 API 与 CLI 目录移除；付费 slug `ornith/ornith-1.5-122b` 仍在）、**`stealth/cat-jam:free`**（已下架）、`stealth/pixel-canary`（2026-09-30 退役）、`stealth/space-bunny-alpha`（已自网关 API 与 CLI 目录移除）、`inclusionai/ling-3.0-flash-sante:free`（已移除）、`inclusionai/ling-3.1-flash:free`（**已转付费 ID `ling-3.1-flash`**，$0.3/$0.9 · $0.06，含 GOAT $100 / Pro $110 加成额度）。OpenCode **Zen 侧的 `ling-3.0-flash-fin-free` 与 OpenRouter 侧同名系列不受此影响（各自独立清单）**。
 
-## 四、最新收录 / 退役端点档位（CLI 1.89.1 官方目录）
+## 四、最新收录 / 退役端点档位（CLI 1.93.0 官方目录）
 
-来源：`command-code` **CLI 1.89.1** 包内 `dist/bundled/command-code-knowledge/reference/models.md`；「最早收录版本」由同包 `CHANGELOG.md` 逐条反查（取**最早出现该模型的版本号**），**不是改动记录**。
+来源：`command-code` **CLI 1.93.0** 包内 `dist/bundled/command-code-knowledge/reference/models.md`；「最早收录版本」由同包 `CHANGELOG.md` 逐条反查（取**最早出现该模型的版本号**），**不是改动记录**。
 
 | 模型 ID | 名称 | 上下文 | 可选推理档位 | 网关价（in/out · cache读） | 最低套餐 | CLI 最早收录 |
 |---|---|---|---|---|---|---|
@@ -197,7 +203,7 @@ tar xzOf command-code-*.tgz package/CHANGELOG.md > c.md
 | `gpt-6-astra` | GPT-6 Astra | 1.05M | low, medium, high, xhigh, max | $10/$50 · $1（wr $12.5） | Max | 1.49.0 |
 | `deepseek/deepseek-v4-flash-fast` | DeepSeek V4 Flash Fast | 1M | low, high, max | $0.28/$0.56 · $0.07 | Go and above | CHANGELOG **未单列**（仅见于目录 `models.md`） |
 
-> **收录版本口径**：表内版本号为 CHANGELOG 中**最早出现该模型的条目**。⚠️ CHANGELOG 只记 feature 行，**未单列的模型不得倒推版本**（如 `deepseek-v4-flash-fast`）。**当前 CLI 1.89.1，官方目录共 98 款**；Provider API 在线 98 端点，差集 2 款为网关独有的 `inclusionai/ling-3.1-flash-1019`、`stealth/crouton-alpha`（CLI 目录未收录）。1.85.0 **新增 Beam 1.0 free 与 MiniMax M3.1 Flash（含限时免费档），同版移除 `stealth/cat-jam:free`**；1.86.0 **新增 Ornith 1.5 122B（含限时免费档）**；1.87.x 为功能与修复版（`/btw` 侧问指令、permission mode aliases、BYOK 包更新）；**1.88.0 起新增 Kimi K3.1 Pro 与 GPT-6.1 Terra，同版移除 MiniMax M3.1 Flash 与 Ornith 1.5 122B 两个限时免费档及 `xiaomi/mimo-v2.5` 系（目录 96 → 94 款）**；1.88.0–1.88.2 另有后台任务改用免费模型、更新器改进与安装目录替换不中断会话等修复。
+> **收录版本口径**：表内版本号为 CHANGELOG 中**最早出现该模型的条目**。⚠️ CHANGELOG 只记 feature 行，**未单列的模型不得倒推版本**（如 `deepseek-v4-flash-fast`）。**当前 CLI 1.93.0，官方目录共 104 款**；Provider API 在线 104 端点，差集 2 款为网关独有的 `inclusionai/ling-3.1-flash-1019`、`stealth/crouton-alpha`（CLI 目录未收录）。1.85.0 **新增 Beam 1.0 free 与 MiniMax M3.1 Flash（含限时免费档），同版移除 `stealth/cat-jam:free`**；1.86.0 **新增 Ornith 1.5 122B（含限时免费档）**；1.87.x 为功能与修复版（`/btw` 侧问指令、permission mode aliases、BYOK 包更新）；**1.88.0 起新增 Kimi K3.1 Pro 与 GPT-6.1 Terra，同版移除 MiniMax M3.1 Flash 与 Ornith 1.5 122B 两个限时免费档及 `xiaomi/mimo-v2.5` 系（目录 96 → 94 款）**；1.88.0–1.88.2 另有后台任务改用免费模型、更新器改进与安装目录替换不中断会话等修复。
 
 > **档位口径补充**：① `Min plan = Go and above` 指 **Command Code 自家 Go 档（$1/月）**即可用（GOAT/Pro/Max 同样可用）——与本报告另一处「GOAT 独占」（指 OpenCode Go 未上架）口径不同，勿混用；② CLI 目录同时给出全部 94 款的网关价与套餐下限，**可作 [AI 订阅档位横向对比](/model-intel/ai-subscription-tiers/) 与价格对比文档的价格交叉校验源**；③ **未公布档位 ≠ 不推理**，只是不让调用方指定 `reasoning_effort`；④ CLI 目录末注原文：「Rates are the advertised price list resolved from the billing source of truth (**promos are already baked in**)」——**表内价格已含 Deals 折后价**。
 
