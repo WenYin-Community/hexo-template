@@ -13,9 +13,9 @@ tags:
   - "proxy"
 ---
 
-把一套 Linux 上的 clash/mihomo 管理脚本移植到 FreeBSD，最麻烦的不是 shell 语法（虽然也够麻烦），而是**大家默认「Linux 能跑的 TUN，FreeBSD 也能跑」**。实际测下来，mihomo 在 FreeBSD 上的两条原生路径都是死的，最后只能换后端。
+把一套 Linux 上的 clash/mihomo 管理脚本移植到 FreeBSD，最麻烦的不是 shell 语法（虽然也够麻烦），而是**大家默认「Linux 能跑的 TUN，FreeBSD 也能跑」**。我也这么以为，结果 mihomo 在 FreeBSD 上的两条原生路径都是死的，折腾到最后只能换后端。
 
-这篇按实际排查顺序记一遍：先解决虚拟机出网，再试 TUN 的三条路，最后是八个 FreeBSD 特有的适配缺陷。
+下面按当时的排查顺序记：先解决虚拟机出网，再试 TUN 的三条路，最后是八个 FreeBSD 特有的适配缺陷。
 
 <!-- more -->
 
