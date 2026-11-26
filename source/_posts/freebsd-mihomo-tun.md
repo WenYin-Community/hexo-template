@@ -127,4 +127,6 @@ FreeBSD 上跑 mihomo 的核心结论只有一句：**不要假设 Linux 的 TUN
 
 最后一条经验：**测试环境的网络要先打通再谈功能**。这次如果没先把 SSH 反向隧道和端口冲突理清楚，后面所有"TUN 不通"的现象都会指向错误的方向。
 
+补一条上游协作的经验：有些上游（如 VMware 的 open-vm-tools）**安全修复不发在 master 上**，而是开 `CVE-*.patch` 补丁分支单独交付——`git log upstream/master` 里找不到它们，等 merge 更是遥遥无期。跟进方式只能是按分支取补丁 `git am`。同理，提 PR 前先读上游 README——有的项目规定补丁必须走邮件列表，PR 开了也是白开（先读规则再动手，这比读 CONTRIBUTING 更重要，规则经常写在 README 里）。
+
 补一句版本管理：FreeBSD 的 pkg 默认走 `quarterly` 分支，它可能比上游 `latest` 滞后几个小版本（这次 `quarterly` 是 1.19.31_3、`latest` 是 1.19.34）。文档里不要写「pkg 装的就是最新」——想固定某个版本，要么显式切 `latest`，要么在安装脚本里检查 `pkg query` 的实际版本。
