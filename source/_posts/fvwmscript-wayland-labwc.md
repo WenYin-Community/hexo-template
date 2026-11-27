@@ -86,6 +86,27 @@ NsCDE 是一套 CDE 风格的桌面，底座是 FVWM——一个 X11 时代的�
 
 vendor NsCDE 的 Python 资产时发现 `MotifColors.py` 顶层 import 的两个模块在母仓库里根本不存在——旧的主题链从拆分那天起就 import 会失败。这不是要修的 bug，是要记录的证据：**vendor 前先跑一遍 import，坏的就地淘汰，别把「能跑」当成默认前提。**
 
+## 八、翻盘：布局别自己写，vendor 上游原码
+
+面板布局是这套移植里最后、也是最典型的一段弯路。
+
+时间线是这样的：先自己写按钮条 → applet 和按钮条各自从不同起点画，互相重叠；`__APPLET__` 占位符和空 launcher 混在一条里；按原配置重写一遍，用户看完还是「布局混乱」。最后放弃自写，直接 vendor 上游 FvwmButtons 的 `parse.c`/`button.c`/`draw.c`——**几何第一次和原项目一致**（root 1015×79、菜单/手柄 21px、左 5 launcher 63px、WSM 343px）。
+
+动手前先数了依赖面：布局核心只有 **2 个 X11 符号 + 25 个 fvwm 函数**——这个数字决定了「vendor 原码」是可行的，如果依赖几百个符号就得另想办法。补 30 多个平台 shim 之后，9,114 行上游代码原样跑起来；绘制层同理（X11→cairo、Flocale→Pango、FvwmPicture→gdk-pixbuf），连 pclock 的指针几何都是照 `Graphics.c` 的公式抄的（时针 16px、分针 22px、秒针 22px，宽 4）。
+
+**通用教训：如果上游代码的依赖面足够小，移植 > 重写。** 重写省不掉理解成本，还多一份「看起来一样但差几像素」的风险。
+
+这一轮配套踩的坑：
+
+- **「全部黑屏」是清理脚本误杀**：headless 验证结束时 `pkill -x swaybg nscde-paneld`，把嵌套会话里的壁纸和面板一起杀了——看起来像渲染崩了，实际是自杀。按 PID 精确清理；
+- **shim 里的几何函数不能留空实现**：`XParseGeometry` 返回空时，布局「看起来跑了」但尺寸全是默认值，排查半天才发现根因在 shim；
+- **Xwayland 禁用后 Swallow 槽永久黑**：目标窗口永远不会出现，按钮一直保持 `b_Hangon`，上游 `draw.c` 因此选了无背景色的 Pixmap colorset 填黑。布局构建完成后清 `b_Hangon`、空槽回落普通 colorset；
+- **fvwm 配置是无分隔拼接**：`*FrontPanel` 和 option 不是 `*FrontPanel: option`，`GetTokenIndex` 按模块名长度切片——shim 必须按这个格式喂行，否则配置整段解析不到；
+- **配置里的转义不还原会截断解析**：`InfoStoreAdd` 里的 `\"` 没还原，按钮定义被截断成黑块，子面板还把 `$[gt.*]` 当字面量显示；
+- **嵌套会话下 grim 会挂起**：宿主 KDE 暂时不产新帧，`grim` 一直等不到 frame——视觉验证放 headless，嵌套会话只用来人工目视。
+
+还有一条流程上的：**待办长期 pending 会卡死目标验证器**。需要用户授权的动作（比如 push）留在 pending 里，completion verifier 会一轮轮判「未完成」并反复要求授权，实际没有新工作可做。该尽早标成「等待授权」，而不是留 pending。
+
 ## 总结
 
 把不可重写的旧生态搬到新平台，真正决定成败的是三个判断：
